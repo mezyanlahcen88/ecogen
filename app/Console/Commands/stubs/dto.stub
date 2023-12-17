@@ -1,0 +1,82 @@
+<?php
+
+namespace App\Dto;
+
+use App\Models\{{model}};
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
+use App\Forms\{{model}}Form;
+use App\Services\ObjectCrudService;
+
+
+class {{class}} {
+
+    const MODEL = 'App\Models\{{model}}';
+    private ObjectCrudService $objectCrudService;
+
+    public function __construct(ObjectCrudService $objectCrudService)
+    {
+        $this->objectCrudService = $objectCrudService;
+    }
+
+    /**
+     * Method Dto to store a new {{model}} from request
+     *
+     * @return {{model}} Model
+     */
+    public function store{{model}}(Request $request): {{model}} {
+        $object = new {{model}}();
+        $object = $this->objectCrudService->AttributeRequestWithFileObject(
+                $request,
+                $object,
+                self::MODEL,
+                'images/{{plural}}/',
+                {{model}}Form::getRules()
+        );
+        $object->id = Str::uuid();
+        $object->save();
+        return $object;
+    }
+
+    /**
+     * Method Dto to update a {{model}} from request
+     *
+     * @return {{model}} Model
+     */
+    public function update{{model}}(Request $request, $id): {{model}} {
+        $object = {{model}}::findOrFail($id);
+        $object = $this->objectCrudService->AttributeRequestWithFileObject(
+            $request,
+            $object,
+            self::MODEL,
+            'images/{{plural}}/',
+            {{model}}Form::getRules()
+    );
+    $object->save();
+        return $object;
+    }
+
+    /**
+     * Method Dto to change the status for a {{model}} object
+     *
+     * @return JsonResponse
+     */
+    public function change{{model}}Status(Request $request): JsonResponse {
+        $id = $request->id;
+        $object = {{model}}::findOrFail($id);
+        $object->status = !$object->status;
+        $object->save();
+        return response()->json(['code'=>200,'isactive'=>$object->status]);
+    }
+
+    /**
+     * Method Dto to delete a object from request
+     *
+     * @return void
+     */
+    public function delete{{model}}(Request $request) {
+        $object = {{model}}::findOrFail($request->id);
+        $object->delete();
+    }
+}

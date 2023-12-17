@@ -1,0 +1,206 @@
+<?php
+
+namespace App\Forms;
+
+use App\Enums\RegexEnum;
+use App\Forms\FieldsType\HiddenField;
+use Illuminate\Validation\Rule;
+use App\Forms\FieldsType\ImageField;
+use App\Forms\FieldsType\InputField;
+use App\Forms\FieldsType\SelectField;
+
+class {{class}} extends AbstractForm
+{
+
+     public function __construct()
+    {
+
+    }
+    /**
+     * Get the validation rules for the model.
+     *
+     * @param string|null $model The model to get the rules for. Default is null.
+     * @return array The array of validation rules.
+     */
+    public static function getRules($model = null): array
+    {
+        return [
+             // 'name' => ['bail', 'required', 'min:3'],
+            // 'adresse' => ['bail', 'required', 'min:3'],
+            // 'adresse_complement' => ['bail'],
+            // 'post_code' => ['bail', 'required', 'min:3'],
+            // 'company_number' => ['bail', 'required', 'min:3'],
+            // 'vat_number' => ['bail'],
+            // 'country' => ['integer'],
+            // 'state' => ['integer'],
+            // 'city' => ['integer'],
+            // 'email' => ['required', 'email', 'regex:/(.+)@(.+)\.(.+)/i', Rule::unique('transport_companies', 'email')->ignore($model)],
+            // 'phone' => ['required', 'regex:' . RegexEnum::PHONE, 'min:11', 'max:15', Rule::unique('transport_companies', 'phone')->ignore($model)],
+            // 'fix' => ['nullable', 'regex:' . RegexEnum::PHONE, 'min:11', 'max:15', Rule::unique('transport_companies', 'fix')->ignore($model)],
+            // 'fax' => ['nullable', 'regex:' . RegexEnum::PHONE, 'min:11', 'max:15', Rule::unique('transport_companies', 'fax')->ignore($model)],
+        ];
+    }
+
+    /**
+     * Get the fields for the object.
+     *
+     * @param mixed|null $object The object to get the fields for. Default is null.
+     * @param array $params Additional parameters for retrieving the fields. Default is an empty array.
+     * @return array The array of fields.
+     */
+    public static function getFields($object = null, $params = []): array
+    {
+       return [
+            'forms'=>[
+            // 1 ere form
+            [
+                'cards'=>[
+                            [
+                                'class' =>'col-xl-12',
+                                'id'=>'cardId',
+                                'rowsFields' => [
+                                    [
+                                        'company_groupe_id' => (new HiddenField())->setKey('company_groupe_id')
+                                            ->setRequired(true)
+                                            ->setValue($params['company_groupe_id']),
+                                        'name' => (new InputField())->setKey('name')
+                                            ->setLabel(trans('translation.transportcompanie_form_name'))
+                                            ->setRequired(true)
+                                            ->setClass('col-md-4 col-xl-4 col-xs-4 col-sm-4')
+                                            ->setFieldClass('form-control')
+                                            ->setPlaceholder(trans('translation.transportcompanie_form_name_placeholder'))
+                                            ->setValue($object->name ?? old('name')),
+
+                                        'email' => (new InputField())->setKey('email')
+                                            ->setLabel(trans('translation.transportcompanie_form_email'))
+                                            ->setRequired(true)
+                                            ->setClass('col-md-4 col-xl-4 col-xs-4 col-sm-4')
+                                            ->setFieldClass('form-control')
+                                            ->setPlaceholder(trans('translation.transportcompanie_form_email_placeholder'))
+                                            ->setValue($object->email ?? old('email')),
+
+                                        'phone' => (new InputField())->setKey('phone')
+                                            ->setLabel(trans('translation.transportcompanie_form_phone'))
+                                            ->setRequired(true)
+                                            ->setClass('col-md-4 col-xl-4 col-xs-4 col-sm-4')
+                                            ->setFieldClass('form-control')
+                                            ->setPlaceholder('Ex : +33xxxxxxxx')
+                                            ->setValue($object->phone ?? old('phone')),
+                                    ],
+
+                                    [
+                                        'adresse' => (new InputField())->setKey('adresse')
+                                            ->setLabel(trans('translation.transportcompanie_form_adresse'))
+                                            ->setRequired(true)
+                                            ->setClass('col-md-6 col-xl-6 col-xs-6 col-sm-6')
+                                            ->setFieldClass('form-control')
+                                            ->setPlaceholder(trans('translation.transportcompanie_form_adresse_placeholder'))
+                                            ->setValue($object->adresse ?? old('adresse')),
+
+                                        'adresse_complement' => (new InputField())->setKey('adresse_complement')
+                                            ->setLabel(trans('translation.transportcompanie_form_adresse_complement'))
+                                            ->setClass('col-md-6 col-xl-6 col-xs-6 col-sm-6s')
+                                            ->setFieldClass('form-control')
+                                            ->setPlaceholder(trans('translation.transportcompanie_form_adresse_complement_placeholder'))
+                                            ->setValue($object->adresse_complement ?? old('adresse_complement')),
+                                    ],
+
+                                    [
+                                        'country' => (new SelectField())->setKey('country')
+                                            ->setLabel(trans('translation.user_form_country'))
+                                            ->setRequired(true)
+                                            ->setClass('col-md-4 col-xl-4 col-xs-4 col-sm-4')
+                                            ->setPlaceholder(trans('translation.country'))
+                                            ->setOptions(Country::pluck('name','id')->toArray())
+                                            ->setValue( $object->country ?? old('country'))
+                                            ->setReload([
+                                                    'route_name' => route('countries.index'),
+                                                    'reload_route' => route('reload.getCountries'),
+                                                    'reloadClass' => 'reloadCountries',
+                                            ]),
+
+                                        'state' => (new SelectField())->setKey('state')
+                                            ->setLabel(trans('translation.user_form_state'))
+                                            ->setRequired(true)
+                                            ->setClass('col-md-4 col-xl-4 col-xs-4 col-sm-4')
+                                            ->setPlaceholder(trans('translation.state'))
+                                            ->setOptions(State::where('country_id',($object->country ?? old('country')))->pluck('name','id')->toArray())
+                                            ->setValue( $object->state ?? old('state')),
+
+                                        'city' => (new SelectField())->setKey('city')
+                                            ->setLabel(trans('translation.user_form_city'))
+                                            ->setRequired(true)
+                                            ->setClass('col-md-4 col-xl-4 col-xs-4 col-sm-4')
+                                            ->setOptions(City::where('state_id',($object->state ?? old('state')))->pluck('name','id')->toArray())
+                                            ->setValue( $object->city ?? old('city')),
+                                    ],
+
+                                    [
+                                        'post_code' => (new InputField())->setKey('post_code')
+                                            ->setLabel(trans('translation.transportcompanie_form_post_code'))
+                                            ->setRequired(true)
+                                            ->setClass('col-md-4 col-xl-4 col-xs-4 col-sm-4')
+                                            ->setFieldClass('form-control')
+                                            ->setPlaceholder(trans('translation.transportcompanie_form_post_code_placeholder'))
+                                            ->setValue($object->post_code ?? old('post_code')),
+
+                                        'fix' => (new InputField())->setKey('fix')
+                                            ->setLabel(trans('translation.transportcompanie_form_fix'))
+                                            ->setClass('col-md-4 col-xl-4 col-xs-4 col-sm-4')
+                                            ->setFieldClass('form-control')
+                                            ->setPlaceholder('Ex : +33xxxxxxxx')
+                                            ->setValue($object->fix ?? old('fix')),
+
+                                        'fax' => (new InputField())->setKey('fax')
+                                            ->setLabel(trans('translation.transportcompanie_form_fax'))
+                                            ->setClass('col-md-4 col-xl-4 col-xs-4 col-sm-4')
+                                            ->setFieldClass('form-control')
+                                            ->setPlaceholder('Ex : +33xxxxxxxx')
+                                            ->setValue($object->fax ?? old('fax')),
+                                    ],
+                                    [
+                                        'company_number' => (new InputField())->setKey('company_number')
+                                            ->setLabel(trans('translation.transportcompanie_form_company_number'))
+                                            ->setRequired(true)
+                                            ->setFieldClass('form-control')
+                                            ->setClass('col-md-6 col-xl-6 col-xs-6 col-sm-6')
+                                            ->setPlaceholder(trans('translation.transportcompanie_form_company_number_placeholder'))
+                                            ->setValue($object->company_number ?? old('company_number')),
+
+                                        'vat_number' => (new InputField())->setKey('vat_number')
+                                            ->setLabel(trans('translation.transportcompanie_form_vat_number'))
+                                            ->setClass('col-md-6 col-xl-6 col-xs-6 col-sm-6')
+                                            ->setFieldClass('form-control')
+                                            ->setPlaceholder(trans('translation.transportcompanie_form_vat_number_placeholder'))
+                                            ->setValue($object->vat_number ?? old('vat_number')),
+                                    ],
+
+                                ],
+
+                                'rowsImage' => [
+                                        [
+                                        'logo' => (new ImageField())->setKey('logo')
+                                            ->setLabel(trans('translation.transport_company_form_img'))
+                                            ->setRequired(false)
+                                            ->setClass('col-md-12 col-xl-12 col-xs-12 col-sm-12 my-2')
+                                            ->setPlaceholder('')
+                                            ->setImageFolder('transportcompanies'),
+
+                                    'favorites_icon' => (new ImageField())->setKey('favorites_icon')
+                                            ->setLabel(trans('translation.setting_form_favorites_icon'))
+                                            ->setRequired(false)
+                                            ->setClass('col-md-12 col-xl-12 col-xs-12 col-sm-12 my-2')
+                                            ->setPlaceholder('')
+                                            ->setImageFolder('transportcompanies'),
+                                    ],
+
+                                ]
+                            ]
+                ]
+            ]
+
+            ]
+
+        ];
+    }
+}

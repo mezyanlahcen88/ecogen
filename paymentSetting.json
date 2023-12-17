@@ -1,0 +1,5 @@
+{
+    "stripe_key": "pk_test_51NJQO8GkY0ubiWS4hIIoET2ybSUWxoMqEIOKOf9urdpOjWrSmsfbUGwFjVdN0QEmGfIm2WDnEs1UoCFff9b2Jncn0044jDWYvX",
+    "stripe_secret": "sk_test_51NJQO8GkY0ubiWS4gGPBUeG2VLSni2Gv7yf0iJSdl8MIm9tu9uNbSC8gTLoBJNSDmlfhzroZiROkFwMdLHYtYRxZ000q6MDpqK",
+    "stripeIsActive": "on"
+}

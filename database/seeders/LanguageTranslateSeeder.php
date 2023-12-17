@@ -1,0 +1,200 @@
+<?php
+
+namespace Database\Seeders;
+
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
+
+class LanguageTranslateSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run($lang_id = 2)
+    {
+        $now = Carbon::now();
+        DB::table('language_translates')->insert([
+            ['language_id' => $lang_id, 'label' => 'navigation_navigation_configuration', 'translation' => 'Configuartion', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'navigation_navigation_dashboard', 'translation' => 'Tableau de bord', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'navigation_navigation_manage_users', 'translation' => 'Gestion des utilisateurs', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'navigation_navigation_permissions', 'translation' => 'Roles et permissions', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'navigation_navigation_roles_list', 'translation' => 'Liste des roles', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'navigation_navigation_users_list', 'translation' => 'Liste des utilisateurs', 'created_at' => $now, 'updated_at' => $now],
+
+            ['language_id' => $lang_id, 'label' => 'navigation_navigation_categories', 'translation' => 'Categories', 'created_at' => $now, 'updated_at' => $now],
+
+            ['language_id' => $lang_id, 'label' => 'navigation_navigation_settings', 'translation' => ' Paramètres', 'created_at' => $now, 'updated_at' => $now],
+
+            ['language_id' => $lang_id, 'label' => 'navigation_navigation_products', 'translation' => 'Produicts', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'navigation_navigation_manage_language', 'translation' => 'langues', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'navigation_navigation_language_translation', 'translation' => 'Traduction des Langues', 'created_at' => $now, 'updated_at' => $now],
+
+            ['language_id' => $lang_id, 'label' => 'general_general_action', 'translation' => 'Action', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'general_general_save', 'translation' => 'Sauvgarder', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'general_general_update', 'translation' => 'Modifier', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'general_general_close', 'translation' => 'Fermer', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'general_general_return', 'translation' => 'Retour', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'general_general_configuration', 'translation' => 'Configuration', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'general_general_super', 'translation' => 'Super', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'general_general_search', 'translation' => 'Rechercher', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'general_general_add', 'translation' => 'Ajouter', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'general_general_select', 'translation' => 'Choisir', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'user_message_store', 'translation' => 'Utilisateur créé avec succès', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'user_message_update', 'translation' => 'Utilisateur modifiéé avec succès', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'user_message_delete', 'translation' => 'Utilisateur supprimé avec succès ', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'user_action_add', 'translation' => 'Ajouter utilisateur', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'user_action_show', 'translation' => 'Voir l\'utilisateur', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'user_action_edit', 'translation' => 'Modifier \'utilisateur', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'user_action_delete', 'translation' => 'Supprimer \'utilisateur', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'user_table_picture', 'translation' => 'Picture', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'user_table_email', 'translation' => 'Email', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'user_table_active', 'translation' => 'Active', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'user_table_roles_name', 'translation' => 'Role', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'user_table_user_name', 'translation' => 'Nom', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'user_table_first_name', 'translation' => 'Prénom', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'user_table_last_name', 'translation' => 'Nom', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'user_table_phone', 'translation' => 'Téléphone', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'user_form_first_name', 'translation' => 'Prénom', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'user_form_first_name_placeholder', 'translation' => 'Entrer le prénom', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'user_form_last_name', 'translation' => 'Nom', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'user_form_last_name_placeholder', 'translation' => 'Entrer le nom', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'user_form_user_name', 'translation' => 'Username', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'user_form_name_placeholder', 'translation' => 'Entrer le  nom ', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'user_form_email', 'translation' => 'Email', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'user_form_email_placeholder', 'translation' => 'Entrer l\'email', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'user_form_security', 'translation' => 'Securité', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'user_form_current_password', 'translation' => 'Mot de passe actuelle', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'user_form_new_password', 'translation' => 'Nouveau mot du passe', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'user_form_confirm_password', 'translation' => 'Confirmer le mot passe', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'user_form_password', 'translation' => 'Mot de passe', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'user_form_password_placeholder', 'translation' => 'Entrer le mot de passe', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'user_form_password_confirmation_placeholder', 'translation' => 'Confirmer le mot de passe', 'created_at' => $now, 'updated_at' => $now],
+
+            ['language_id' => $lang_id, 'label' => 'user_form_password_confirmation', 'translation' => 'Confirmer le mot de passe', 'created_at' => $now, 'updated_at' => $now],
+
+            ['language_id' => $lang_id, 'label' => 'user_form_adresse', 'translation' => 'Adresse', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'user_form_adresse_placeholder', 'translation' => 'Entrer l\'dresse', 'created_at' => $now, 'updated_at' => $now],
+
+            ['language_id' => $lang_id, 'label' => 'user_form_phone', 'translation' => 'Téléphone', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'user_form_phone_placeholder', 'translation' => 'Entrer le  Phone', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'user_form_isactive', 'translation' => 'Active', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'user_form_picture', 'translation' => 'picture ', 'created_at' => $now, 'updated_at' => $now],
+
+            ['language_id' => $lang_id, 'label' => 'user_form_change_password', 'translation' => 'Changer le mot de passe', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'user_form_role_name', 'translation' => 'Nom du role', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'user_form_users_list', 'translation' => 'Liste des utilisateurs', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'user_form_manage_users', 'translation' => 'Gestion des utilisateurs', 'created_at' => $now, 'updated_at' => $now],
+
+            ['language_id' => $lang_id, 'label' => 'user_form_users_list_trashed', 'translation' => 'Gestion des utilisateurs supprimées', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'user_form_manage_deleted_users', 'translation' => 'Liste des utilisateurs supprimées', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'user_form_users_list_deleted', 'translation' => 'Liste des utilisateurs supprimées', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'user_message_restore', 'translation' => 'Utilisateur restauré avec succès', 'created_at' => $now, 'updated_at' => $now],
+
+            ['language_id' => $lang_id, 'label' => 'role_table_roles_name', 'translation' => 'Roles', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'role_action_add', 'translation' => 'Ajouter role', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'role_action_show', 'translation' => 'voir role ', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'role_action_edit', 'translation' => 'Modifier le role', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'role_action_delete', 'translation' => 'Supprimer', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'role_message_store', 'translation' => 'Role créé avec succès', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'role_message_update', 'translation' => 'Role modifiéé avec succès', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'role_message_delete', 'translation' => 'Role suppriméé avec succès', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'role_form_role', 'translation' => 'Role', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'role_form_user_role', 'translation' => 'Role d\'utilisateur', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'role_form_role_name_placeholder', 'translation' => 'Enter Role Name ', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'role_form_permissions_list', 'translation' => 'Liste des permissions', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'role_form_roles_list', 'translation' => 'Liste des roles', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'role_form_manage_roles', 'translation' => 'Gestion des roles', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'login_login_title', 'translation' => 'Content de te revoir !', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'login_login_subtitle', 'translation' => 'Connectez-vous pour continuer à', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'login_login_email', 'translation' => 'Email', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'login_login_email_placeholder', 'translation' => 'Entrez l\'email', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'login_login_password', 'translation' => 'Mot de passe', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'login_login_password_placeholder', 'translation' => 'Entrez  le mot de passe', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'login_login_sign_in', 'translation' => 'Se connecter', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'login_login_remember_me', 'translation' => 'Souviens-toi de moi', 'created_at' => $now, 'updated_at' => $now],
+
+
+            ['language_id' => $lang_id, 'label' => 'setting_form_settings', 'translation' => 'Paramètres', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'setting_form_system_name', 'translation' => 'Nom du système', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'setting_form_title', 'translation' => 'Titre', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'setting_form_address', 'translation' => 'Adresse', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'setting_form_phone', 'translation' => 'Téléphone', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'setting_form_system_name_placeholder', 'translation' => 'Entrer le nom du système', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'setting_form_title_placeholder', 'translation' => 'Titre', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'setting_form_address_placeholder', 'translation' => 'Adresse', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'setting_form_email', 'translation' => 'E-Mail', 'created_at' => $now, 'updated_at' => $now],
+['language_id'=>$lang_id,'label'=>'setting_form_email_placeholder','translation'=>'Entrer l\'e-mail','created_at'=>$now,'updated_at'=>$now],
+            ['language_id' => $lang_id, 'label' => 'setting_form_phone_placeholder', 'translation' => 'Entrer le téléphone', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'setting_form_manage_settings', 'translation' => 'Gérer Les Paramètres', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'setting_form_settings_list', 'translation' => 'Liste Des Paramètres', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'setting_form_picture', 'translation' => 'Logo du system', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'setting_form_logo', 'translation' => 'Logo du system', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'setting_form_favorites_icon', 'translation' => 'favorites_icon', 'created_at' => $now, 'updated_at' => $now],
+            ['language_id' => $lang_id, 'label' => 'setting_form_copyrigth', 'translation' => 'copyrigth', 'created_at' => $now, 'updated_at' => $now],
+
+            ['language_id'=>$lang_id,'label'=>'language_action_add','translation'=>'Ajouter la langue','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'language_action_show','translation'=>'Montrer la langue','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'language_action_edit','translation'=>'Modifier la langue','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'language_action_delete','translation'=>'Supprimer','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'language_message_store','translation'=>'Langue créée avec succès','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'language_message_update','translation'=>'Langue avec succès mis à jour','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'language_message_delete','translation'=>'Langue avec succès supprimé','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'language_table_flag','translation'=>'Drapeau','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'language_table_name','translation'=>'Nom','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'language_table_locale','translation'=>'Lieu','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'language_table_direction','translation'=>'Direction','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'language_table_default','translation'=>'Défaut','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'language_table_status','translation'=>'Statut','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'language_form_locale','translation'=>'Lieu','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'language_form_name','translation'=>'Nom','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'language_form_direction','translation'=>'Direction','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'language_form_language_list','translation'=>'Liste','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'language_form_locale_placeholder','translation'=>'Espace réservé local','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'language_form_name_placeholder','translation'=>'Nom de nom','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'language_form_direction_placeholder','translation'=>'Planification de direction','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'language_form_manage_languages','translation'=>'Gérer les langues','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'translation_action_add','translation'=>'Ajouter une traduction','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'translation_action_show','translation'=>'Montrer la traduction','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'translation_action_edit','translation'=>'Modifier la traduction','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'translation_action_delete','translation'=>'Supprimer','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'translation_message_store','translation'=>'Traduction avec succès créé','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'translation_message_update','translation'=>'Traduction a réussi à mettre à jour','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'translation_message_delete','translation'=>'Traduction avec succès supprimé','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'translation_table_label','translation'=>'Étiquette','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'translation_table_model','translation'=>'Modèle','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'translation_table_type','translation'=>'Taper','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'translation_table_translation','translation'=>'Traduction','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'translation_form_translation_list','translation'=>'Liste de traduction','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'translation_form_manage_translations','translation'=>'Gérer les traductions','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'car_action_add','translation'=>'Ajouter une voiture','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'car_action_show','translation'=>'Voiture d\'exposition','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'car_action_edit','translation'=>'Modifier la voiture','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'car_action_delete','translation'=>'Supprimer la voiture','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'car_action_restore','translation'=>'Restaurer la voiture','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'car_message_add','translation'=>'Voiture créée avec succès','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'car_message_show','translation'=>'La voiture a montré avec succès','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'car_message_edit','translation'=>'Voiture à jour avec succès','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'car_message_delete','translation'=>'Voiture avec succès supprimé','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'car_message_restore','translation'=>'Voiture avec succès restauré','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'car_message_active','translation'=>'Voiture activée avec succès','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'car_message_inactive','translation'=>'La voiture a inactivé avec succès','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'car_form_manage_cars','translation'=>'Gérer les voitures','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'car_form_cars_list','translation'=>'Liste des voitures','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'car_form_deleted_cars_list','translation'=>'Liste des voitures supprimés','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'car_form_manage_deleted_cars','translation'=>'Gérer les voitures supprimés','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'car_table_name','translation'=>'Nom','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'car_table_matricule','translation'=>'Matricule','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'car_form_name','translation'=>'Nom','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'car_form_matricule','translation'=>'Matricule','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'car_form_name_placeholder','translation'=>'Entrez le nom','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'car_form_matricule_placeholder','translation'=>'Entrez Matricule','created_at'=>$now,'updated_at'=>$now],
+
+
+
+        ]);
+    }
+}
