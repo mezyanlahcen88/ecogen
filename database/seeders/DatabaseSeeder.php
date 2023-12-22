@@ -28,6 +28,7 @@ class DatabaseSeeder extends Seeder
             RegionSeeder::class,
             VilleSeeder::class,
             SecteurSeeder::class,
+            ProfessionSeeder::class,
         ]);
 
     }

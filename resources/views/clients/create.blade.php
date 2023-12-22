@@ -31,14 +31,6 @@
     <form action="{{ route('clients.store') }}" method="post" id="clientForm">
         @csrf
         <div class="row">
-            {{-- code
-
-
-
-            address
-
-            obs --}}
-
 
             <div class="col-12">
                 <div class="card card-body">
@@ -132,18 +124,18 @@
                             'options' => [],
                             'object' => false,
                         ])
-                                           @include('form.singleSelect', [
-                                            'cols' => 'col-md-6 ',
-                                            'column' => 'region_id',
-                                            'isReload' => false,
-                                            'label' => 'client_form_region_id',
-                                            'optional' => 'text-danger',
-                                            'divID' => 'region_id',
-                                            'options' => $regions,
-                                            'object' => false,
-                                        ])
                         @include('form.singleSelect', [
-                            'cols' => 'col-md-6 ',
+                            'cols' => 'col-md-3 ',
+                            'column' => 'region_id',
+                            'isReload' => false,
+                            'label' => 'client_form_region_id',
+                            'optional' => 'text-danger',
+                            'divID' => 'region_id',
+                            'options' => $regions,
+                            'object' => false,
+                        ])
+                        @include('form.singleSelect', [
+                            'cols' => 'col-md-3 ',
                             'column' => 'ville_id',
                             'isReload' => false,
                             'label' => 'client_form_ville_id',
@@ -153,12 +145,43 @@
                             'object' => false,
                         ])
                         @include('form.singleSelect', [
-                            'cols' => 'col-md-6 ',
+                            'cols' => 'col-md-3 ',
                             'column' => 'secteur_id',
                             'isReload' => false,
                             'label' => 'client_form_secteur_id',
                             'optional' => 'text-danger',
                             'divID' => 'secteur_id',
+                            'options' => [],
+                            'object' => false,
+                        ])
+                        @include('form.input', [
+                            'cols' => 'col-md-3',
+                            'column' => 'cd_postale',
+                            'model' => 'client',
+                            'optional' => 'text-danger',
+                            'input_type' => 'text',
+                            'class_name' => '',
+                            'column_id' => 'cd_postale',
+                            'column_value' => old('cd_postale'),
+                            'readonly' => 'false',
+                        ])
+                        @include('form.singleSelect', [
+                            'cols' => 'col-md-3 ',
+                            'column' => 'parent_type',
+                            'isReload' => false,
+                            'label' => 'client_form_parent_type',
+                            'optional' => 'text-danger',
+                            'divID' => 'parent_type',
+                            'options' => [],
+                            'object' => false,
+                        ])
+                        @include('form.singleSelect', [
+                            'cols' => 'col-md-3 ',
+                            'column' => 'parent_id',
+                            'isReload' => false,
+                            'label' => 'client_form_parent_id',
+                            'optional' => 'text-danger',
+                            'divID' => 'parent_id',
                             'options' => [],
                             'object' => false,
                         ])
@@ -195,6 +218,7 @@
                             'column_value' => old('obs'),
                             'readonly' => 'false',
                         ])
+
                     </div>
                 </div>
             </div>
@@ -204,21 +228,21 @@
                     <div class="card-header bg-primary text-white">
                         <h6 class="card-title mb-0 text-white">Garantie informations</h6>
                     </div>
-                <div class="card-body">
-                    @include('form.input', [
-                        'cols' => 'col-md-4',
-                        'column' => 'garanty_img',
-                        'model' => 'client',
-                        'optional' => 'text-danger',
-                        'input_type' => 'FILE',
-                        'class_name' => '',
-                        'column_id' => 'garanty_img',
-                        'column_value' => old('garanty'),
-                        'readonly' => 'false',
-                    ])
+                    <div class="card-body">
+                        @include('form.input', [
+                            'cols' => 'col-md-4',
+                            'column' => 'garanty_img',
+                            'model' => 'client',
+                            'optional' => 'text-danger',
+                            'input_type' => 'FILE',
+                            'class_name' => '',
+                            'column_id' => 'garanty_img',
+                            'column_value' => old('garanty'),
+                            'readonly' => 'false',
+                        ])
 
 
-                    {{-- <div class="profile-user position-relative d-inline-block mx-auto  mb-4">
+                        {{-- <div class="profile-user position-relative d-inline-block mx-auto  mb-4">
                         <img src="{{ URL::asset('assets/images/no_image.jpg') }}"
                             class="  rounded-circle avatar-xl img-thumbnail user-profile-image" alt="user-profile-image">
                         <div class="avatar-xs p-0 rounded-circle profile-photo-edit">
@@ -230,27 +254,27 @@
                             </label>
                         </div>
                     </div> --}}
-                    @include('form.input', [
-                        'cols' => 'col-md-4',
-                        'column' => 'garanty',
-                        'model' => 'client',
-                        'optional' => 'text-danger',
-                        'input_type' => 'text',
-                        'class_name' => '',
-                        'column_id' => 'garanty',
-                        'column_value' => old('garanty'),
-                        'readonly' => 'false',
-                    ])
+                        @include('form.input', [
+                            'cols' => 'col-md-4',
+                            'column' => 'garanty',
+                            'model' => 'client',
+                            'optional' => 'text-danger',
+                            'input_type' => 'text',
+                            'class_name' => '',
+                            'column_id' => 'garanty',
+                            'column_value' => old('garanty'),
+                            'readonly' => 'false',
+                        ])
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="col-lg-12">
+                <div class="text-start">
+                    <button type="submit" class="btn btn-primary">{{ trans('translation.general_general_save') }}</button>
                 </div>
             </div>
-
-
-        </div>
-        <div class="col-lg-12">
-            <div class="text-start">
-                <button type="submit" class="btn btn-primary">{{ trans('translation.general_general_save') }}</button>
-            </div>
-        </div>
     </form>
 
     </div>
