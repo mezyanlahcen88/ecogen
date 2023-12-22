@@ -2,28 +2,24 @@
 
 namespace App\Models;
 
-use App\Models\Client;
-use App\Models\CompanyGroupe;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class Country extends Model
 {
     use HasFactory;
 
-    //relation pays peut avoir un seul groupe_entreprise
-    public function company()
+    /**
+     * Get all of the comments for the Country
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function suppliers()
     {
-         return $this->hasOne(CompanyGroupe::class);
+        return $this->hasMany(Supplier::class, );
     }
-
-     public function pickupDeliveryAdresse()
+    public function products()
     {
-         return $this->hasMany(PickupDeliveryAdresse::class);
-    }
-
-    public function clients()
-    {
-         return $this->hasMany(Client::class);
+         return $this->hasMany(Product::class);
     }
 }

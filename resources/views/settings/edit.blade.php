@@ -25,7 +25,7 @@
 @section('script')
 
 @include('layouts.includes.form_js')
-
+<script src="{{ URL::asset('assets/js/pages/form-wizard.init.js') }}"></script>
 <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
 {!! JsValidator::formRequest('App\Http\Requests\StoreSettingRequest'); !!}
 

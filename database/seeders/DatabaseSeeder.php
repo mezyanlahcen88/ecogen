@@ -25,6 +25,9 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             LanguageTranslateSeeder::class,
             SettingsSeeder::class,
+            RegionSeeder::class,
+            VilleSeeder::class,
+            SecteurSeeder::class,
         ]);
 
     }

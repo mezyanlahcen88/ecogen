@@ -116,7 +116,6 @@ class CarController extends Controller
     {
         $validated = $request->validated();
         $update = $this->crudService->updateRecord(new Car(),$validated,$id);
-        return $update;
         if($update){
             Alert::success('Success Title', 'Success Message');
         }

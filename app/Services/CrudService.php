@@ -35,7 +35,7 @@ public function updateRecord($model ,array $request ,string $id)
         $record->$key = $value;
     }
     $record->save();
-    return true;
+    // return true;
 
 }
 // public function showRecord(){

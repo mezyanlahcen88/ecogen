@@ -19,15 +19,7 @@ class CityController extends Controller
         return view('cities.cities');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
 
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -44,20 +36,11 @@ class CityController extends Controller
         $object->country_id = $request->country_id;
         $object->save();
         storeSidebar();
-        Alert()->success('Super', 'City été crée avec succée');
+        Alert()->success(trans('translation.general_general_super'), trans('translation.city_message_store'));
         return redirect()->back();
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\City  $city
-     * @return \Illuminate\Http\Response
-     */
-    public function show(City $city)
-    {
-        //
-    }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -86,7 +69,7 @@ class CityController extends Controller
         $object = City::findOrFail($request->city_id);
         $object->name = $request->name;
         $object->save();
-        Alert()->success('Super', 'City  à été modifiée avec succée');
+        Alert()->success(trans('translation.general_general_super'), trans('translation.city_message_update'));
         return redirect()->back();
     }
 

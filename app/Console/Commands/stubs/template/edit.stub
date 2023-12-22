@@ -27,7 +27,7 @@
     @endif
 
 
-        <form action="{{route('{{plural}}.update',$object->id)}}" method="post" id="userForm">
+        <form action="{{route('{{plural}}.update',$object->id)}}" method="post" id="userForm" enctype="multipart/form-data">
             @csrf
              @method('PUT')
             <div class="row">
@@ -130,6 +130,7 @@
                     'optional' => 'text-danger',
                     'divID' => 'roles_name',
                     'options' => [],
+                    'object' => $object,
                 ])
             </div>
         </div>

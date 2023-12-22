@@ -132,6 +132,7 @@
                     'optional' => 'text-danger',
                     'divID' => 'roles_name',
                     'options' => $roles,
+                    'object' => false,
                 ])
             </div>
         </div>

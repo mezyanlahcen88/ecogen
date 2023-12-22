@@ -22,7 +22,4 @@
     <link rel="stylesheet" href="{{ asset('assets/libs/custom-datatable/css/buttons.dataTables.min.css') }}">
 
 
-    <link href="{{ URL::asset('assets/libs/@tarekraafat/@tarekraafat.min.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.3/css/intlTelInput.min.css" />
-    @livewireStyles
-    @laravelTelInputStyles
+

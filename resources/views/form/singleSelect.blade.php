@@ -17,11 +17,21 @@
 
         <select class="js-example-basic-single" name="{{ $column }}" id="{{ $id ?? '' }}">
             <option value="" selected>{{ trans('translation.general_general_select') }}</option>
-            @foreach ($options as $key => $value)
-                <option value="{{ $key }}" {{-- {{ $key == $object->$column ? 'selected' : '' }} --}}>
-                    {{ $value }}
-                </option>
-            @endforeach
+
+                @foreach ($options as $key => $value)
+                @if ($object)
+                    <option value="{{ $key }}" {{ $key == $object->$column ? 'selected' : '' }}>
+                        {{ $value }}
+                    </option>
+                    @else
+                    <option value="{{ $key }}">
+                        {{ $value }}
+                    </option>
+            @endif
+
+                @endforeach
+
+               
         </select>
     </div>
     @error($column)
@@ -30,7 +40,7 @@
         </span>
     @enderror
     <div>
-        <span class="text-danger error"  id="error_{{ $column }}"></span>
+        <span class="text-danger error" id="error_{{ $column }}"></span>
     </div>
     <span id="{{ $column }}-error" class="help-block error-help-block"></span>
 </div>

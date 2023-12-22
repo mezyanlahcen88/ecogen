@@ -14,14 +14,18 @@ class State extends Model
         'country_id',
     ];
 
-
+     /**
+     * Get The country for the state
+     *
+     * @return hasOne
+     */
     // chidrens
-//relation région  appatient à un pays
     public function country()
     {
         return $this->belongsTo(Country::class);
     }
-
-
-
+    public function suppliers()
+    {
+        return $this->hasMany(Supplier::class, );
+    }
 }

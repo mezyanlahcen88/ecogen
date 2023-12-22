@@ -18,6 +18,7 @@ use App\Models\MainSupplyTranslate;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use App\Models\ManufacturerTranslate;
+use App\Models\Numerotation;
 use Dotenv\Util\Str;
 use Illuminate\Support\Facades\Storage;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
@@ -185,6 +186,47 @@ if (!function_exists('acceptImageType')) {
     function acceptImageType()
     {
         return 'image/jpeg,image/png,image/gif,image/bmp';
+    }
+}
+
+if (!function_exists('getClientNumerotation')) {
+    function getClientNumerotation()
+    {
+        $num = Numerotation::where('doc_type', 'Client')->latest()->first();
+
+        if (!$num) {
+            throw new Exception('No Numerotation record found for doc_type "Client"');
+        }
+
+        $incrementNum = intval($num->increment_num);
+        $incrementNum++;
+
+        // Add leading zeros based on $num->length
+        $paddedIncrement = str_pad($incrementNum, $num->length, '0', STR_PAD_LEFT);
+        $incrementNumLength = strlen($num->increment_num);
+        $codeClient = $num->prefix . $paddedIncrement;
+
+        return $codeClient;
+    }
+}
+
+if (!function_exists('getClientNumerotation')) {
+    function getClientNumerotation()
+    {
+        $num = Numerotation::where('doc_type', 'Client')->latest()->first();
+
+        if (!$num) {
+            throw new Exception('No Numerotation record found for doc_type "Client"');
+        }
+
+        $incrementNum = intval($num->increment_num);
+        $incrementNum++;
+
+        $paddedIncrement = str_pad($incrementNum, max($num->length, 6), '0', STR_PAD_LEFT);
+
+        $codeClient = $num->prefix . '-' . $paddedIncrement;
+
+        return $codeClient;
     }
 }
 

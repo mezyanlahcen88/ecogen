@@ -20,13 +20,14 @@ class City extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\hasOne
      */
-
     // chidrens
-//relation ville appartient à une région
     public function state()
     {
         return $this->belongsTo(State::class);
     }
 
-
+    public function suppliers()
+    {
+        return $this->hasMany(Supplier::class, );
+    }
 }

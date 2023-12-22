@@ -19,7 +19,7 @@
     </div>
 </div>
 
-<form action="{{route('users.apparence')}}" method="post">
+<form action="#" method="post">
     @csrf
     <div class="offcanvas offcanvas-end border-0" tabindex="-1" id="theme-settings-offcanvas">
         <div class="d-flex align-items-center bg-primary bg-gradient p-3 offcanvas-header">

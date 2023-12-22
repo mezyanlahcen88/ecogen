@@ -27,49 +27,116 @@
     @endif
 
 
-        <form action="{{route('cars.store')}}" method="post" id="userForm">
-            @csrf
-            <div class="row">
+    <form action="{{ route('cars.store') }}" method="post" id="userForm">
+        @csrf
+        <div class="row">
 
-        <div class="col-12">
-            <div class="card card-body">
+            <div class="col-12">
+                <div class="card card-body">
 
                     <div class="row">
+
                         @include('form.input', [
                             'cols' => 'col-md-6',
-                            'column' => 'name',
+                            'column' => 'matricule',
                             'model' => 'car',
                             'optional' => 'text-danger',
                             'input_type' => 'text',
                             'class_name' => '',
-                            'column_id' => 'name',
-                            'column_value' => old('name'),
+                            'column_id' => 'matricule',
+                            'column_value' => old('matricule'),
                             'readonly' => 'false',
                         ])
-                                                @include('form.input', [
-                                                    'cols' => 'col-md-6',
-                                                    'column' => 'matricule',
-                                                    'model' => 'car',
-                                                    'optional' => 'text-danger',
-                                                    'input_type' => 'text',
-                                                    'class_name' => '',
-                                                    'column_id' => 'matricule',
-                                                    'column_value' => old('matricule'),
-                                                    'readonly' => 'false',
-                                                ])
+                        @include('form.input', [
+                            'cols' => 'col-md-6',
+                            'column' => 'marque',
+                            'model' => 'car',
+                            'optional' => 'text-danger',
+                            'input_type' => 'text',
+                            'class_name' => '',
+                            'column_id' => 'marque',
+                            'column_value' => old('marque'),
+                            'readonly' => 'false',
+                        ])
+                        @include('form.input', [
+                            'cols' => 'col-md-6',
+                            'column' => 'type',
+                            'model' => 'car',
+                            'optional' => 'text-danger',
+                            'input_type' => 'text',
+                            'class_name' => '',
+                            'column_id' => 'type',
+                            'column_value' => old('type'),
+                            'readonly' => 'false',
+                        ])
+                        @include('form.input', [
+                            'cols' => 'col-md-6',
+                            'column' => 'dae',
+                            'model' => 'car',
+                            'optional' => 'text-danger',
+                            'input_type' => 'date',
+                            'class_name' => '',
+                            'column_id' => 'dae',
+                            'column_value' => old('dae'),
+                            'readonly' => 'false',
+                        ])
+                        @include('form.input', [
+                            'cols' => 'col-md-6',
+                            'column' => 'nbplace',
+                            'model' => 'car',
+                            'optional' => 'text-danger',
+                            'input_type' => 'number',
+                            'class_name' => '',
+                            'column_id' => 'nbplace',
+                            'column_value' => old('nbplace'),
+                            'readonly' => 'false',
+                        ])
+                        @include('form.input', [
+                            'cols' => 'col-md-6',
+                            'column' => 'consommation',
+                            'model' => 'car',
+                            'optional' => 'text-danger',
+                            'input_type' => 'number',
+                            'class_name' => '',
+                            'column_id' => 'consommation',
+                            'column_value' => old('consommation'),
+                            'readonly' => 'false',
+                        ])
+                         @include('form.input', [
+                            'cols' => 'col-md-6',
+                            'column' => 'tonnage',
+                            'model' => 'car',
+                            'optional' => 'text-danger',
+                            'input_type' => 'number',
+                            'class_name' => '',
+                            'column_id' => 'tonnage',
+                            'column_value' => old('tonnage'),
+                            'readonly' => 'false',
+                        ])
+                         @include('form.input', [
+                            'cols' => 'col-md-6',
+                            'column' => 'obs',
+                            'model' => 'car',
+                            'optional' => 'text-danger',
+                            'input_type' => 'text',
+                            'class_name' => '',
+                            'column_id' => 'obs',
+                            'column_value' => old('obs'),
+                            'readonly' => 'false',
+                        ])
 
 
                     </div>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="col-lg-12">
+            <div class="text-start">
+                <button type="submit" class="btn btn-primary">{{ trans('translation.general_general_save') }}</button>
             </div>
         </div>
-
-
-    </div>
-    <div class="col-lg-12">
-        <div class="text-start">
-            <button type="submit" class="btn btn-primary">{{ trans('translation.general_general_save') }}</button>
-        </div>
-    </div>
     </form>
 
     </div>

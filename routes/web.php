@@ -9,6 +9,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\LocationController;
 use App\Http\Controllers\CardDetailsController;
 use App\Http\Controllers\PickupDeliveryController;
 
@@ -32,13 +33,14 @@ Route::get(env('ADMIN_PREFIX'), function () {
 Route::get('/pass', function () {
     return bcrypt('azerty123');
 });
-Route::get('/store-lang', function () {
-    return storeTranslaionToLang();
+Route::get('/get-number', function () {
+    // return storeTranslaionToLang();
+    return getClientNumerotation();
 });
 Route::get('lang/{lang}', [LanguageController::class, 'switchLang'])->name('lang.switch');
 
-Route::get('/country/{id}', [UserController::class, 'getStates'])->name('getStates');
-Route::get('/state/{id}', [UserController::class, 'getCities'])->name('getCities');
+Route::get('/region/{id}', [LocationController::class, 'getVilles'])->name('location.villes');
+Route::get('/ville/{id}', [LocationController::class, 'getSecteurs'])->name('location.secteurs');
 // Route::group(['prefix' => env('ADMIN_PREFIX').'/'.App::getLocale(),  'middleware' => 'auth'], function()
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
@@ -48,8 +50,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('roles', RoleController::class);
 
     ##LOCALISATIONS
-
-
 
     ############################### systemLanguages ###############################
     Route::prefix('/')->group(__DIR__ . '/base/systemeLanguage.routes.php');
@@ -62,9 +62,22 @@ Route::group(['middleware' => 'auth'], function () {
 
     ############################### setting ###############################
     require __DIR__ . '/base/settingRoute.php';
-############################### Car ###############################
-require __DIR__ . '/base/carRoute.php';
+    ############################### Car ###############################
+    require __DIR__ . '/base/carRoute.php';
+    ############################### Category ###############################
+    require __DIR__ . '/base/categoryRoute.php';
+    ############################### Driver ###############################
+    require __DIR__ . '/base/driverRoute.php';
+    ############################### Client ###############################
+    require __DIR__ . '/base/clientRoute.php';
+    ############################### Brand ###############################
+    require __DIR__ . '/base/brandRoute.php';
+    ############################### Numerotation ###############################
+    require __DIR__ . '/base/numerotationRoute.php';
+    ############################### Exercice ###############################
+    require __DIR__ . '/base/exerciceRoute.php';
+    ############################### Payment ###############################
+    require __DIR__ . '/base/paymentRoute.php';
     ############################### ReloadController ###############################
     Route::prefix('/')->group(__DIR__ . '/base/reload.routes.php');
-
 });

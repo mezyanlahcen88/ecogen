@@ -1,6 +1,6 @@
 <!doctype html>
 
-<html lang="en" data-layout="horizontal" data-topbar="light" data-sidebar="dark" data-sidebar-size="lg"
+<html lang="en" data-layout="vertical" data-topbar="light" data-sidebar="dark" data-sidebar-size="lg"
     data-sidebar-image="none">
 <head>
     <meta charset="utf-8" />
@@ -44,7 +44,8 @@
         <!-- end main content-->
     </div>
     <!-- END layout-wrapper -->
-
+   <!-- Theme Settings -->
+   @include('layouts.partials.setting_bar')
     <!-- JAVASCRIPT -->
     @include('layouts.includes.footer-scripts')
 

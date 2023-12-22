@@ -27,8 +27,7 @@ class StoreCarRequest extends FormRequest
 
 
         return [
-             'name' => ['bail', 'required', 'min:3'],
-
+             'matricule' => ['bail', 'required', 'min:3'],
         ];
     }
 }

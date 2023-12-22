@@ -49,8 +49,12 @@ class Car extends Model
 
     public function getRowsTable(){
         return [
-             'name' => 'name',
              'matricule' => 'matricule',
+             'marque' => 'marque',
+             'type' => 'type',
+             'dae' => 'dae',
+             'nbplace' => 'nbplace',
+
 
          ];
      }
@@ -62,8 +66,11 @@ class Car extends Model
 
      public function getRowsTableTrashed(){
          return [
-             'name' => 'name',
-             'matricule' => 'matricule',
+            'matricule' => 'matricule',
+            'marque' => 'marque',
+            'type' => 'type',
+            'dae' => 'dae',
+            'nbplace' => 'nbplace',
           ];
           }
 

@@ -27,7 +27,7 @@
     @endif
 
 
-        <form action="{{route('{{plural}}.store')}}" method="post" id="userForm">
+        <form action="{{route('{{plural}}.store')}}" method="post" id="userForm" enctype="multipart/form-data">
             @csrf
             <div class="row">
 
@@ -54,6 +54,7 @@
                     'optional' => 'text-danger',
                     'divID' => 'roles_name',
                     'options' => [],
+                    'object' => false,
                 ])
 
                     </div>

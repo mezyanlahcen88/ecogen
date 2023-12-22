@@ -1,0 +1,20 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ClientController;
+
+
+
+//chaneg the status
+Route::post('/clients/changestatus', [ClientController::class, 'changeStatus'])->name('clients.changestatus');
+//to permanently delete
+Route::delete('/clients/{id}/force_delete', [ClientController::class, 'forceDelete'])->name('clients.forceDelete');
+// to restore
+Route::put('/clients/{id}/restore', [ClientController::class, 'restore'])->name('clients.restore');
+//liste all deleted
+Route::get('/clients/trashed', [ClientController::class, 'trashed'])->name('clients.trashed');
+Route::resource('clients', ClientController::class);
+
+
+//copy this two lines in web.php
+

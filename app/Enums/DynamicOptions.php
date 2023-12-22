@@ -73,11 +73,11 @@ final class DynamicOptions
  * @return \Illuminate\Database\Eloquent\Collection The collection of Company Groupes.
  */
 
- public static function getCompanyGroupes()
- {
-    $CompanyGroupes = CompanyGroupe::select('id','groupe_name')->get();
-    return $CompanyGroupes;
- }
+//  public static function getCompanyGroupes()
+//  {
+//     $CompanyGroupes = CompanyGroupe::select('id','groupe_name')->get();
+//     return $CompanyGroupes;
+//  }
 
 
 
