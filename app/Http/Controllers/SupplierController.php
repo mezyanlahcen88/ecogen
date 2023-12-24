@@ -2,36 +2,33 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\City;
-use App\Models\State;
-use App\Models\Ville;
-use App\Dto\ClientDto;
-use App\Models\Client;
 use App\Models\Region;
-use App\Models\Secteur;
-use App\Forms\ClientForm;
+use App\Dto\SupplierDto;
+use App\Models\Supplier;
 use App\Models\Profession;
+use App\Forms\SupplierForm;
 use Illuminate\Support\Str;
 use App\Enums\StaticOptions;
 use Illuminate\Http\Request;
 use App\Services\CrudService;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\StoreClientRequest;
+use App\Http\Requests\StoreSupplierRequest;
 
-class ClientController extends Controller
+
+class SupplierController extends Controller
 {
     public $staticOptions;
     public $crudService;
     public function __construct(CrudService $crudService, StaticOptions $staticOptions)
     {
-        $this->middleware('permission:client-list|client-create|client-edit|client-show|client-delete', ['only' => ['index']]);
-        $this->middleware('permission:client-create', ['only' => ['create', 'store']]);
-        $this->middleware('permission:client-edit', ['only' => ['edit', 'update']]);
-        $this->middleware('permission:client-show', ['only' => ['show']]);
-        $this->middleware('permission:client-delete', ['only' => ['destroy']]);
-        $this->middleware('permission:client-restore', ['only' => ['restore']]);
-        $this->middleware('permission:client-trashed', ['only' => ['trashed']]);
-        $this->middleware('permission:client-forse-delete', ['only' => ['forseDelete']]);
+        $this->middleware('permission:supplier-list|supplier-create|supplier-edit|supplier-show|supplier-delete', ['only' => ['index']]);
+        $this->middleware('permission:supplier-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:supplier-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:supplier-show', ['only' => ['show']]);
+        $this->middleware('permission:supplier-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:supplier-restore', ['only' => ['restore']]);
+        $this->middleware('permission:supplier-trashed', ['only' => ['trashed']]);
+        $this->middleware('permission:supplier-forse-delete', ['only' => ['forseDelete']]);
         $this->staticOptions = $staticOptions;
         $this->crudService = $crudService;
     }
@@ -43,9 +40,9 @@ class ClientController extends Controller
      */
     public function index()
     {
-        $tableRows = (new Client())->getRowsTable();
-        $objects = Client::get();
-        return view('clients.index', compact('tableRows', 'objects'));
+        $tableRows = (new Supplier())->getRowsTable();
+        $objects = Supplier::get();
+        return view('suppliers.index', compact('tableRows', 'objects'));
     }
     /**
      * Display a list of soft-deleted records.
@@ -54,9 +51,9 @@ class ClientController extends Controller
      */
     public function trashed(Request $request)
     {
-        $objects = Client::onlyTrashed()->get();
-        $tableRows = (new Client())->getRowsTableTrashed();
-        return view('clients.trashedIndex', compact('tableRows', 'objects'));
+        $objects = Supplier::onlyTrashed()->get();
+        $tableRows = (new Supplier())->getRowsTableTrashed();
+        return view('suppliers.trashedIndex', compact('tableRows', 'objects'));
     }
 
     /**
@@ -66,13 +63,13 @@ class ClientController extends Controller
      */
     public function create()
     {
-        $object = new Client();
+        $object = new Supplier();
         $regions = Region::pluck('name', 'id');
-        $client_types = $this->staticOptions::CLIENT_TYPES;
+        $supplier_types = $this->staticOptions::CLIENT_TYPES;
         $parent_types = $this->staticOptions::PARENT_TYPES;
         $fonctions = Profession::pluck('name', 'id');
 
-        return view('clients.create', compact('regions', 'client_types', 'parent_types', 'fonctions'));
+        return view('suppliers.create', compact('regions', 'supplier_types', 'parent_types', 'fonctions'));
     }
 
     /**
@@ -81,15 +78,15 @@ class ClientController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreClientRequest $request)
+    public function store(StoreSupplierRequest $request)
     {
         $validated = $request->validated();
 
         // dd($request->all());
-        $object = new Client();
+        $object = new Supplier();
         $object->id = Str::uuid();
-        // $object->code_client = getClientNumerotation();
-        $object->code_client = 'CLT-1';
+        // $object->code_supplier = getSupplierNumerotation();
+        $object->code_supplier = 'CLT-1';
         $object->ice = $request->ice;
         $object->name_ar = $request->name_ar;
         $object->name_fr = $request->name_fr;
@@ -97,7 +94,7 @@ class ClientController extends Controller
         $object->phone = $request->phone;
         $object->fax = $request->fax;
         $object->email = $request->email;
-        $object->type_client = $request->type_client;
+        $object->type_supplier = $request->type_supplier;
         $object->region_id = $request->region_id;
         $object->ville_id = $request->ville_id;
         $object->secteur_id = $request->secteur_id;
@@ -110,13 +107,13 @@ class ClientController extends Controller
         $object->parent_id = $request->parent_id;
         $object->parent_type = $request->parent_type;
         $object->save();
-        return redirect()->route('clients.index');
+        return redirect()->route('suppliers.index');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Client  $client
+     * @param  \App\Models\Supplier  $supplier
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -127,38 +124,38 @@ class ClientController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Client  $client
+     * @param  \App\Models\Supplier  $supplier
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        $object = client::findOrfail($id);
-        return view('clients.edit', compact('object'));
+        $object = supplier::findOrfail($id);
+        return view('suppliers.edit', compact('object'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Client  $client
+     * @param  \App\Models\Supplier  $supplier
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreClientRequest $request, string $id)
+    public function update(StoreSupplierRequest $request, string $id)
     {
         $validated = $request->validated();
-        $this->crudService->updateRecord(new Client(), $validated, $id);
-        return redirect()->route('clients.index');
+        $this->crudService->updateRecord(new Supplier(), $validated, $id);
+        return redirect()->route('suppliers.index');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Client  $client
+     * @param  \App\Models\Supplier  $supplier
      * @return \Illuminate\Http\Response
      */
     public function destroy(Request $request)
     {
-        $object = Client::findOrFail($request->id)->delete();
+        $object = Supplier::findOrFail($request->id)->delete();
     }
 
     /**
@@ -170,11 +167,11 @@ class ClientController extends Controller
      */
     public function restore(Request $request, $id)
     {
-        $object = Client::withTrashed()
+        $object = Supplier::withTrashed()
             ->findOrFail($id)
             ->restore();
         // storeSidebar();
-        return redirect()->route('clients.index');
+        return redirect()->route('suppliers.index');
     }
 
     /**
@@ -186,8 +183,8 @@ class ClientController extends Controller
      */
     public function forceDelete(Request $request, $id)
     {
-        $object = Client::withTrashed()->findOrFail($id);
-        // deletePicture($object,'clients','picture');
+        $object = Supplier::withTrashed()->findOrFail($id);
+        // deletePicture($object,'suppliers','picture');
         $object->forceDelete();
         // storeSidebar();
     }
@@ -201,10 +198,10 @@ class ClientController extends Controller
     public function changeStatus(Request $request)
     {
         $id = $request->id;
-        $object = Client::findOrFail($id);
+        $object = Supplier::findOrFail($id);
         $object->active = !$object->active;
         $object->save();
-        $message = $object->active ? trans('translation.client_message_activated') : trans('translation.client_message_inactivated');
+        $message = $object->active ? trans('translation.supplier_message_activated') : trans('translation.supplier_message_inactivated');
         return response()->json(['code' => 200, 'active' => $object->active, 'message' => $message]);
     }
 }

@@ -66,7 +66,7 @@
                                 @endcan
                                 @can('role-list')
                                     <li class="nav-item">
-                                        <a href="{{ route('roles.index') }}" class="nav-link" data-key="roles"> <span
+                                        <a href="{{ route('suppliers.index') }}" class="nav-link" data-key="suppliers"> <span
                                                 class="text-uppercase">{{ trans('translation.navigation_navigation_suppliers') }}
                                             </span>
                                             <span class="badge badge-pill bg-danger" data-key="users">1</span>
@@ -75,8 +75,8 @@
                                 @endcan
                                 @can('role-list')
                                     <li class="nav-item">
-                                        <a href="{{ route('roles.index') }}" class="nav-link" data-key="roles"> <span
-                                                class="text-uppercase">{{ trans('translation.navigation_navigation_peoples') }}
+                                        <a href="{{ route('employes.index') }}" class="nav-link" data-key="roles"> <span
+                                                class="text-uppercase">{{ trans('translation.navigation_navigation_employes') }}
                                             </span>
                                             <span class="badge badge-pill bg-danger" data-key="users">1</span>
                                         </a>
@@ -138,10 +138,9 @@
                             <ul class="nav nav-sm flex-column">
                                 @can('user-list')
                                     <li class="nav-item">
-                                        <a href="{{ route('users.index') }}" class="nav-link" data-key="users">
+                                        <a href="{{ route('products.index') }}" class="nav-link" data-key="users">
                                             <span class="text-uppercase">{{ trans('translation.navigation_navigation_products') }}</span>
                                             <span class="badge badge-pill bg-danger" data-key="users">
-                                                {{-- {{ getSidebar()['users'] }} --}}
                                             </span>
                                         </a>
                                     </li>
@@ -149,7 +148,7 @@
                                 @can('role-list')
                                     <li class="nav-item">
                                         <a href="{{ route('roles.index') }}" class="nav-link" data-key="roles"> <span
-                                                class="text-uppercase">{{ trans('translation.navigation_navigation_inventaire') }}
+                                                class="text-uppercase">{{ trans('translation.navigation_navigation_inventory') }}
                                             </span>
                                             <span class="badge badge-pill bg-danger" data-key="users">1</span>
                                         </a>
@@ -168,6 +167,14 @@
                                     <span class="text-uppercase">
                                         <a href="{{ route('brands.index') }}"
                                             class="nav-link">{{ trans('translation.navigation_navigation_brands') }}</a>
+                                    </span>
+                                </li>
+                                @endcan
+                                @can('role-list')
+                                <li class="nav-item">
+                                    <span class="text-uppercase">
+                                        <a href="{{ route('warehouses.index') }}"
+                                            class="nav-link">{{ trans('translation.navigation_navigation_warehouses') }}</a>
                                     </span>
                                 </li>
                                 @endcan

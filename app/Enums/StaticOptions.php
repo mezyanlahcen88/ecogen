@@ -35,6 +35,16 @@ final class StaticOptions
         'glovo'=>'GLOVO',
         'jumia'=>'JUMIA',
         'sur place'=>'SUR PLACE',
+    ];
 
+    const PARENT_TYPES =[
+        'Client'=>'Client',
+        'Fournisseur'=>'Fournisseur',
+    ];
+
+    const CLIENT_TYPES =[
+        'Fidel'=>'Fidel',
+        'Serieux'=>'Serieux',
+        'Garantie'=>'Garantie',
     ];
 }

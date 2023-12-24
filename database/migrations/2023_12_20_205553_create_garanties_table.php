@@ -15,10 +15,11 @@ return new class extends Migration
     {
         Schema::create('garanties', function (Blueprint $table) {
             $table->uuid('id')->unique();
-            $table->double('garanty_amount', 8, 2)->nullable();
+            $table->double('amount', 8, 2)->nullable();
             $table->string('parent_id');
-            $table->string('type')->comment('client or Supplier');
-            $table->string('garanty_img');
+            $table->string('parent_type')->comment('Client/Supplier');
+            $table->string('type')->comment('CHEQUE/ESPECE');
+            $table->string('picture');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->text('comment');
             $table->date('doe')->comment('experation date');

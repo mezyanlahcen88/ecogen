@@ -1,30 +1,30 @@
 @extends('layouts.main_layout')
 @section('title')
-    {{ env('APP_NAME') }} | {{ trans('translation.client_form_manage_clients') }} |
-    {{ trans('translation.client_action_add') }}
+    {{ env('APP_NAME') }} | {{ trans('translation.supplier_form_manage_suppliers') }} |
+    {{ trans('translation.supplier_action_add') }}
 @stop
 @section('css')
     @include('layouts.includes.form_css')
 @endsection
 @section('page-header')
     @include('components.new_breadcrumb', [
-        'title' => trans('translation.client_form_manage_clients'),
-        'subtitle' => trans('translation.client_action_add'),
-        'route' => route('clients.index'),
-        'text' => trans('translation.client_form_clients_list'),
-        'permission' => 'client-list',
+        'title' => trans('translation.supplier_form_manage_suppliers'),
+        'subtitle' => trans('translation.supplier_action_add'),
+        'route' => route('suppliers.index'),
+        'text' => trans('translation.supplier_form_suppliers_list'),
+        'permission' => 'supplier-list',
         'icon' => 'lab la-stack-exchange',
     ])
 @endsection
 @section('content')
-    <form action="{{ route('clients.store') }}" method="post" id="clientForm">
+    <form action="{{ route('suppliers.store') }}" method="post" id="supplierForm">
         @csrf
         <div class="row">
 
             <div class="col-12">
                 <div class="card">
                     <div class="card-header  bg-primary text-white">
-                        <h6 class="card-title mb-0 text-white">Informations du client</h6>
+                        <h6 class="card-title mb-0 text-white">Informations du supplier</h6>
                     </div>
                     <div class="card-body">
 
@@ -32,7 +32,7 @@
                             @include('form.input', [
                                 'cols' => 'col-md-6',
                                 'column' => 'name_fr',
-                                'model' => 'client',
+                                'model' => 'supplier',
                                 'optional' => 'text-danger',
                                 'input_type' => 'text',
                                 'class_name' => '',
@@ -43,7 +43,7 @@
                             @include('form.input', [
                                 'cols' => 'col-md-6',
                                 'column' => 'name_ar',
-                                'model' => 'client',
+                                'model' => 'supplier',
                                 'optional' => 'text-danger',
                                 'input_type' => 'text',
                                 'class_name' => '',
@@ -55,7 +55,7 @@
                             @include('form.input', [
                                 'cols' => 'col-md-6',
                                 'column' => 'ice',
-                                'model' => 'client',
+                                'model' => 'supplier',
                                 'optional' => 'text-danger',
                                 'input_type' => 'text',
                                 'class_name' => '',
@@ -66,7 +66,7 @@
                             @include('form.input', [
                                 'cols' => 'col-md-6',
                                 'column' => 'phone',
-                                'model' => 'client',
+                                'model' => 'supplier',
                                 'optional' => 'text-danger',
                                 'input_type' => 'number',
                                 'class_name' => '',
@@ -77,7 +77,7 @@
                             @include('form.input', [
                                 'cols' => 'col-md-6',
                                 'column' => 'fax',
-                                'model' => 'client',
+                                'model' => 'supplier',
                                 'optional' => 'text-danger',
                                 'input_type' => 'number',
                                 'class_name' => '',
@@ -88,7 +88,7 @@
                             @include('form.input', [
                                 'cols' => 'col-md-6',
                                 'column' => 'email',
-                                'model' => 'client',
+                                'model' => 'supplier',
                                 'optional' => 'text-danger',
                                 'input_type' => 'email',
                                 'class_name' => '',
@@ -102,7 +102,7 @@
                                 'cols' => 'col-md-3 ',
                                 'column' => 'region_id',
                                 'isReload' => false,
-                                'label' => 'client_form_region_id',
+                                'label' => 'supplier_form_region_id',
                                 'optional' => 'text-danger',
                                 'divID' => 'region_id',
                                 'options' => $regions,
@@ -112,7 +112,7 @@
                                 'cols' => 'col-md-3 ',
                                 'column' => 'ville_id',
                                 'isReload' => false,
-                                'label' => 'client_form_ville_id',
+                                'label' => 'supplier_form_ville_id',
                                 'optional' => 'text-danger',
                                 'divID' => 'ville_id',
                                 'options' => [],
@@ -122,7 +122,7 @@
                                 'cols' => 'col-md-3 ',
                                 'column' => 'secteur_id',
                                 'isReload' => false,
-                                'label' => 'client_form_secteur_id',
+                                'label' => 'supplier_form_secteur_id',
                                 'optional' => 'text-danger',
                                 'divID' => 'secteur_id',
                                 'options' => [],
@@ -131,7 +131,7 @@
                             @include('form.input', [
                                 'cols' => 'col-md-3',
                                 'column' => 'cd_postale',
-                                'model' => 'client',
+                                'model' => 'supplier',
                                 'optional' => 'text-danger',
                                 'input_type' => 'text',
                                 'class_name' => '',
@@ -141,19 +141,19 @@
                             ])
                             @include('form.singleSelect', [
                                 'cols' => 'col-md-3 ',
-                                'column' => 'type_client',
+                                'column' => 'type_supplier',
                                 'isReload' => false,
-                                'label' => 'client_form_type_client',
+                                'label' => 'supplier_form_type_supplier',
                                 'optional' => 'text-danger',
-                                'divID' => 'type_client',
-                                'options' => $client_types,
+                                'divID' => 'type_supplier',
+                                'options' => $supplier_types,
                                 'object' => false,
                             ])
                             @include('form.singleSelect', [
                                 'cols' => 'col-md-3 ',
                                 'column' => 'fonction',
                                 'isReload' => false,
-                                'label' => 'client_form_fonction',
+                                'label' => 'supplier_form_fonction',
                                 'optional' => 'text-danger',
                                 'divID' => 'fonction',
                                 'options' => $fonctions,
@@ -163,7 +163,7 @@
                                 'cols' => 'col-md-3 ',
                                 'column' => 'parent_type',
                                 'isReload' => false,
-                                'label' => 'client_form_parent_type',
+                                'label' => 'supplier_form_parent_type',
                                 'optional' => 'text-danger',
                                 'divID' => 'parent_type',
                                 'options' => $parent_types,
@@ -173,7 +173,7 @@
                                 'cols' => 'col-md-3 ',
                                 'column' => 'parent_id',
                                 'isReload' => false,
-                                'label' => 'client_form_parent_id',
+                                'label' => 'supplier_form_parent_id',
                                 'optional' => 'text-danger',
                                 'divID' => 'parent_id',
                                 'options' => [],
@@ -182,7 +182,7 @@
                             @include('form.input', [
                                 'cols' => 'col-md-6',
                                 'column' => 'address',
-                                'model' => 'client',
+                                'model' => 'supplier',
                                 'optional' => 'text-danger',
                                 'input_type' => 'text',
                                 'class_name' => '',
@@ -194,7 +194,7 @@
                             @include('form.input', [
                                 'cols' => 'col-md-6',
                                 'column' => 'obs',
-                                'model' => 'client',
+                                'model' => 'supplier',
                                 'optional' => 'text-danger',
                                 'input_type' => 'text',
                                 'class_name' => '',
@@ -214,80 +214,41 @@
                         <h6 class="card-title mb-0 text-white">informations de la garantie</h6>
                     </div>
                     <div class="card-body">
-
-                        <div class="row repeater">
+                        <div class="row">
                             @include('form.input', [
-                                'cols' => 'col-md-2',
-                                'column' => 'amount',
-                                'model' => 'garanty',
-                                'optional' => 'text-danger',
-                                'input_type' => 'text',
-                                'class_name' => '',
-                                'column_id' => 'amount',
-                                'column_value' => old('amount'),
-                                'readonly' => 'false',
-                            ])
-                            @include('form.singleSelect', [
-                                'cols' => 'col-md-2 ',
-                                'column' => 'type',
-                                'isReload' => false,
-                                'label' => 'garanty_form_type',
-                                'optional' => 'text-danger',
-                                'divID' => 'ville_id',
-                                'options' => [],
-                                'object' => false,
-                            ])
-                            @include('form.input', [
-                                'cols' => 'col-md-2',
-                                'column' => 'doe',
-                                'model' => 'garanty',
-                                'optional' => 'text-danger',
-                                'input_type' => 'date',
-                                'class_name' => '',
-                                'column_id' => 'doe',
-                                'column_value' => old('doe'),
-                                'readonly' => 'false',
-                            ])
-                            @include('form.input', [
-                                'cols' => 'col-md-3',
-                                'column' => 'picture',
+                                'cols' => 'col-md-4',
+                                'column' => 'garanty_img',
                                 'model' => 'garanty',
                                 'optional' => 'text-danger',
                                 'input_type' => 'file',
                                 'class_name' => '',
-                                'column_id' => 'picture',
-                                'column_value' => old('picture'),
+                                'column_id' => 'garanty_img',
+                                'column_value' => old('garanty'),
                                 'readonly' => 'false',
                             ])
-                             {{-- @include('form.input', [
-                                'cols' => 'col-md-3 d-none',
-                                'column' => 'comment',
+
+                            @include('form.input', [
+                                'cols' => 'col-md-4',
+                                'column' => 'garanty',
                                 'model' => 'garanty',
                                 'optional' => 'text-danger',
                                 'input_type' => 'text',
                                 'class_name' => '',
-                                'column_id' => 'comment',
-                                'column_value' => old('comment'),
+                                'column_id' => 'garanty',
+                                'column_value' => old('garanty'),
                                 'readonly' => 'false',
-                            ]) --}}
-                             <div class="col-1 d-visible">
-                                <button class="btn add"><i class="las la-copy icon-xxxlg text-success"></i></button>
-                            </div>
-                            <div class="col-1 d-none">
-                                <button class="btn remove"><i class="las la-times icon-xxxlg text-danger"></i></button>
-                            </div>
-                        </div>
-                        <div class="repeater-container">
+                            ])
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="col-lg-12">
-                <div class="text-start">
-                    <button type="submit" class="btn btn-primary">{{ trans('translation.general_general_save') }}</button>
+                <div class="col-lg-12">
+                    <div class="text-start">
+                        <button type="submit"
+                            class="btn btn-primary">{{ trans('translation.general_general_save') }}</button>
+                    </div>
                 </div>
-            </div>
     </form>
 
     </div>
@@ -298,6 +259,5 @@
     <script src="{{ asset('assets/custom_js/validate_number.js') }}"></script>
     <script src="{{ asset('assets/custom_js/region_ville.js') }}"></script>
     <script src="{{ asset('assets/custom_js/ville_secteur.js') }}"></script>
-    <script src="{{ asset('assets/custom_js/shared/reapeter.js') }}"></script>
-    {!! JsValidator::formRequest('App\Http\Requests\StoreClientRequest') !!}
+    {!! JsValidator::formRequest('App\Http\Requests\StoresupplierRequest') !!}
 @endsection

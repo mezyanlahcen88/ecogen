@@ -78,6 +78,14 @@ Route::group(['middleware' => 'auth'], function () {
     require __DIR__ . '/base/exerciceRoute.php';
     ############################### Payment ###############################
     require __DIR__ . '/base/paymentRoute.php';
+    ############################### Supplier ###############################
+require __DIR__ . '/base/supplierRoute.php';
+############################### Employe ###############################
+require __DIR__ . '/base/employeRoute.php';
+############################### Warehouse ###############################
+require __DIR__ . '/base/warehouseRoute.php';
+############################### Product ###############################
+require __DIR__ . '/base/productRoute.php';
     ############################### ReloadController ###############################
     Route::prefix('/')->group(__DIR__ . '/base/reload.routes.php');
 });

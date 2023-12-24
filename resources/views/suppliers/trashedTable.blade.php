@@ -17,10 +17,10 @@
                                 @endforeach
                             <td>
                                     @include('components.softDeleteActions',[
-                                    'restoreRoute'=>'clients.restore',
-                                    'forceDeleteRoute'=>'clients.forceDelete',
-                                    'restorePermission'=>'client-restore',
-                                    'forceDeletePermission'=>'client-forse-delete',
+                                    'restoreRoute'=>'suppliers.restore',
+                                    'forceDeleteRoute'=>'suppliers.forceDelete',
+                                    'restorePermission'=>'supplier-restore',
+                                    'forceDeletePermission'=>'supplier-forse-delete',
                                 ])
                             </td>
                         </tr>

@@ -17,6 +17,9 @@ return new class extends Migration
             // choose uuid or id
             $table->id();
             $table->uuid('id')->unique();
+            $table->string('name');
+            $table->string('address');
+            $table->boolean('active')->default(1);
             $table->foreignUuid('email_type_id')->constrained('email_types')->onDelete('cascade');
             $table->foreignId('language_id')->constrained()->onDelete('cascade');
             $table->timestamps();

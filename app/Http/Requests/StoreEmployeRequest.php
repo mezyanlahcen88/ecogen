@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class StoreClientRequest extends FormRequest
+class StoreEmployeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,9 +27,9 @@ class StoreClientRequest extends FormRequest
 
 
         return [
-             'name_fr' => ['bail', 'required', 'min:3'],
-             'name_ar' => ['bail', 'required', 'min:3'],
-
+             'first_name' => ['bail', 'required', 'min:3'],
+             'last_name' => ['bail', 'required', 'min:3'],
+             'doe' => ['bail', 'required', 'min:3'],
         ];
     }
 }

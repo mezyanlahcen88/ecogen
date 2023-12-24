@@ -2,7 +2,7 @@
     <table id="scroll-horizontal" class="table nowrap align-middle table-hover table-bordered"  style="width:100%">
                 <thead class="table-light">
                     <tr class="text-center">
-                        @foreach ($tableRows as $key => $value)
+                       @foreach ($tableRows as $key => $value)
                             <th>{{ trans('translation.'.$model.'_table_' . $value) }} </th>
                         @endforeach
                         <th class="sort" data-sort="action">{{ trans('translation.general_general_action') }}
@@ -12,16 +12,12 @@
                 <tbody class="list form-check-all">
                     @foreach ($objects as $object)
                         <tr class="text-center">
-                                @foreach ($tableRows as $key => $value)
+
+                            @foreach ($tableRows as $key => $value)
                                  <td> {{ $object->$key }}</td>
-                                @endforeach
+                            @endforeach
                             <td>
-                                    @include('components.softDeleteActions',[
-                                    'restoreRoute'=>'clients.restore',
-                                    'forceDeleteRoute'=>'clients.forceDelete',
-                                    'restorePermission'=>'client-restore',
-                                    'forceDeletePermission'=>'client-forse-delete',
-                                ])
+                                @include('suppliers.actions')
                             </td>
                         </tr>
                     @endforeach

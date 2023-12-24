@@ -13,9 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('clients', function (Blueprint $table) {
+        Schema::create('suppliers', function (Blueprint $table) {
             $table->uuid('id')->unique();
-            $table->string('code_client');
+            $table->string('code_supplier');
             $table->string('ice');
             $table->string('name_ar');
             $table->string('name_fr');
@@ -49,7 +49,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('clients');
+        Schema::dropIfExists('suppliers');
     }
 };
 

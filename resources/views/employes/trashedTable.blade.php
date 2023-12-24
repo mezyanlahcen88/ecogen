@@ -12,15 +12,17 @@
                 <tbody class="list form-check-all">
                     @foreach ($objects as $object)
                         <tr class="text-center">
+
                                 @foreach ($tableRows as $key => $value)
                                  <td> {{ $object->$key }}</td>
-                                @endforeach
+                            @endforeach
+
                             <td>
                                     @include('components.softDeleteActions',[
-                                    'restoreRoute'=>'clients.restore',
-                                    'forceDeleteRoute'=>'clients.forceDelete',
-                                    'restorePermission'=>'client-restore',
-                                    'forceDeletePermission'=>'client-forse-delete',
+                                    'restoreRoute'=>'employes.restore',
+                                    'forceDeleteRoute'=>'employes.forceDelete',
+                                    'restorePermission'=>'employe-restore',
+                                    'forceDeletePermission'=>'employe-forse-delete',
                                 ])
                             </td>
                         </tr>

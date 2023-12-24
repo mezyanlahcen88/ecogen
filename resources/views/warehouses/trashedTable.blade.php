@@ -2,6 +2,7 @@
     <table id="scroll-horizontal" class="table nowrap align-middle table-hover table-bordered"  style="width:100%">
                 <thead class="table-light">
                     <tr class="text-center">
+                        <th>{{ trans('translation.warehouse_table_picture') }}</th>
                         @foreach ($tableRows as $key => $value)
                             <th>{{ trans('translation.'.$model.'_table_' . $value) }} </th>
                         @endforeach
@@ -12,15 +13,23 @@
                 <tbody class="list form-check-all">
                     @foreach ($objects as $object)
                         <tr class="text-center">
+                            <td class="email">
+                                <div class="d-flex gap-2 align-items-center">
+                                    <div class="flex-shrink-0">
+                                        <img src="{{ getUserPicture($object->picture) }}" alt="" class="avatar-xs rounded-circle">
+                                    </div>
+                                </div>
+                            </td>
                                 @foreach ($tableRows as $key => $value)
                                  <td> {{ $object->$key }}</td>
-                                @endforeach
+                            @endforeach
+
                             <td>
                                     @include('components.softDeleteActions',[
-                                    'restoreRoute'=>'clients.restore',
-                                    'forceDeleteRoute'=>'clients.forceDelete',
-                                    'restorePermission'=>'client-restore',
-                                    'forceDeletePermission'=>'client-forse-delete',
+                                    'restoreRoute'=>'warehouses.restore',
+                                    'forceDeleteRoute'=>'warehouses.forceDelete',
+                                    'restorePermission'=>'warehouse-restore',
+                                    'forceDeletePermission'=>'warehouse-forse-delete',
                                 ])
                             </td>
                         </tr>
