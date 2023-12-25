@@ -33,7 +33,9 @@ public function storeRecordWithFile($model ,array $request){
     $record->id = Str::uuid();
 
     foreach ($request as $key => $value) {
-        // if()
+        if($key == 'picture'){
+            dealWithPicture($request,$record,'picture', $request['picture'],'products','store');
+        }
         $record->$key = $value;
         }
     $record->save();

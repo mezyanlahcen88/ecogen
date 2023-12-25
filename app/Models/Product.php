@@ -36,10 +36,26 @@ class Product extends Model
 
 
 //  put the relation of this Model Here
+/**
+ * Get the user that owns the Product
+ *
+ * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+ */
+public function category()
+{
+    return $this->belongsTo(Category::class, 'category_id', 'id');
+}
 
 
-//  put the relation of this Model Here
-
+/**
+ * Get the user that owns the Product
+ *
+ * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+ */
+public function scategory()
+{
+    return $this->belongsTo(Category::class, 'scategory_id', 'id');
+}
 
 
     /**
@@ -52,9 +68,6 @@ class Product extends Model
              'product_code' => 'product_code',
              'name_fr' => 'name_fr',
              'name_ar' => 'name_ar',
-             'category_id' => 'category_id',
-             'scategory_id' => 'scategory_id',
-
          ];
      }
 
@@ -65,8 +78,9 @@ class Product extends Model
 
      public function getRowsTableTrashed(){
          return [
-             'name' => 'name',
-             'matricule' => 'matricule',
+            'product_code' => 'product_code',
+            'name_fr' => 'name_fr',
+            'name_ar' => 'name_ar',
           ];
           }
 

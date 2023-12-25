@@ -27,7 +27,7 @@ class StoreProductRequest extends FormRequest
 
 
         return [
-             // 'name' => ['bail', 'required', 'min:3'],
+             'product_code' => ['bail', 'required', 'min:3'],
             // 'adresse' => ['bail', 'required', 'min:3'],
             // 'adresse_complement' => ['bail'],
             // 'post_code' => ['bail', 'required', 'min:3'],

@@ -38,6 +38,29 @@
                     <div class="row">
                         @include('form.input', [
                             'cols' => 'col-md-6',
+                            'column' => 'product_code',
+                            'model' => 'product',
+                            'optional' => 'text-danger',
+                            'input_type' => 'text',
+                            'class_name' => '',
+                            'column_id' => 'product_code',
+                            // 'column_value' => old('product_code'),
+                            'column_value' => getProduitNumerotation(),
+                            'readonly' => 'false',
+                        ])
+                        @include('form.input', [
+                            'cols' => 'col-md-6',
+                            'column' => 'date',
+                            'model' => 'product',
+                            'optional' => 'text-danger',
+                            'input_type' => 'text',
+                            'class_name' => '',
+                            'column_id' => 'date',
+                            'column_value' => Carbon\Carbon::now()->toDateTimeString(),
+                            'readonly' => 'false',
+                        ])
+                        @include('form.input', [
+                            'cols' => 'col-md-6',
                             'column' => 'name_fr',
                             'model' => 'product',
                             'optional' => 'text-danger',
@@ -58,6 +81,7 @@
                             'column_value' => old('name_ar'),
                             'readonly' => 'false',
                         ])
+
                         @include('form.singleSelect', [
                             'cols' => 'col-md-4 ',
                             'column' => 'category_id',
@@ -227,6 +251,7 @@
                 <div class="form-check form-switch form-switch-md" dir="ltr">
                     <input type="checkbox" class="form-check-input" id="archive" value="1" name="archive">
                     <label class="form-check-label" for="archive">Archive
+                    <input type="hidden" name="archive" value="0">
                     </label>
                 </div>
                 <div class="form-check form-switch form-switch-md" dir="ltr">

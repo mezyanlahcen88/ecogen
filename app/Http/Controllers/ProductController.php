@@ -84,7 +84,7 @@ class ProductController extends Controller
         $validated = $request->validated();
         $object = new Product();
         $object->id = Str::uuid();
-        $object->product_code = 'Product_2105';
+        $object->product_code = 'request->name_fr';
         $object->name_fr = $request->name_fr;
         $object->name_ar = $request->name_ar;
         $object->category_id = $request->category_id;
@@ -105,7 +105,9 @@ class ProductController extends Controller
         $object->stock_methode = $request->stock_methode;
         $object->archive = $request->archive;
         $object->brand_id = $request->brand_id;
-        $object->picture = $request->picture;
+        if($request->hasFile('picture')){
+            dealWithPicture($request,$object,'picture', $request->name_fr,'products','store');
+        }
         $object->save();
 
         return redirect()->route('products.index');
@@ -130,8 +132,14 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        $object = product::findOrfail($id);
-        return view('products.edit', compact('object'));
+        $object = Product::findOrfail($id);
+        $categories = Category::where('parent_id',null)->pluck('name','id');
+        $scategories = Category::where('parent_id','!=',null)->pluck('name','id');
+        $brands = Brand::pluck('name','id');
+        $warehouses = Warehouse::pluck('name','id');
+        $units = $this->staticOptions::UNITS;
+        $stock_methods = $this->staticOptions::STOCK_METHODS;
+        return view('products.edit', compact('object','categories','scategories','brands','units','warehouses','stock_methods'));
     }
 
     /**
@@ -144,7 +152,32 @@ class ProductController extends Controller
     public function update(StoreProductRequest $request, string $id)
     {
         $validated = $request->validated();
-        $this->crudService->updateRecord(new Product(), $validated, $id);
+        $object = Product::findOrfail($id);
+        $object->product_code = $request->name_fr;
+        $object->name_fr = $request->name_fr;
+        $object->name_ar = $request->name_ar;
+        $object->category_id = $request->category_id;
+        $object->scategory_id = $request->scategory_id;
+        $object->buy_price = $request->buy_price;
+        $object->price_unit = $request->price_unit;
+        $object->price_gros = $request->price_gros;
+        $object->price_reseller = $request->price_reseller;
+        $object->latest_price = $request->latest_price;
+        $object->remise = $request->remise;
+        $object->tva = $request->tva;
+        $object->min_stock = $request->min_stock;
+        $object->unite = $request->unite;
+        $object->warehouse_id = $request->warehouse_id;
+        $object->bar_code = $request->bar_code;
+        $object->stockable = $request->stockable;
+        $object->stock_methode = $request->stock_methode;
+        $object->archive = $request->archive;
+        $object->brand_id = $request->brand_id;
+        if($request->hasFile('picture')){
+            dealWithPicture($request,$object,'picture', $request->name_fr,'products','update');
+        }
+        $object->save();
+
         return redirect()->route('products.index');
     }
 

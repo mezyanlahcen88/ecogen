@@ -6,6 +6,8 @@
                        @foreach ($tableRows as $key => $value)
                             <th>{{ trans('translation.'.$model.'_table_' . $value) }} </th>
                         @endforeach
+                         <th class="sort" data-sort="action">{{ trans('translation.'.$model.'_table_category_id') }}</th>
+                         <th class="sort" data-sort="action">{{ trans('translation.'.$model.'_table_scategory_id') }}</th>
                          <th class="sort" data-sort="action">{{ trans('translation.'.$model.'_table_active') }}</th>
                         <th class="sort" data-sort="action">{{ trans('translation.general_general_action') }}</th>
                     </tr>
@@ -16,13 +18,15 @@
                             <td>
                                 <div class="d-flex gap-2 align-items-center">
                                     <div class="flex-shrink-0">
-                                        <img src="{{ getUserPicture($object->picture) }}" alt="" class="avatar-xs rounded-circle">
+                                        <img src="{{ getPicture($object->picture,'products') }}" alt="" class="avatar-xs rounded-circle">
                                     </div>
                                 </div>
                             </td>
                             @foreach ($tableRows as $key => $value)
                                  <td> {{ $object->$key }}</td>
                             @endforeach
+                            <td> {{ $object->category->name }}</td>
+                            <td> {{ $object->scategory->name }}</td>
                                                 <td class="isactive ">
                         <div class="form-check form-switch d-flex justify-content-center">
                             <input class="form-check-input changeStatus" type="checkbox" role="switch" id="check"

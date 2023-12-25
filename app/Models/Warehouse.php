@@ -50,7 +50,6 @@ class Warehouse extends Model
     public function getRowsTable(){
         return [
              'name' => 'name',
-
          ];
      }
 

@@ -35,7 +35,7 @@ return new class extends Migration
             $table->string('stock_methode')->comment('CMUP/FIFO/LIFO');
             $table->string('archive');
             $table->foreignUuid('brand_id')->constrained()->onDelete('cascade');
-            $table->string('picture');
+            $table->string('picture')->nullable();
             $table->foreignUuid('warehouse_id')->constrained()->onDelete('cascade');
             $table->boolean('active')->default(1);
             $table->timestamps();

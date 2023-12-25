@@ -77,8 +77,11 @@ class BrandController extends Controller
     public function store(StoreBrandRequest $request)
     {
         $validated = $request->validated();
-        $this->crudService->storeRecord(new Brand(),$request->except('_token','proengsoft_jsvalidation'));
-
+        if($request->hasFile('picture')){
+            $this->crudService->storeRecordWithFile(new Brand(),$request->except('_token','proengsoft_jsvalidation'));
+        }else{
+            $this->crudService->storeRecord(new Brand(),$request->except('_token','proengsoft_jsvalidation'));
+        }
         return redirect()->route('brands.index');
         }
 
