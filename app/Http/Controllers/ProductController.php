@@ -2,15 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Brand;
 use App\Dto\ProductDto;
 use App\Models\Product;
+use App\Models\Category;
+use App\Models\Warehouse;
 use App\Forms\ProductForm;
+use Illuminate\Support\Str;
 use App\Enums\StaticOptions;
 use Illuminate\Http\Request;
 use App\Services\CrudService;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreProductRequest;
-use App\Models\Brand;
-use App\Models\Category;
 
 class ProductController extends Controller
 {
@@ -64,8 +67,10 @@ class ProductController extends Controller
         $categories = Category::where('parent_id',null)->pluck('name','id');
         $scategories = Category::where('parent_id','!=',null)->pluck('name','id');
         $brands = Brand::pluck('name','id');
+        $warehouses = Warehouse::pluck('name','id');
         $units = $this->staticOptions::UNITS;
-        return view('products.create', compact('categories','scategories','brands','units'));
+        $stock_methods = $this->staticOptions::STOCK_METHODS;
+        return view('products.create', compact('categories','scategories','brands','units','warehouses','stock_methods'));
     }
 
     /**
@@ -78,13 +83,13 @@ class ProductController extends Controller
     {
         $validated = $request->validated();
         $object = new Product();
-        $object->id = $request->id;
-        $object->product_code = $request->product_code;
+        $object->id = Str::uuid();
+        $object->product_code = 'Product_2105';
         $object->name_fr = $request->name_fr;
         $object->name_ar = $request->name_ar;
         $object->category_id = $request->category_id;
         $object->scategory_id = $request->scategory_id;
-        $object->puy_price = $request->puy_price;
+        $object->buy_price = $request->buy_price;
         $object->price_unit = $request->price_unit;
         $object->price_gros = $request->price_gros;
         $object->price_reseller = $request->price_reseller;
@@ -96,7 +101,7 @@ class ProductController extends Controller
         $object->warehouse_id = $request->warehouse_id;
         $object->bar_code = $request->bar_code;
         $object->stockable = $request->stockable;
-        $object->created_by = $request->created_by;
+        $object->created_by = Auth::id();
         $object->stock_methode = $request->stock_methode;
         $object->archive = $request->archive;
         $object->brand_id = $request->brand_id;

@@ -52,5 +52,11 @@ final class StaticOptions
         'PIECE'=>'PIECE',
     ];
 
+    const STOCK_METHODS =[
+        'CMUP'=>'CMUP',
+        'FIFO'=>'FIFO',
+        'LIFO'=>'LIFO',
+    ];
+
 
 }

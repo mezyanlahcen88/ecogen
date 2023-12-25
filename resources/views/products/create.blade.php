@@ -28,7 +28,7 @@
     @endif
 
 
-    <form action="{{ route('products.store') }}" method="post" id="userForm" enctype="multipart/form-data">
+    <form action="{{ route('products.store') }}" method="post" id="userForm" autocomplete="on" enctype="multipart/form-data">
         @csrf
         <div class="row">
 
@@ -225,12 +225,12 @@
                 <div class="card card-body">
              <div class="between-center">
                 <div class="form-check form-switch form-switch-md" dir="ltr">
-                    <input type="checkbox" class="form-check-input" id="archive" value="1">
-                    <label class="form-check-label" for="archive">archive
+                    <input type="checkbox" class="form-check-input" id="archive" value="1" name="archive">
+                    <label class="form-check-label" for="archive">Archive
                     </label>
                 </div>
                 <div class="form-check form-switch form-switch-md" dir="ltr">
-                    <input type="checkbox" class="form-check-input" id="customSwitchsizelg" value="1">
+                    <input type="checkbox" class="form-check-input" id="customSwitchsizelg" value="1" name="stockable">
                     <label class="form-check-label" for="customSwitchsizelg">Agir sur le stock</label>
                 </div>
              </div>
@@ -242,7 +242,7 @@
                         'label' => 'product_form_stock_methode',
                         'optional' => 'text-danger',
                         'divID' => 'stock_methode',
-                        'options' => [],
+                        'options' => $stock_methods,
                         'object' => false,
                     ])
                     @include('form.singleSelect', [
@@ -252,7 +252,7 @@
                         'label' => 'product_form_warehouse_id',
                         'optional' => 'text-danger',
                         'divID' => 'warehouse_id',
-                        'options' => [],
+                        'options' => $warehouses,
                         'object' => false,
                     ])
                 </div>
