@@ -28,7 +28,7 @@
     @endif
 
 
-    <form action="{{ route('categories.store') }}" method="post" id="userForm">
+    <form action="{{ route('categories.store') }}" method="post" id="userForm" enctype="multipart/form-data">
         @csrf
         <div class="row">
 
@@ -47,9 +47,9 @@
                             'column_value' => old('name'),
                             'readonly' => 'false',
                         ])
-                                         @include('form.input', [
+                        {{-- @include('form.input', [
                                             'cols' => 'col-md-6',
-                                            'column' => 'stock',
+                                            'column' => 'stockable',
                                             'model' => 'category',
                                             'optional' => 'text-danger',
                                             'input_type' => 'check',
@@ -57,7 +57,9 @@
                                             'column_id' => 'stock',
                                             'column_value' => old('stock'),
                                             'readonly' => 'false',
-                                        ])
+                                        ]) --}}
+
+
                         @include('form.singleSelect', [
                             'cols' => 'col-md-6 ',
                             'column' => 'parent_id',
@@ -66,18 +68,25 @@
                             'optional' => 'text-danger',
                             'divID' => 'parent_id',
                             'options' => $categories,
-                            'object'=>false
+                            'object' => false,
                         ])
-                                                @include('form.singleSelect', [
-                                                    'cols' => 'col-md-6 ',
-                                                    'column' => 'menu',
-                                                    'isReload' => false,
-                                                    'label' => 'category_form_menu',
-                                                    'optional' => 'text-danger',
-                                                    'divID' => 'menu',
-                                                    'options' => $menus,
-                                                    'object'=>false
-                                                ])
+                        @include('form.singleSelect', [
+                            'cols' => 'col-md-6 ',
+                            'column' => 'menu',
+                            'isReload' => false,
+                            'label' => 'category_form_menu',
+                            'optional' => 'text-danger',
+                            'divID' => 'menu',
+                            'options' => $menus,
+                            'object' => false,
+                        ])
+                        <div class="col-md-6">
+                            <div class="form-check form-switch form-switch-md checkboxstyle" dir="ltr">
+                                <input type="checkbox" class="form-check-input " id="customSwitchsizelg"
+                                     name="stockable" value="1" >
+                                <label class="form-check-label" for="customSwitchsizelg">{{ trans('translation.category_form_stockable') }}</label>
+                            </div>
+                        </div>
 
                     </div>
                 </div>

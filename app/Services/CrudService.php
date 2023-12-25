@@ -27,6 +27,18 @@ public function storeRecord($model ,array $request){
     $record->save();
     return true;
 }
+
+public function storeRecordWithFile($model ,array $request){
+    $record = $model;
+    $record->id = Str::uuid();
+
+    foreach ($request as $key => $value) {
+        // if()
+        $record->$key = $value;
+        }
+    $record->save();
+    return true;
+}
 public function updateRecord($model ,array $request ,string $id)
 {
     $record = $model::where('id', $id)->firstOrFail();

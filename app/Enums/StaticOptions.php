@@ -47,4 +47,10 @@ final class StaticOptions
         'Serieux'=>'Serieux',
         'Garantie'=>'Garantie',
     ];
+    const UNITS =[
+        'KG'=>'KG',
+        'PIECE'=>'PIECE',
+    ];
+
+
 }

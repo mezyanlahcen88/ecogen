@@ -9,11 +9,11 @@ use App\Enums\StaticOptions;
 use Illuminate\Http\Request;
 use App\Services\CrudService;
 use App\Http\Requests\StoreProductRequest;
-
+use App\Models\Brand;
+use App\Models\Category;
 
 class ProductController extends Controller
 {
-
     public $staticOptions;
     public $crudService;
     public function __construct(CrudService $crudService, StaticOptions $staticOptions)
@@ -37,10 +37,9 @@ class ProductController extends Controller
      */
     public function index()
     {
-
-           $tableRows =(new Product())->getRowsTable();
+        $tableRows = (new Product())->getRowsTable();
         $objects = Product::get();
-        return view('products.index',compact('tableRows','objects'));
+        return view('products.index', compact('tableRows', 'objects'));
     }
     /**
      * Display a list of soft-deleted records.
@@ -50,8 +49,8 @@ class ProductController extends Controller
     public function trashed(Request $request)
     {
         $objects = Product::onlyTrashed()->get();
-        $tableRows =(new Product())->getRowsTableTrashed();
-        return view('products.trashedIndex', compact('tableRows','objects'));
+        $tableRows = (new Product())->getRowsTableTrashed();
+        return view('products.trashedIndex', compact('tableRows', 'objects'));
     }
 
     /**
@@ -61,11 +60,12 @@ class ProductController extends Controller
      */
     public function create()
     {
-
         $object = new Product();
-        $variable = '';
-        return view('products.create',compact('variable'));
-
+        $categories = Category::where('parent_id',null)->pluck('name','id');
+        $scategories = Category::where('parent_id','!=',null)->pluck('name','id');
+        $brands = Brand::pluck('name','id');
+        $units = $this->staticOptions::UNITS;
+        return view('products.create', compact('categories','scategories','brands','units'));
     }
 
     /**
@@ -77,10 +77,34 @@ class ProductController extends Controller
     public function store(StoreProductRequest $request)
     {
         $validated = $request->validated();
-        $this->crudService->storeRecord(new Product(),$request->except('_token','proengsoft_jsvalidation'));
+        $object = new Product();
+        $object->id = $request->id;
+        $object->product_code = $request->product_code;
+        $object->name_fr = $request->name_fr;
+        $object->name_ar = $request->name_ar;
+        $object->category_id = $request->category_id;
+        $object->scategory_id = $request->scategory_id;
+        $object->puy_price = $request->puy_price;
+        $object->price_unit = $request->price_unit;
+        $object->price_gros = $request->price_gros;
+        $object->price_reseller = $request->price_reseller;
+        $object->latest_price = $request->latest_price;
+        $object->remise = $request->remise;
+        $object->tva = $request->tva;
+        $object->min_stock = $request->min_stock;
+        $object->unite = $request->unite;
+        $object->warehouse_id = $request->warehouse_id;
+        $object->bar_code = $request->bar_code;
+        $object->stockable = $request->stockable;
+        $object->created_by = $request->created_by;
+        $object->stock_methode = $request->stock_methode;
+        $object->archive = $request->archive;
+        $object->brand_id = $request->brand_id;
+        $object->picture = $request->picture;
+        $object->save();
 
         return redirect()->route('products.index');
-        }
+    }
 
     /**
      * Display the specified resource.
@@ -102,7 +126,7 @@ class ProductController extends Controller
     public function edit($id)
     {
         $object = product::findOrfail($id);
-        return view('products.edit',compact('object'));
+        return view('products.edit', compact('object'));
     }
 
     /**
@@ -112,10 +136,10 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreProductRequest $request,string $id)
+    public function update(StoreProductRequest $request, string $id)
     {
         $validated = $request->validated();
-        $this->crudService->updateRecord(new Product(),$validated,$id);
+        $this->crudService->updateRecord(new Product(), $validated, $id);
         return redirect()->route('products.index');
     }
 
@@ -127,11 +151,10 @@ class ProductController extends Controller
      */
     public function destroy(Request $request)
     {
-      $object = Product::findOrFail($request->id)->delete();
-
+        $object = Product::findOrFail($request->id)->delete();
     }
 
-            /**
+    /**
      * Restore a soft-deleted user.
      *
      * @param \Illuminate\Http\Request $request The HTTP request object.
@@ -140,8 +163,9 @@ class ProductController extends Controller
      */
     public function restore(Request $request, $id)
     {
-
-        $object = Product::withTrashed()->findOrFail($id)->restore();
+        $object = Product::withTrashed()
+            ->findOrFail($id)
+            ->restore();
         // storeSidebar();
         return redirect()->route('products.index');
     }
@@ -155,7 +179,6 @@ class ProductController extends Controller
      */
     public function forceDelete(Request $request, $id)
     {
-
         $object = Product::withTrashed()->findOrFail($id);
         // deletePicture($object,'products','picture');
         $object->forceDelete();

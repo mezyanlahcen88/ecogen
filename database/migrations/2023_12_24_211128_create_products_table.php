@@ -24,6 +24,7 @@ return new class extends Migration
             $table->double('price_unit',8,2);
             $table->double('price_gros',8,2);
             $table->double('price_reseller',8,2);
+            $table->double('latest_price',8,2);
             $table->tinyInteger('remise');
             $table->tinyInteger('tva');
             $table->tinyInteger('min_stock');

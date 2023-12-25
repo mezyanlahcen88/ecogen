@@ -49,8 +49,11 @@ class Product extends Model
 
     public function getRowsTable(){
         return [
-             'name' => 'name',
-             'matricule' => 'matricule',
+             'product_code' => 'product_code',
+             'name_fr' => 'name_fr',
+             'name_ar' => 'name_ar',
+             'category_id' => 'category_id',
+             'scategory_id' => 'scategory_id',
 
          ];
      }

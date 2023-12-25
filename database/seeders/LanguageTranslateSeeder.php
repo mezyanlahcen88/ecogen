@@ -240,6 +240,7 @@ class LanguageTranslateSeeder extends Seeder
 ['language_id'=>$lang_id,'label'=>'car_form_obs_placeholder','translation'=>'Entrez l\'observation','created_at'=>$now,'updated_at'=>$now],
 
 
+
 ['language_id'=>$lang_id,'label'=>'category_action_add','translation'=>'Ajouter une catégorie','created_at'=>$now,'updated_at'=>$now],
 ['language_id'=>$lang_id,'label'=>'category_action_show','translation'=>'Catégorie de spectacle','created_at'=>$now,'updated_at'=>$now],
 ['language_id'=>$lang_id,'label'=>'category_action_edit','translation'=>'Modifier la catégorie','created_at'=>$now,'updated_at'=>$now],
@@ -258,10 +259,14 @@ class LanguageTranslateSeeder extends Seeder
 ['language_id'=>$lang_id,'label'=>'category_form_manage_deleted_categories','translation'=>'Gérer les catégories supprimées','created_at'=>$now,'updated_at'=>$now],
 ['language_id'=>$lang_id,'label'=>'category_table_name','translation'=>'Nom','created_at'=>$now,'updated_at'=>$now],
 ['language_id'=>$lang_id,'label'=>'category_table_parent_id','translation'=>'Categorie','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'category_table_stockable','translation'=>'Agir sur le stock','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'category_table_menu','translation'=>'Menu','created_at'=>$now,'updated_at'=>$now],
 ['language_id'=>$lang_id,'label'=>'category_table_active','translation'=>'Actif','created_at'=>$now,'updated_at'=>$now],
 ['language_id'=>$lang_id,'label'=>'category_table_picture','translation'=>'Image','created_at'=>$now,'updated_at'=>$now],
 ['language_id'=>$lang_id,'label'=>'category_form_name','translation'=>'Nom','created_at'=>$now,'updated_at'=>$now],
 ['language_id'=>$lang_id,'label'=>'category_form_name_placeholder','translation'=>'Entrez le nom','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'category_form_stockable','translation'=>'Agir sur le stock','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'category_form_menu','translation'=>'Menu','created_at'=>$now,'updated_at'=>$now],
 ['language_id'=>$lang_id,'label'=>'category_form_parent_id','translation'=>'Categorie','created_at'=>$now,'updated_at'=>$now],
 ['language_id'=>$lang_id,'label'=>'category_form_picture','translation'=>'Image','created_at'=>$now,'updated_at'=>$now],
 
@@ -634,6 +639,8 @@ class LanguageTranslateSeeder extends Seeder
 ['language_id'=>$lang_id,'label'=>'garanty_form_comment_placeholder','translation'=>'Entrez le commentaire','created_at'=>$now,'updated_at'=>$now],
 ['language_id'=>$lang_id,'label'=>'garanty_form_doe_placeholder','translation'=>'Entrez la date d\'expiration','created_at'=>$now,'updated_at'=>$now],
 
+
+
 ['language_id'=>$lang_id,'label'=>'product_action_add','translation'=>'Ajouter le produit','created_at'=>$now,'updated_at'=>$now],
 ['language_id'=>$lang_id,'label'=>'product_action_show','translation'=>'Montrer le produit','created_at'=>$now,'updated_at'=>$now],
 ['language_id'=>$lang_id,'label'=>'product_action_edit','translation'=>'Modifier le produit','created_at'=>$now,'updated_at'=>$now],
@@ -651,9 +658,9 @@ class LanguageTranslateSeeder extends Seeder
 ['language_id'=>$lang_id,'label'=>'product_form_deleted_products_list','translation'=>'Liste des produits supprimés','created_at'=>$now,'updated_at'=>$now],
 ['language_id'=>$lang_id,'label'=>'product_form_manage_deleted_products','translation'=>'Gérer les produits supprimés','created_at'=>$now,'updated_at'=>$now],
 ['language_id'=>$lang_id,'label'=>'product_table_product_code','translation'=>'Code produit','created_at'=>$now,'updated_at'=>$now],
-['language_id'=>$lang_id,'label'=>'product_table_name_ar','translation'=>'Produit','created_at'=>$now,'updated_at'=>$now],
-['language_id'=>$lang_id,'label'=>'product_table_category','translation'=>'Catégorie','created_at'=>$now,'updated_at'=>$now],
-['language_id'=>$lang_id,'label'=>'product_table_scategory','translation'=>'Sous categorie','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'product_table_name_fr','translation'=>'Produit','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'product_table_category_id','translation'=>'Catégorie','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'product_table_scategory_id','translation'=>'Sous categorie','created_at'=>$now,'updated_at'=>$now],
 ['language_id'=>$lang_id,'label'=>'product_table_buy_price','translation'=>'Prix ​​d\'achat','created_at'=>$now,'updated_at'=>$now],
 ['language_id'=>$lang_id,'label'=>'product_table_price_unit','translation'=>'Prix vente détails','created_at'=>$now,'updated_at'=>$now],
 ['language_id'=>$lang_id,'label'=>'product_table_price_gros','translation'=>'Prix vente gros','created_at'=>$now,'updated_at'=>$now],
@@ -673,13 +680,14 @@ class LanguageTranslateSeeder extends Seeder
 ['language_id'=>$lang_id,'label'=>'product_table_picture','translation'=>'Image','created_at'=>$now,'updated_at'=>$now],
 ['language_id'=>$lang_id,'label'=>'product_table_active','translation'=>'Active','created_at'=>$now,'updated_at'=>$now],
 ['language_id'=>$lang_id,'label'=>'product_form_product_code','translation'=>'Code produit','created_at'=>$now,'updated_at'=>$now],
-['language_id'=>$lang_id,'label'=>'product_form_name_ar','translation'=>'Produit','created_at'=>$now,'updated_at'=>$now],
-['language_id'=>$lang_id,'label'=>'product_form_category','translation'=>'Catégorie','created_at'=>$now,'updated_at'=>$now],
-['language_id'=>$lang_id,'label'=>'product_form_scategory','translation'=>'Sous categorie','created_at'=>$now,'updated_at'=>$now],
-['language_id'=>$lang_id,'label'=>'product_form_puy_price','translation'=>'Prix ​​d\'achat','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'product_form_name_fr','translation'=>'Produit','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'product_form_category_id','translation'=>'Catégorie','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'product_form_scategory_id','translation'=>'Sous categorie','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'product_form_buy_price','translation'=>'Prix ​​d\'achat','created_at'=>$now,'updated_at'=>$now],
 ['language_id'=>$lang_id,'label'=>'product_form_price_unit','translation'=>'Prix vente détails','created_at'=>$now,'updated_at'=>$now],
 ['language_id'=>$lang_id,'label'=>'product_form_price_gros','translation'=>'Prix vente gros','created_at'=>$now,'updated_at'=>$now],
 ['language_id'=>$lang_id,'label'=>'product_form_price_reseller','translation'=>'Prix vente revendeur','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'product_form_latest_price','translation'=>'Derniere prix','created_at'=>$now,'updated_at'=>$now],
 ['language_id'=>$lang_id,'label'=>'product_form_remise','translation'=>'Remise','created_at'=>$now,'updated_at'=>$now],
 ['language_id'=>$lang_id,'label'=>'product_form_tva','translation'=>'Tva','created_at'=>$now,'updated_at'=>$now],
 ['language_id'=>$lang_id,'label'=>'product_form_min_stock','translation'=>'Stock mini','created_at'=>$now,'updated_at'=>$now],
@@ -694,10 +702,10 @@ class LanguageTranslateSeeder extends Seeder
 ['language_id'=>$lang_id,'label'=>'product_form_name_ar','translation'=>'المنتوج','created_at'=>$now,'updated_at'=>$now],
 ['language_id'=>$lang_id,'label'=>'product_form_picture','translation'=>'Image','created_at'=>$now,'updated_at'=>$now],
 ['language_id'=>$lang_id,'label'=>'product_form_product_code_placeholder','translation'=>'Entrez le code produit','created_at'=>$now,'updated_at'=>$now],
-['language_id'=>$lang_id,'label'=>'product_form_name_ar_placeholder','translation'=>'Entrez le nom ar','created_at'=>$now,'updated_at'=>$now],
-['language_id'=>$lang_id,'label'=>'product_form_category_placeholder','translation'=>'Entrez la catégorie','created_at'=>$now,'updated_at'=>$now],
-['language_id'=>$lang_id,'label'=>'product_form_scategory_placeholder','translation'=>'Entrez Scategory','created_at'=>$now,'updated_at'=>$now],
-['language_id'=>$lang_id,'label'=>'product_form_puy_price_placeholder','translation'=>'Entrer prix ​​d\'achat','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'product_form_name_fr_placeholder','translation'=>'Entrez le nom du produit','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'product_form_category_id_placeholder','translation'=>'Entrez la catégorie','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'product_form_scategory_id_placeholder','translation'=>'Entrez Scategory','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'product_form_buy_price_placeholder','translation'=>'Entrer prix ​​d\'achat','created_at'=>$now,'updated_at'=>$now],
 ['language_id'=>$lang_id,'label'=>'product_form_price_unit_placeholder','translation'=>'Entrer prix vente détails','created_at'=>$now,'updated_at'=>$now],
 ['language_id'=>$lang_id,'label'=>'product_form_price_gros_placeholder','translation'=>'Entrer prix vente gros','created_at'=>$now,'updated_at'=>$now],
 ['language_id'=>$lang_id,'label'=>'product_form_price_reseller_placeholder','translation'=>'Entrer prix vente revendeur','created_at'=>$now,'updated_at'=>$now],
@@ -714,6 +722,7 @@ class LanguageTranslateSeeder extends Seeder
 ['language_id'=>$lang_id,'label'=>'product_form_brand_id_placeholder','translation'=>'Entrer la marque','created_at'=>$now,'updated_at'=>$now],
 ['language_id'=>$lang_id,'label'=>'product_form_name_ar_placeholder','translation'=>'أدخل إسم المنتوج','created_at'=>$now,'updated_at'=>$now],
 ['language_id'=>$lang_id,'label'=>'product_form_picture_placeholder','translation'=>'Entrer l\'image','created_at'=>$now,'updated_at'=>$now],
+
 
 
 ['language_id'=>$lang_id,'label'=>'warehouse_action_add','translation'=>'Ajouter depot','created_at'=>$now,'updated_at'=>$now],

@@ -48,6 +48,17 @@
                             'column_value' => $object->name,
                             'readonly' => 'false',
                         ])
+                        @include('form.input', [
+                            'cols' => 'col-md-6',
+                            'column' => 'stockable',
+                            'model' => 'category',
+                            'optional' => 'text-danger',
+                            'input_type' => 'check',
+                            'class_name' => '',
+                            'column_id' => 'stock',
+                            'column_value' => old('stock'),
+                            'readonly' => 'false',
+                        ])
                         @include('form.singleSelect', [
                             'cols' => 'col-md-6 ',
                             'column' => 'parent_id',
@@ -56,8 +67,18 @@
                             'optional' => 'text-danger',
                             'divID' => 'parent_id',
                             'options' => $categories,
-                            
                         ])
+                        @include('form.singleSelect', [
+                            'cols' => 'col-md-6 ',
+                            'column' => 'menu',
+                            'isReload' => false,
+                            'label' => 'category_form_menu',
+                            'optional' => 'text-danger',
+                            'divID' => 'menu',
+                            'options' => $menus,
+                            'object' => false,
+                        ])
+
 
                     </div>
                 </div>

@@ -60,6 +60,11 @@
     align-items: center;
 }
 
+/* .between-center{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+} */
 /* row custom */
 .row-custom {
         padding-right: 5px !important;
@@ -81,4 +86,10 @@
 
 .icon-xxxlg{
     font-size: xxx-large;
+}
+
+/* check box style */
+.checkboxstyle {
+    margin-top: 32px;
+    margin-left: -2px;
 }

@@ -78,7 +78,13 @@ class CategoryController extends Controller
     public function store(StoreCategoryRequest $request)
     {
         $validated = $request->validated();
-        $this->crudService->storeRecord(new Category(),$request->except('_token','proengsoft_jsvalidation'));
+        // dd($request->all());
+        if($request->hasFile('picture')){
+        $this->crudService->storeRecordWithFile(new Category(),$request->except('_token','proengsoft_jsvalidation'));
+
+        }else{
+            $this->crudService->storeRecord(new Category(),$request->except('_token','proengsoft_jsvalidation'));
+        }
 
         return redirect()->route('categories.index');
         }
