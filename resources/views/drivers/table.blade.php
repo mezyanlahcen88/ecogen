@@ -16,7 +16,7 @@
                             <td>
                                 <div class="d-flex gap-2 align-items-center">
                                     <div class="flex-shrink-0">
-                                        <img src="{{ getUserPicture($object->picture) }}" alt="" class="avatar-xs rounded-circle">
+                                        <img src="{{ getPicture($object->picture,'drivers') }}" alt="" class="avatar-xs rounded-circle">
                                     </div>
                                 </div>
                             </td>

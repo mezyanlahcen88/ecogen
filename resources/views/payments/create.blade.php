@@ -27,7 +27,7 @@
     @endif
 
 
-        <form action="{{route('payments.store')}}" method="post" id="userForm">
+        <form action="{{route('payments.store')}}" method="post" id="userForm" enctype="multipart/form-data">
             @csrf
             <div class="row">
                 <div class="col-9">

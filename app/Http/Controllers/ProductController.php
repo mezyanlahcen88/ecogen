@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use App\Services\CrudService;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreProductRequest;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class ProductController extends Controller
 {

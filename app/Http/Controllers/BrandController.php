@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Dto\BrandDto;
 use App\Models\Brand;
-use App\Forms\BrandForm;
+use Illuminate\Support\Str;
 use App\Enums\StaticOptions;
 use Illuminate\Http\Request;
 use App\Services\CrudService;
 use App\Http\Requests\StoreBrandRequest;
+use RealRashid\SweetAlert\Facades\Alert;
+
 
 
 class BrandController extends Controller
@@ -38,7 +39,7 @@ class BrandController extends Controller
     public function index()
     {
 
-           $tableRows =(new Brand())->getRowsTable();
+        $tableRows =(new Brand())->getRowsTable();
         $objects = Brand::get();
         return view('brands.index',compact('tableRows','objects'));
     }
@@ -63,8 +64,7 @@ class BrandController extends Controller
     {
 
         $object = new Brand();
-        $variable = '';
-        return view('brands.create',compact('variable'));
+        return view('brands.create');
 
     }
 
@@ -77,11 +77,17 @@ class BrandController extends Controller
     public function store(StoreBrandRequest $request)
     {
         $validated = $request->validated();
+
+        $object = new Brand();
+        $object->id = Str::uuid();
+        $object->name = $request->name;
         if($request->hasFile('picture')){
-            $this->crudService->storeRecordWithFile(new Brand(),$request->except('_token','proengsoft_jsvalidation'));
-        }else{
-            $this->crudService->storeRecord(new Brand(),$request->except('_token','proengsoft_jsvalidation'));
+            dealWithPicture($request,$object,'picture', $request->name,'brands','store');
         }
+        $object->save();
+
+         flash()->addInfo('Your account has been created, but requires verification.');
+        // Alert()->success(trans('translation.general_general_super'), trans('translation.supplier_message_store'));
         return redirect()->route('brands.index');
         }
 
@@ -118,7 +124,16 @@ class BrandController extends Controller
     public function update(StoreBrandRequest $request,string $id)
     {
         $validated = $request->validated();
-        $this->crudService->updateRecord(new Brand(),$validated,$id);
+        // dd($request->all());
+        $object = Brand::findOrfail($id);
+        $object->name = $request->name;
+        if($request->hasFile('picture')){
+            dealWithPicture($request,$object,'picture', $request->name,'brands','update');
+        }
+        $object->save();
+
+         flash()->addInfo('Your account has been created, but requires verification.');
+        // Alert()->success(trans('translation.general_general_super'), trans('translation.supplier_message_update'));
         return redirect()->route('brands.index');
     }
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Dto\CategoryDto;
 use App\Models\Category;
 use App\Forms\CategoryForm;
+use Illuminate\Support\Str;
 use App\Enums\StaticOptions;
 use Illuminate\Http\Request;
 use App\Services\CrudService;
@@ -78,13 +79,17 @@ class CategoryController extends Controller
     public function store(StoreCategoryRequest $request)
     {
         $validated = $request->validated();
-        // dd($request->all());
+        $object = new Category();
+        $object->id = Str::uuid();
+        $object->name = $request->name;
+        $object->parent_id = $request->parent_id;
+        $object->stockable = $request->stockable ? 1 : 0;
+        $object->menu = $request->menu;
+        // $object->active = $request->active;
         if($request->hasFile('picture')){
-        $this->crudService->storeRecordWithFile(new Category(),$request->except('_token','proengsoft_jsvalidation'));
-
-        }else{
-            $this->crudService->storeRecord(new Category(),$request->except('_token','proengsoft_jsvalidation'));
+            dealWithPicture($request,$object,'picture', $request->name,'products','store');
         }
+        $object->save();
 
         return redirect()->route('categories.index');
         }
@@ -110,8 +115,8 @@ class CategoryController extends Controller
     {
         $object = category::findOrfail($id);
         $categories = Category::pluck('name','id');
-
-        return view('categories.edit',compact('object','categories'));
+        $menus = $this->staticOptions::MENU;
+        return view('categories.edit',compact('object','categories','menus'));
     }
 
     /**
@@ -124,7 +129,16 @@ class CategoryController extends Controller
     public function update(StoreCategoryRequest $request,string $id)
     {
         $validated = $request->validated();
-        $this->crudService->updateRecord(new Category(),$validated,$id);
+        $object = Category::findOrFail($id);
+        $object->name = $request->name;
+        $object->parent_id = $request->parent_id;
+        $object->menu = $request->menu;
+        $object->stockable = $request->stockable ? 1 : 0;
+
+        if($request->hasFile('picture')){
+            dealWithPicture($request,$object,'picture', $request->name,'categories','update');
+        }
+        $object->save();
         return redirect()->route('categories.index');
     }
 

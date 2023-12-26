@@ -28,7 +28,7 @@
     @endif
 
 
-    <form action="{{ route('categories.update', $object->id) }}" method="post" id="userForm">
+    <form action="{{ route('categories.update', $object->id) }}" method="post" id="userForm" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <div class="row">
@@ -46,17 +46,6 @@
                             'class_name' => '',
                             'column_id' => 'name',
                             'column_value' => $object->name,
-                            'readonly' => 'false',
-                        ])
-                        @include('form.input', [
-                            'cols' => 'col-md-6',
-                            'column' => 'stockable',
-                            'model' => 'category',
-                            'optional' => 'text-danger',
-                            'input_type' => 'check',
-                            'class_name' => '',
-                            'column_id' => 'stock',
-                            'column_value' => old('stock'),
                             'readonly' => 'false',
                         ])
                         @include('form.singleSelect', [
@@ -78,7 +67,13 @@
                             'options' => $menus,
                             'object' => false,
                         ])
-
+          <div class="col-md-6">
+            <div class="form-check form-switch form-switch-md checkboxstyle" dir="ltr">
+                <input type="checkbox" class="form-check-input " id="customSwitchsizelg"
+                     name="stockable" value="1" >
+                <label class="form-check-label" for="customSwitchsizelg">{{ trans('translation.category_form_stockable') }}</label>
+            </div>
+        </div>
 
                     </div>
                 </div>
@@ -87,7 +82,7 @@
             <div class="col-3">
                 <div class="card card-body">
                     <div class="profile-user position-relative d-inline-block mx-auto  mb-4">
-                        <img src="{{ URL::asset('assets/images/no_image.jpg') }}"
+                        <img src="{{ URL::asset(getPicture($object->picture,'categories')) }}"
                             class="  rounded-circle avatar-xl img-thumbnail user-profile-image" alt="user-profile-image">
                         <div class="avatar-xs p-0 rounded-circle profile-photo-edit">
                             <input id="profile-img-file-input" type="file" class="profile-img-file-input" name="picture">

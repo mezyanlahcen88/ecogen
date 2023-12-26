@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Dto\DriverDto;
 use App\Models\Driver;
 use App\Forms\DriverForm;
+use Illuminate\Support\Str;
 use App\Enums\StaticOptions;
 use Illuminate\Http\Request;
 use App\Services\CrudService;
@@ -77,7 +78,20 @@ class DriverController extends Controller
     public function store(StoreDriverRequest $request)
     {
         $validated = $request->validated();
-        $this->crudService->storeRecord(new Driver(),$request->except('_token','proengsoft_jsvalidation'));
+        $object = new Driver();
+        $object->id = Str::uuid();
+        $object->first_name = $request->first_name;
+        $object->last_name = $request->last_name;
+        $object->cin = $request->cin;
+        $object->permis_number = $request->permis_number;
+        $object->dob = $request->dob;
+        $object->permis_type = $request->permis_type;
+        $object->obs = $request->obs;
+
+        if($request->hasFile('picture')){
+            dealWithPicture($request,$object,'picture', $request->first_name,'drivers','store');
+        }
+        $object->save();
 
         return redirect()->route('drivers.index');
         }
@@ -116,7 +130,18 @@ class DriverController extends Controller
     public function update(StoreDriverRequest $request,string $id)
     {
         $validated = $request->validated();
-        $this->crudService->updateRecord(new Driver(),$validated,$id);
+        $object = Driver::findOrFail($id);
+        $object->first_name = $request->first_name;
+        $object->last_name = $request->last_name;
+        $object->cin = $request->cin;
+        $object->permis_number = $request->permis_number;
+        $object->dob = $request->dob;
+        $object->permis_type = $request->permis_type;
+        $object->obs = $request->obs;
+        if($request->hasFile('picture')){
+            dealWithPicture($request,$object,'picture', $request->first_name,'drivers','update');
+        }
+        $object->save();
         return redirect()->route('drivers.index');
     }
 

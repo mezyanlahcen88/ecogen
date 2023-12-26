@@ -28,7 +28,7 @@
     @endif
 
 
-    <form action="{{ route('drivers.store') }}" method="post" id="userForm">
+    <form action="{{ route('drivers.store') }}" method="post" id="userForm" enctype="multipart/form-data">
         @csrf
         <div class="row">
 
@@ -103,17 +103,14 @@
                             'options' => $permis_types,
                             'object' => false,
                         ])
-                        @include('form.input', [
-                            'cols' => 'col-md-12',
-                            'column' => 'obs',
-                            'model' => 'driver',
-                            'optional' => 'text-danger',
-                            'input_type' => 'text',
-                            'class_name' => '',
-                            'column_id' => 'obs',
-                            'column_value' => old('obs'),
-                            'readonly' => 'false',
-                        ])
+                        <div class="col-md-12 col-xl-12 col-xs-12 col-sm-12">
+                            <div class="form-group">
+                                <label for="content">{{ trans('translation.driver_form_obs') }} &nbsp;
+                                    <span class="text-secondary">*</span></label>
+                                <textarea class="form-control ckeditor" name="obs" id="obs" style="height: 213px">{{ old('obs') }}</textarea>
+                            </div>
+                        </div>
+
 
 
 
@@ -152,5 +149,6 @@
 @section('js')
     @include('layouts.includes.form_js')
     <script src="{{ asset('assets/custom_js/validate_number.js') }}"></script>
+    <script src="{{ asset('assets/custom_js/ckeditor.js') }}"></script>
     {!! JsValidator::formRequest('App\Http\Requests\StoreDriverRequest') !!}
 @endsection

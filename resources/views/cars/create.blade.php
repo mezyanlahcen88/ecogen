@@ -82,17 +82,6 @@
                         ])
                         @include('form.input', [
                             'cols' => 'col-md-6',
-                            'column' => 'nbplace',
-                            'model' => 'car',
-                            'optional' => 'text-danger',
-                            'input_type' => 'number',
-                            'class_name' => '',
-                            'column_id' => 'nbplace',
-                            'column_value' => old('nbplace'),
-                            'readonly' => 'false',
-                        ])
-                        @include('form.input', [
-                            'cols' => 'col-md-6',
                             'column' => 'consommation',
                             'model' => 'car',
                             'optional' => 'text-danger',
@@ -113,17 +102,13 @@
                             'column_value' => old('tonnage'),
                             'readonly' => 'false',
                         ])
-                         @include('form.input', [
-                            'cols' => 'col-md-6',
-                            'column' => 'obs',
-                            'model' => 'car',
-                            'optional' => 'text-danger',
-                            'input_type' => 'text',
-                            'class_name' => '',
-                            'column_id' => 'obs',
-                            'column_value' => old('obs'),
-                            'readonly' => 'false',
-                        ])
+                            <div class="col-md-12 col-xl-12 col-xs-12 col-sm-12">
+                                <div class="form-group">
+                                    <label for="content">{{ trans('translation.car_form_obs') }} &nbsp;
+                                        <span class="text-secondary">*</span></label>
+                                    <textarea class="form-control ckeditor" name="obs" id="obs" style="height: 213px">{{ old('obs') }}</textarea>
+                                </div>
+                            </div>
 
 
                     </div>
@@ -145,5 +130,6 @@
 @section('js')
     @include('layouts.includes.form_js')
     <script src="{{ asset('assets/custom_js/validate_number.js') }}"></script>
+    <script src="{{ asset('assets/custom_js/ckeditor.js') }}"></script>
     {!! JsValidator::formRequest('App\Http\Requests\StoreCarRequest') !!}
 @endsection

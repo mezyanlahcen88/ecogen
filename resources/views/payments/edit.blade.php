@@ -19,7 +19,7 @@
 
 
 
-        <form action="{{route('payments.update',$object->id)}}" method="post" id="userForm">
+        <form action="{{route('payments.update',$object->id)}}" method="post" id="userForm" enctype="multipart/form-data">
             @csrf
              @method('PUT')
             <div class="row">

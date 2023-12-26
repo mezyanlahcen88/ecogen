@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Dto\PaymentDto;
 use App\Models\Payment;
 use App\Forms\PaymentForm;
+use Illuminate\Support\Str;
 use App\Enums\StaticOptions;
 use Illuminate\Http\Request;
 use App\Services\CrudService;
@@ -77,8 +78,17 @@ class PaymentController extends Controller
     public function store(StorePaymentRequest $request)
     {
         $validated = $request->validated();
-        $this->crudService->storeRecord(new Payment(),$request->except('_token','proengsoft_jsvalidation'));
+        $object = new Payment();
+        $object->id = Str::uuid();
+$object->reglement = $request->reglement;
+$object->compte = $request->compte;
+$object->nature = $request->nature;
+$object->comment = $request->comment;
 
+        if($request->hasFile('picture')){
+            dealWithPicture($request,$object,'picture', $request->name,'payments','store');
+        }
+        $object->save();
         return redirect()->route('payments.index');
         }
 
@@ -115,7 +125,16 @@ class PaymentController extends Controller
     public function update(StorePaymentRequest $request,string $id)
     {
         $validated = $request->validated();
-        $this->crudService->updateRecord(new Payment(),$validated,$id);
+                $object = Payment::findOrFail($id);
+$object->reglement = $request->reglement;
+$object->compte = $request->compte;
+$object->nature = $request->nature;
+$object->comment = $request->comment;
+
+        if($request->hasFile('picture')){
+            dealWithPicture($request,$object,'picture', $request->name,'payments','update');
+        }
+        $object->save();
         return redirect()->route('payments.index');
     }
 

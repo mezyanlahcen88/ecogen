@@ -28,7 +28,7 @@
     @endif
 
 
-    <form action="{{ route('drivers.update', $object->id) }}" method="post" id="userForm">
+    <form action="{{ route('drivers.update', $object->id) }}" method="post" id="userForm" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <div class="row">
@@ -104,17 +104,13 @@
                             'options' => $permis_types,
                             'object' => $object,
                         ])
-                        @include('form.input', [
-                            'cols' => 'col-md-12',
-                            'column' => 'obs',
-                            'model' => 'driver',
-                            'optional' => 'text-danger',
-                            'input_type' => 'text',
-                            'class_name' => '',
-                            'column_id' => 'obs',
-                            'column_value' => $object->obs,
-                            'readonly' => 'false',
-                        ])
+                        <div class="col-md-12 col-xl-12 col-xs-12 col-sm-12">
+                            <div class="form-group">
+                                <label for="content">{{ trans('translation.driver_form_obs') }} &nbsp;
+                                    <span class="text-secondary">*</span></label>
+                                <textarea class="form-control ckeditor" name="obs" id="obs" style="height: 213px">{{ $object->obs }}</textarea>
+                            </div>
+                        </div>
 
 
 
@@ -125,7 +121,7 @@
             <div class="col-3">
                 <div class="card card-body">
                     <div class="profile-user position-relative d-inline-block mx-auto  mb-4">
-                        <img src="{{ URL::asset('assets/images/no_image.jpg') }}"
+                        <img src="{{ URL::asset(getPicture($object->picture,'drivers')) }}"
                             class="  rounded-circle avatar-xl img-thumbnail user-profile-image" alt="user-profile-image">
                         <div class="avatar-xs p-0 rounded-circle profile-photo-edit">
                             <input id="profile-img-file-input" type="file" class="profile-img-file-input" name="picture">
@@ -153,6 +149,7 @@
 @section('js')
     @include('layouts.includes.form_js')
     <script src="{{ asset('assets/custom_js/validate_number.js') }}"></script>
+    <script src="{{ asset('assets/custom_js/ckeditor.js') }}"></script>
     {!! JsValidator::formRequest('App\Http\Requests\StoreDriverRequest') !!}
 
 @endsection

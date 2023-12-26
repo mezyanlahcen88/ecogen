@@ -9,6 +9,7 @@ use App\Enums\StaticOptions;
 use Illuminate\Http\Request;
 use App\Services\CrudService;
 use App\Http\Requests\Store{{model}}Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 
 class {{class}} extends Controller

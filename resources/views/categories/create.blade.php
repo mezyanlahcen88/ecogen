@@ -47,25 +47,12 @@
                             'column_value' => old('name'),
                             'readonly' => 'false',
                         ])
-                        {{-- @include('form.input', [
-                                            'cols' => 'col-md-6',
-                                            'column' => 'stockable',
-                                            'model' => 'category',
-                                            'optional' => 'text-danger',
-                                            'input_type' => 'check',
-                                            'class_name' => '',
-                                            'column_id' => 'stock',
-                                            'column_value' => old('stock'),
-                                            'readonly' => 'false',
-                                        ]) --}}
-
-
                         @include('form.singleSelect', [
                             'cols' => 'col-md-6 ',
                             'column' => 'parent_id',
                             'isReload' => false,
                             'label' => 'category_form_parent_id',
-                            'optional' => 'text-danger',
+                            'optional' => 'text-secondary',
                             'divID' => 'parent_id',
                             'options' => $categories,
                             'object' => false,
@@ -75,7 +62,7 @@
                             'column' => 'menu',
                             'isReload' => false,
                             'label' => 'category_form_menu',
-                            'optional' => 'text-danger',
+                            'optional' => 'text-secondary',
                             'divID' => 'menu',
                             'options' => $menus,
                             'object' => false,
