@@ -271,4 +271,17 @@ class ProductController extends Controller
         $message = $object->active ? trans('translation.product_message_activated') : trans('translation.product_message_inactivated');
         return response()->json(['code' => 200, 'active' => $object->active, 'message' => $message]);
     }
+    public function getLastPrice(Request $request){
+        $id = $request->id;
+        $product = Product::findOrFail($id);
+        return response()->json($product);
+
+    }
+    public function getProduct(Request $request){
+        $id = $request->id;
+        $product = Product::findOrFail($id);
+        return response()->json($product);
+
+    }
+
 }

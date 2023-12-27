@@ -14,6 +14,8 @@ Route::put('/products/{id}/restore', [ProductController::class, 'restore'])->nam
 //liste all deleted
 Route::get('/products/trashed', [ProductController::class, 'trashed'])->name('products.trashed');
 Route::get('/get-products-json',[ProductController::class,'getProductsJson'])->name('products.getProductsJson');
+Route::get('/products/get-last-price',[ProductController::class,'getLastPrice'])->name('products.getLastPrice');
+Route::get('/products/get-product',[ProductController::class,'getProduct'])->name('products.getProduct');
 
 Route::resource('products', ProductController::class);
 

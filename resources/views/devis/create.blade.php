@@ -74,16 +74,16 @@
 
                                     @include('form.singleSelect', [
                                         'cols' => 'col-md-6 ',
-                                        'column' => 'client_id',
+                                        'column' => 'product_id',
                                         'isReload' => false,
                                         'label' => 'devis_form_product_id',
                                         'optional' => 'text-danger',
                                         'divID' => 'client_id',
-                                        'options' => $clients,
+                                        'options' => $products,
                                         'object' => false,
                                     ])
                                     @include('form.input', [
-                                        'cols' => 'col-md-6',
+                                        'cols' => 'col-md-4',
                                         'column' => 'latest_price',
                                         'model' => 'product',
                                         'optional' => 'text-danger',
@@ -93,7 +93,11 @@
                                         'column_value' => old('latest_price'),
                                         'readonly' => 'false',
                                     ])
+      <div class="col-md-2 mt-4">
+        <a href="#" id="" class="btn btn-primary text-light getProduct"><i class="las la-check"></i></a>
+    </div>
                                 </div>
+
                             </div>
                             <div class="col-md-4">
                                 <div class="row">
@@ -107,28 +111,31 @@
                                         'options' => $devis_status,
                                         'object' => false,
                                     ])
-                                        <div class="col-md-12">
-                                            <div>
-                                                <label class="form-label">Date de crétation</label>
-                                                <input type="text" class="form-control" data-provider="flatpickr" data-date-format="d/m/Y" placeholder="{{Carbon\Carbon::now()->format('d/m/Y')}}">
-                                            </div>
+                                    <div class="col-md-12">
+                                        <div>
+                                            <label class="form-label">Date de crétation</label>
+                                            <input type="text" class="form-control" data-provider="flatpickr"
+                                                data-date-format="d/m/Y"
+                                                placeholder="{{ Carbon\Carbon::now()->format('d/m/Y') }}">
                                         </div>
-                                            <div class="col-md-12 col-xl-12 col-xs-12 col-sm-12">
-                                                <div class="form-group">
-                                                    <label for="content">{{ trans('translation.devis_form_comment') }} &nbsp;
-                                                        <span class="text-secondary">*</span></label>
-                                                    <textarea class="form-control" name="comment" id="comment">{{ old('comment') }}</textarea>
-                                                </div>
-                                            </div>
+                                    </div>
+                                    <div class="col-md-12 col-xl-12 col-xs-12 col-sm-12">
+                                        <div class="form-group">
+                                            <label for="content">{{ trans('translation.devis_form_comment') }} &nbsp;
+                                                <span class="text-secondary">*</span></label>
+                                            <textarea class="form-control" name="comment" id="comment">{{ old('comment') }}</textarea>
+                                        </div>
+                                    </div>
 
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div
-                                class="bg-info text-light h-25 w-100 d-flex  justify-content-between align-items-center px-4 mb-1">
-                                <label for="" id="total_ttc">DEVIS N° :</label>
-                                <label for="" id="total_ttc" class="fs-3">{{getDevisNumerotation()."/" .getExercice()}}</label>
-                            </div>
+                                    class="bg-info text-light h-25 w-100 d-flex  justify-content-between align-items-center px-4 mb-1">
+                                    <label for="" id="total_ttc">DEVIS N° :</label>
+                                    <label for="" id="total_ttc"
+                                        class="fs-3">{{ getDevisNumerotation() . '/' . getExercice() }}</label>
+                                </div>
                                 <div
                                     class="bg-primary text-light h-25 w-100 d-flex  justify-content-between align-items-center px-4 mb-1">
                                     <label for="" id="total_ttc">Total TTC :</label>
@@ -172,6 +179,7 @@
     @include('layouts.includes.form_js')
     <script src="{{ asset('assets/custom_js/validate_number.js') }}"></script>
     <script src="{{ asset('assets/custom_js/categories_scategories.js') }}"></script>
-    <script src="{{ asset('assets/custom_js/ckeditor.js') }}"></script>
+    <script src="{{ asset('assets/custom_js/get_last_price.js') }}"></script>
+    <script src="{{ asset('assets/custom_js/getProduct.js') }}"></script>
     {!! JsValidator::formRequest('App\Http\Requests\StoreDevisRequest') !!}
 @endsection
