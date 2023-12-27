@@ -226,27 +226,12 @@
                 <div class="card card-body">
                     <div class="between-center">
                         <div class="form-check form-switch form-switch-md" dir="ltr">
-                            <input type="checkbox" class="form-check-input" id="archive" value="1" name="archive" {{$object->archive ? 'checked' : ''}}>
-                            <label class="form-check-label" for="archive">Archive
-                            </label>
-                        </div>
-                        <div class="form-check form-switch form-switch-md" dir="ltr">
                             <input type="checkbox" class="form-check-input" id="customSwitchsizelg" value="1"
                                 name="stockable" {{$object->stockable ? 'checked' : ''}}>
                             <label class="form-check-label" for="customSwitchsizelg">Agir sur le stock</label>
                         </div>
                     </div>
 
-                    @include('form.singleSelect', [
-                        'cols' => 'col-md-12 ',
-                        'column' => 'stock_methode',
-                        'isReload' => false,
-                        'label' => 'product_form_stock_methode',
-                        'optional' => 'text-danger',
-                        'divID' => 'stock_methode',
-                        'options' => $stock_methods,
-                        'object' => $object,
-                    ])
                     @include('form.singleSelect', [
                         'cols' => 'col-md-12 ',
                         'column' => 'warehouse_id',

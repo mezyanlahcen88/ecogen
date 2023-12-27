@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,44 +18,34 @@ class ProductFactory extends Factory
     public function definition()
     {
         return [
-        'name' => $this->faker->name,
-                'email' => $this->faker->unique()->safeEmail,
-                'email_verified_at' => now(),
-                'password' => bcrypt('password'),
-                'remember_token' => Str::random(10),
-                'created_at' => now(),
-                'updated_at' => now(),
-                'deleted_at' => null,
-                'tiny_int' => $this->faker->numberBetween(-128, 127),
-                'small_int' => $this->faker->numberBetween(-32768, 32767),
-                'medium_int' => $this->faker->numberBetween(-8388608, 8388607),
-                'int' => $this->faker->numberBetween(-2147483648, 2147483647),
-                'big_int' => $this->faker->numberBetween(-9223372036854775808, 9223372036854775807),
-                'unsigned_tiny_int' => $this->faker->numberBetween(0, 255),
-                'unsigned_small_int' => $this->faker->numberBetween(0, 65535),
-                'unsigned_medium_int' => $this->faker->numberBetween(0, 16777215),
-                'unsigned_int' => $this->faker->numberBetween(0, 4294967295),
-                'unsigned_big_int' => $this->faker->numberBetween(0, 18446744073709551615),
-                'float' => $this->faker->randomFloat(2, 0, 999999.99),
-                'double' => $this->faker->randomFloat(2, 0, 999999.99),
-                'decimal' => $this->faker->randomFloat(2, 0, 999999.99),
-                'bool' => $this->faker->boolean,
-                'enum' => $this->faker->randomElement(['value1', 'value2', 'value3']),
-                'text' => $this->faker->text,
-                'medium_text' => $this->faker->text(500),
-                'long_text' => $this->faker->text(1000),
-                'json' => $this->faker->randomElement([json_encode(['key1' => 'value1', 'key2' => 'value2']), null]),
-                'jsonb' => $this->faker->randomElement([json_encode(['key1' => 'value1', 'key2' => 'value2']), null]),
-                'date' => $this->faker->date,
-                'date_time' => $this->faker->dateTime,
-                'date_time_tz' => $this->faker->dateTime,
-                'time' => $this->faker->time,
-                'time_tz' => $this->faker->time,
-                'year' => $this->faker->year,
-                'binary' => $this->faker->randomElement([pack('H*', md5('binary')), null]),
-                'uuid' => $this->faker->uuid,
-                'ip_address' => $this->faker->ipv4,
-                'mac_address' => $this->faker->macAddress,
+
+            'id' =>  Str::uuid(),
+            'product_code' =>  'PR-'.Str::random(6),
+            'name_fr' =>  $this->faker->name,
+            'name_ar' =>  $this->faker->name,
+            'category_id' =>  $this->faker->randomElement(['48ce88da-cc8d-4643-9a4e-16bffb4fc813', '67912cd2-1888-4478-bc36-cc558ef7276d']),
+            'scategory_id' =>  $this->faker->randomElement(['44c728dc-7f59-457d-ad90-10a633722b91', 'dc04578d-bcc1-4b9f-aac6-c884dad0ea3f']),
+            'buy_price' =>  $this->faker->randomFloat(2, 0, 999999.99),
+            'price_unit'=>  $this->faker->randomFloat(2, 0, 999999.99),
+            'price_gros'=>  $this->faker->randomFloat(2, 0, 999999.99),
+            'price_reseller' =>  $this->faker->randomFloat(2, 0, 999999.99),
+            'latest_price' =>  $this->faker->randomFloat(2, 0, 999999.99),
+            'remise' =>  $this->faker->numberBetween(1, 99),
+            'tva' =>  $this->faker->numberBetween(1, 99),
+            'min_stock' =>  $this->faker->numberBetween(1, 99),
+            'unite' =>  $this->faker->randomElement(['KG', 'Piece', 'Ton']),
+            'warehouse_id'=>  '99b9efa5-b139-4502-bc5c-83c7824c53be',
+            'bar_code'=>  $this->faker->numberBetween(1111111, 9999999),
+            'stockable' =>  $this->faker->randomElement([0,1]),
+            'created_by' =>  '142a514b-faef-4b89-b5fc-34811f151cf4',
+            'stock_methode' =>  $this->faker->randomElement(['CMUP','FIFO','LIFO']),
+            'archive' =>  $this->faker->randomElement([0,1]),
+            'active' =>  $this->faker->randomElement([0,1]),
+            'brand_id' =>  $this->faker->randomElement(['26100eda-f80f-40d0-8d56-2aa55d537a2e','a8a2358c-a31e-4036-8916-14eb00a85352']),
+            'picture' => 'ddddd.jpg',
+            'created_at' => now(),
+            'updated_at' => now(),
+            'deleted_at' => null,
       ];
     }
 }

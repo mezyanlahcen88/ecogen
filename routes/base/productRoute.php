@@ -13,6 +13,8 @@ Route::delete('/products/{id}/force_delete', [ProductController::class, 'forceDe
 Route::put('/products/{id}/restore', [ProductController::class, 'restore'])->name('products.restore');
 //liste all deleted
 Route::get('/products/trashed', [ProductController::class, 'trashed'])->name('products.trashed');
+Route::get('/get-products-json',[ProductController::class,'getProductsJson'])->name('products.getProductsJson');
+
 Route::resource('products', ProductController::class);
 
 

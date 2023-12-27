@@ -12,6 +12,7 @@ use App\Models\AditionalRate;
 use App\Models\EmailAttachement;
 use App\Models\ProductTranslate;
 use App\Models\CategoryTranslate;
+use App\Models\Exercice;
 use App\Models\LanguageTranslate;
 use App\Models\ProductAttachement;
 use App\Models\MainSupplyTranslate;
@@ -244,4 +245,44 @@ if (!function_exists('getProduitNumerotation')) {
     }
 }
 
+if (!function_exists('incProduitNumerotation')) {
+    function incProduitNumerotation()
+    {
+        $num = Numerotation::where('doc_type', 'Produit')->latest()->first();
+        $num->increment_num = $num->increment_num + 1;
+        $num->save();
 
+    }
+}
+
+
+if (!function_exists('getDevisNumerotation')) {
+    function getDevisNumerotation()
+    {
+        $num = Numerotation::where('doc_type', 'Devis')->latest()->first();
+
+        if (!$num) {
+            throw new Exception('No Numerotation record found for doc_type "Client"');
+        }
+        $codeDevis = $num->prefix . $num->increment_num + 1;
+
+        return $codeDevis;
+    }
+}
+
+if (!function_exists('incDevisNumerotation')) {
+    function incDevisNumerotation()
+    {
+        $num = Numerotation::where('doc_type', 'Produit')->latest()->first();
+        $num->increment_num = $num->increment_num + 1;
+        $num->save();
+    }
+}
+
+if (!function_exists('getExercice')) {
+    function getExercice()
+    {
+        $exercice = Exercice::where('etat', 'OUVERT')->latest()->first();
+        return $exercice->exercice;
+    }
+}

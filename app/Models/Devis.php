@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Product extends Model
+class Devis extends Model
 {
     use HasFactory,SoftDeletes;
 
@@ -36,26 +36,10 @@ class Product extends Model
 
 
 //  put the relation of this Model Here
-/**
- * Get the user that owns the Product
- *
- * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
- */
-public function category()
-{
-    return $this->belongsTo(Category::class, 'category_id', 'id');
-}
 
 
-/**
- * Get the user that owns the Product
- *
- * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
- */
-public function scategory()
-{
-    return $this->belongsTo(Category::class, 'scategory_id', 'id');
-}
+//  put the relation of this Model Here
+
 
 
     /**
@@ -65,8 +49,9 @@ public function scategory()
 
     public function getRowsTable(){
         return [
-             'product_code' => 'product_code',
-             'name_fr' => 'name_fr',
+             'name' => 'name',
+             'matricule' => 'matricule',
+
          ];
      }
 
@@ -77,8 +62,8 @@ public function scategory()
 
      public function getRowsTableTrashed(){
          return [
-            'product_code' => 'product_code',
-            'name_fr' => 'name_fr',
+             'name' => 'name',
+             'matricule' => 'matricule',
           ];
           }
 

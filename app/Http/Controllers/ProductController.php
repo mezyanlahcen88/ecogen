@@ -45,6 +45,36 @@ class ProductController extends Controller
         $objects = Product::get();
         return view('products.index', compact('tableRows', 'objects'));
     }
+
+    public function getProductsJson()
+    {
+        $products = Product::with('category')->with('scategory');
+        return Datatables($products)
+
+        // ->filterColumn('user.name' , function($query , $keyword){
+        //     if(is_numeric($keyword)){
+        //         $query->whereRelation('user','id', $keyword);
+        //     }else{
+        //         $query->whereRelation('user','name','LIKE',"%{$keyword}%");
+        //     }
+        // })
+        ->filterColumn('archive' , function($query , $keyword){
+            $query->where('archive', $keyword);
+        })
+        ->addIndexColumn()
+        ->addColumn('archive' , function(Product $product){
+            return '<span class="badge ' . (!$product->archive ? 'bg-danger' : 'bg-success') . ' text-uppercase">' . ($product->archive ? 'Archive' : 'Inarchive') . '</span>
+             ';
+        })
+        ->addColumn('actions', function (Product $object) {
+            return view('products.actions', compact('object'));
+        })
+        ->rawColumns(['archive','actions'])
+        ->editColumn('created_at','{{\Carbon\Carbon::parse($created_at)->format("d/m/Y")}}')
+        ->setRowAttr(['align'=>'center'])
+        ->make(true);
+    }
+
     /**
      * Display a list of soft-deleted records.
      *
@@ -85,7 +115,7 @@ class ProductController extends Controller
         $validated = $request->validated();
         $object = new Product();
         $object->id = Str::uuid();
-        $object->product_code = 'request->name_fr';
+        $object->product_code = $request->product_code;
         $object->name_fr = $request->name_fr;
         $object->name_ar = $request->name_ar;
         $object->category_id = $request->category_id;
@@ -103,14 +133,16 @@ class ProductController extends Controller
         $object->bar_code = $request->bar_code;
         $object->stockable = $request->stockable;
         $object->created_by = Auth::id();
-        $object->stock_methode = $request->stock_methode;
-        $object->archive = $request->archive;
+        $object->stock_methode = 'CMUP';
+        $object->archive = 0;
         $object->brand_id = $request->brand_id;
         if($request->hasFile('picture')){
             dealWithPicture($request,$object,'picture', $request->name_fr,'products','store');
         }
         $object->save();
-
+        if (strpos($request->product_code, 'PR-') !== false) {
+            incProduitNumerotation();
+        }
         return redirect()->route('products.index');
     }
 

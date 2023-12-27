@@ -44,21 +44,16 @@
                             'input_type' => 'text',
                             'class_name' => '',
                             'column_id' => 'product_code',
-                            // 'column_value' => old('product_code'),
                             'column_value' => getProduitNumerotation(),
                             'readonly' => 'false',
                         ])
-                        @include('form.input', [
-                            'cols' => 'col-md-6',
-                            'column' => 'date',
-                            'model' => 'product',
-                            'optional' => 'text-danger',
-                            'input_type' => 'text',
-                            'class_name' => '',
-                            'column_id' => 'date',
-                            'column_value' => Carbon\Carbon::now()->toDateTimeString(),
-                            'readonly' => 'false',
-                        ])
+    <div class="col-lg-6">
+        <div>
+            <label class="form-label mb-0">Date de crétation</label>
+            <input type="text" class="form-control" data-provider="flatpickr" data-date-format="d/m/Y" placeholder="{{Carbon\Carbon::now()->format('d/m/Y')}}">
+        </div>
+    </div>
+
                         @include('form.input', [
                             'cols' => 'col-md-6',
                             'column' => 'name_fr',
@@ -247,29 +242,14 @@
 
                 </div>
                 <div class="card card-body">
-             <div class="between-center">
-                <div class="form-check form-switch form-switch-md" dir="ltr">
-                    <input type="checkbox" class="form-check-input" id="archive" value="1" name="archive">
-                    <label class="form-check-label" for="archive">Archive
-                    <input type="hidden" name="archive" value="0">
-                    </label>
-                </div>
-                <div class="form-check form-switch form-switch-md" dir="ltr">
-                    <input type="checkbox" class="form-check-input" id="customSwitchsizelg" value="1" name="stockable">
-                    <label class="form-check-label" for="customSwitchsizelg">Agir sur le stock</label>
-                </div>
-             </div>
+                    <div class="between-center">
+                        <div class="form-check form-switch form-switch-md" dir="ltr">
+                            <input type="checkbox" class="form-check-input" id="customSwitchsizelg" value="1"
+                                name="stockable">
+                            <label class="form-check-label" for="customSwitchsizelg">Agir sur le stock</label>
+                        </div>
+                    </div>
 
-                    @include('form.singleSelect', [
-                        'cols' => 'col-md-12 ',
-                        'column' => 'stock_methode',
-                        'isReload' => false,
-                        'label' => 'product_form_stock_methode',
-                        'optional' => 'text-danger',
-                        'divID' => 'stock_methode',
-                        'options' => $stock_methods,
-                        'object' => false,
-                    ])
                     @include('form.singleSelect', [
                         'cols' => 'col-md-12 ',
                         'column' => 'warehouse_id',
@@ -283,12 +263,12 @@
                 </div>
             </div>
 
-        <div class="col-lg-12">
-            <div class="text-start">
-                <button type="submit" class="btn btn-primary">{{ trans('translation.general_general_save') }}</button>
+            <div class="col-lg-12">
+                <div class="text-start">
+                    <button type="submit" class="btn btn-primary">{{ trans('translation.general_general_save') }}</button>
+                </div>
             </div>
         </div>
-    </div>
 
     </form>
 
@@ -297,5 +277,6 @@
 @section('js')
     @include('layouts.includes.form_js')
     <script src="{{ asset('assets/custom_js/validate_number.js') }}"></script>
+    <script src="{{ asset('assets/custom_js/categories_scategories.js') }}"></script>
     {!! JsValidator::formRequest('App\Http\Requests\StoreProductRequest') !!}
 @endsection

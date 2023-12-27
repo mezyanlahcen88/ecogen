@@ -86,6 +86,8 @@ require __DIR__ . '/base/employeRoute.php';
 require __DIR__ . '/base/warehouseRoute.php';
 ############################### Product ###############################
 require __DIR__ . '/base/productRoute.php';
+############################### Devis ###############################
+require __DIR__ . '/base/devisRoute.php';
     ############################### ReloadController ###############################
     Route::prefix('/')->group(__DIR__ . '/base/reload.routes.php');
 });

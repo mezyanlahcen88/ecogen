@@ -25,6 +25,7 @@
 
 
 @section('card-body')
+@include('products.product_filter')
     @include('products.table',[
         'model'=>'product',
     ])
@@ -32,6 +33,35 @@
 
 @section('js')
     @include('layouts.includes.datatable_js')
+<script>
+        $('#datatable').DataTable({
+            serverSide: true,
+            ajax: '/get-products-json',
+            'columns':[
+                {
+                        data: 'DT_RowIndex',
+                        name: 'DT_RowIndex',
+                        orderable: false,
+                        searchable: false
+                    },
+                {data:'picture'},
+                {data:'product_code'},
+                {data:'name_fr'},
+                {data:'category.name'},
+                {data:'scategory.name'},
+                {data:'active', searchable: true,visible: true},
+                {data:'archive',searchable: true,visible: true,orderable: true},
+                {data:'created_at'},
+                {data:'actions'},
+
+            ],
+
+
+        });
+
+</script>
+    <script src="{{ URL::asset('assets/js/pages/form-pickers.init.js') }}"></script>
+
     <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
 @endsection
 

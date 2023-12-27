@@ -87,7 +87,7 @@ class CategoryController extends Controller
         $object->menu = $request->menu;
         // $object->active = $request->active;
         if($request->hasFile('picture')){
-            dealWithPicture($request,$object,'picture', $request->name,'products','store');
+            dealWithPicture($request,$object,'picture', $request->name,'categories','store');
         }
         $object->save();
 
@@ -199,5 +199,10 @@ class CategoryController extends Controller
         $object->save();
         $message = $object->active ? trans('translation.category_message_active') : trans('translation.category_message_inactive');
         return response()->json(['code' => 200, 'active' => $object->active, 'message' => $message]);
+    }
+
+    public function getSubCategories($id){
+        $scategories = Category::where('parent_id', $id)->pluck('name', 'id');
+        return response()->json($scategories);
     }
 }

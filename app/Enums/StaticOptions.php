@@ -58,5 +58,10 @@ final class StaticOptions
         'LIFO'=>'LIFO',
     ];
 
+    const DEVIS_STATUS =[
+        'En attente'=>'En attente',
+        'Validé'=>'Validé',
+        'Rejeté'=>'Rejeté',
+    ];
 
 }

@@ -13,6 +13,7 @@ Route::delete('/categories/{id}/force_delete', [CategoryController::class, 'forc
 Route::put('/categories/{id}/restore', [CategoryController::class, 'restore'])->name('categories.restore');
 //liste all deleted
 Route::get('/categories/trashed', [CategoryController::class, 'trashed'])->name('categories.trashed');
+Route::get('/categories/{id}/sub-categories', [CategoryController::class, 'getSubCategories'])->name('categories.getSubCategories');
 Route::resource('categories', CategoryController::class);
 
 

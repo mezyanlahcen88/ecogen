@@ -74,7 +74,7 @@
                 <div class="col-3">
                     <div class="card card-body">
                         <div class="profile-user position-relative d-inline-block mx-auto  mb-4">
-                            <img src="{{ URL::asset(getPicture($object->picture,'reglements')) }}"
+                            <img src="{{ URL::asset(getPicture($object->picture,'payments')) }}"
                                 class="  rounded-circle avatar-xl img-thumbnail user-profile-image" alt="user-profile-image">
                             <div class="avatar-xs p-0 rounded-circle profile-photo-edit">
                                 <input id="profile-img-file-input" type="file" class="profile-img-file-input" name="picture">
@@ -107,6 +107,7 @@
 @section('js')
     @include('layouts.includes.form_js')
     <script src="{{ asset('assets/custom_js/validate_number.js') }}"></script>
+    <script src="{{ asset('assets/custom_js/ckeditor.js') }}"></script>
     {!! JsValidator::formRequest('App\Http\Requests\StorePaymentRequest') !!}
 
 @endsection

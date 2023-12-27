@@ -97,7 +97,7 @@
                             <ul class="nav nav-sm flex-column">
                                 @can('user-list')
                                     <li class="nav-item">
-                                        <a href="{{ route('users.index') }}" class="nav-link" data-key="users">
+                                        <a href="{{ route('devis.index') }}" class="nav-link" data-key="users">
                                             <span class="text-uppercase">Demande de prix</span>
                                             <span class="badge badge-pill bg-danger" data-key="users">
                                                 {{-- {{ getSidebar()['users'] }} --}}

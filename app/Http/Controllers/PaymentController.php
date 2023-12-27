@@ -11,10 +11,8 @@ use Illuminate\Http\Request;
 use App\Services\CrudService;
 use App\Http\Requests\StorePaymentRequest;
 
-
 class PaymentController extends Controller
 {
-
     public $staticOptions;
     public $crudService;
     public function __construct(CrudService $crudService, StaticOptions $staticOptions)
@@ -38,10 +36,9 @@ class PaymentController extends Controller
      */
     public function index()
     {
-
-           $tableRows =(new Payment())->getRowsTable();
+        $tableRows = (new Payment())->getRowsTable();
         $objects = Payment::get();
-        return view('payments.index',compact('tableRows','objects'));
+        return view('payments.index', compact('tableRows', 'objects'));
     }
     /**
      * Display a list of soft-deleted records.
@@ -51,8 +48,8 @@ class PaymentController extends Controller
     public function trashed(Request $request)
     {
         $objects = Payment::onlyTrashed()->get();
-        $tableRows =(new Payment())->getRowsTableTrashed();
-        return view('payments.trashedIndex', compact('tableRows','objects'));
+        $tableRows = (new Payment())->getRowsTableTrashed();
+        return view('payments.trashedIndex', compact('tableRows', 'objects'));
     }
 
     /**
@@ -62,11 +59,9 @@ class PaymentController extends Controller
      */
     public function create()
     {
-
         $object = new Payment();
         $variable = '';
-        return view('payments.create',compact('variable'));
-
+        return view('payments.create', compact('variable'));
     }
 
     /**
@@ -80,17 +75,17 @@ class PaymentController extends Controller
         $validated = $request->validated();
         $object = new Payment();
         $object->id = Str::uuid();
-$object->reglement = $request->reglement;
-$object->compte = $request->compte;
-$object->nature = $request->nature;
-$object->comment = $request->comment;
+        $object->reglement = $request->reglement;
+        $object->compte = $request->compte;
+        $object->nature = $request->nature;
+        $object->comment = $request->comment;
 
-        if($request->hasFile('picture')){
-            dealWithPicture($request,$object,'picture', $request->name,'payments','store');
+        if ($request->hasFile('picture')) {
+            dealWithPicture($request, $object, 'picture', $request->reglement, 'payments', 'store');
         }
         $object->save();
         return redirect()->route('payments.index');
-        }
+    }
 
     /**
      * Display the specified resource.
@@ -112,7 +107,7 @@ $object->comment = $request->comment;
     public function edit($id)
     {
         $object = payment::findOrfail($id);
-        return view('payments.edit',compact('object'));
+        return view('payments.edit', compact('object'));
     }
 
     /**
@@ -122,17 +117,17 @@ $object->comment = $request->comment;
      * @param  \App\Models\Payment  $payment
      * @return \Illuminate\Http\Response
      */
-    public function update(StorePaymentRequest $request,string $id)
+    public function update(StorePaymentRequest $request, string $id)
     {
         $validated = $request->validated();
-                $object = Payment::findOrFail($id);
-$object->reglement = $request->reglement;
-$object->compte = $request->compte;
-$object->nature = $request->nature;
-$object->comment = $request->comment;
+        $object = Payment::findOrFail($id);
+        $object->reglement = $request->reglement;
+        $object->compte = $request->compte;
+        $object->nature = $request->nature;
+        $object->comment = $request->comment;
 
-        if($request->hasFile('picture')){
-            dealWithPicture($request,$object,'picture', $request->name,'payments','update');
+        if ($request->hasFile('picture')) {
+            dealWithPicture($request, $object, 'picture', $request->reglement, 'payments', 'update');
         }
         $object->save();
         return redirect()->route('payments.index');
@@ -146,11 +141,10 @@ $object->comment = $request->comment;
      */
     public function destroy(Request $request)
     {
-      $object = Payment::findOrFail($request->id)->delete();
-
+        $object = Payment::findOrFail($request->id)->delete();
     }
 
-            /**
+    /**
      * Restore a soft-deleted user.
      *
      * @param \Illuminate\Http\Request $request The HTTP request object.
@@ -159,8 +153,9 @@ $object->comment = $request->comment;
      */
     public function restore(Request $request, $id)
     {
-
-        $object = Payment::withTrashed()->findOrFail($id)->restore();
+        $object = Payment::withTrashed()
+            ->findOrFail($id)
+            ->restore();
         // storeSidebar();
         return redirect()->route('payments.index');
     }
@@ -174,7 +169,6 @@ $object->comment = $request->comment;
      */
     public function forceDelete(Request $request, $id)
     {
-
         $object = Payment::withTrashed()->findOrFail($id);
         // deletePicture($object,'payments','picture');
         $object->forceDelete();
