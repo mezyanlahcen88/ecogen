@@ -39,8 +39,18 @@
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-5">
                                 <div class="row">
+                                    @include('form.singleSelect', [
+                                        'cols' => 'col-md-12',
+                                        'column' => 'client_id',
+                                        'isReload' => false,
+                                        'label' => 'devis_form_client_id',
+                                        'optional' => 'text-danger',
+                                        'divID' => 'client_id',
+                                        'options' => $clients,
+                                        'object' => false,
+                                    ])
                                     @include('form.singleSelect', [
                                         'cols' => 'col-md-6 ',
                                         'column' => 'category_id',
@@ -61,16 +71,7 @@
                                         'options' => [],
                                         'object' => false,
                                     ])
-                                    @include('form.singleSelect', [
-                                        'cols' => 'col-md-12',
-                                        'column' => 'client_id',
-                                        'isReload' => false,
-                                        'label' => 'devis_form_client_id',
-                                        'optional' => 'text-danger',
-                                        'divID' => 'client_id',
-                                        'options' => $clients,
-                                        'object' => false,
-                                    ])
+
 
                                     @include('form.singleSelect', [
                                         'cols' => 'col-md-6 ',
@@ -93,16 +94,17 @@
                                         'column_value' => old('latest_price'),
                                         'readonly' => 'false',
                                     ])
-      <div class="col-md-2 mt-4">
-        <a href="#" id="" class="btn btn-primary text-light getProduct"><i class="las la-check"></i></a>
-    </div>
+                                    <div class="col-md-2 mt-4">
+                                        <a href="#" id="" class="btn btn-primary text-light getProduct"><i
+                                                class="las la-check"></i></a>
+                                    </div>
                                 </div>
 
                             </div>
                             <div class="col-md-4">
                                 <div class="row">
                                     @include('form.singleSelect', [
-                                        'cols' => 'col-md-12 ',
+                                        'cols' => 'col-md-6 ',
                                         'column' => 'client_id',
                                         'isReload' => false,
                                         'label' => 'devis_form_status',
@@ -111,7 +113,7 @@
                                         'options' => $devis_status,
                                         'object' => false,
                                     ])
-                                    <div class="col-md-12">
+                                    <div class="col-md-6">
                                         <div>
                                             <label class="form-label">Date de crétation</label>
                                             <input type="text" class="form-control" data-provider="flatpickr"
@@ -123,13 +125,13 @@
                                         <div class="form-group">
                                             <label for="content">{{ trans('translation.devis_form_comment') }} &nbsp;
                                                 <span class="text-secondary">*</span></label>
-                                            <textarea class="form-control" name="comment" id="comment">{{ old('comment') }}</textarea>
+                                            <textarea class="form-control" name="comment" id="comment" rows="5">{{ old('comment') }}</textarea>
                                         </div>
                                     </div>
 
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <div
                                     class="bg-info text-light h-25 w-100 d-flex  justify-content-between align-items-center px-4 mb-1">
                                     <label for="" id="total_ttc">DEVIS N° :</label>

@@ -29,6 +29,9 @@ class DatabaseSeeder extends Seeder
             VilleSeeder::class,
             SecteurSeeder::class,
             ProfessionSeeder::class,
+            CategorySeeder::class,
+            ProfessionSeeder::class,
+            ProfessionSeeder::class,
         ]);
 
     }
