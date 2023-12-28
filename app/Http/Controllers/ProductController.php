@@ -97,6 +97,7 @@ class ProductController extends Controller
      */
     public function create()
     {
+
         $object = new Product();
         $categories = Category::where('parent_id',null)->pluck('name','id');
         $scategories = Category::where('parent_id','!=',null)->pluck('name','id');
@@ -116,6 +117,7 @@ class ProductController extends Controller
     public function store(StoreProductRequest $request)
     {
         $validated = $request->validated();
+        // dd($request->all());
         $object = new Product();
         $object->id = Str::uuid();
         $object->product_code = $request->product_code;
@@ -139,8 +141,8 @@ class ProductController extends Controller
         $object->stock_methode = 'CMUP';
         // $object->archive = 0;
         $object->brand_id = $request->brand_id;
-        $object->created_at = \Carbon\Carbon::now();
-        $object->updated_at = \Carbon\Carbon::now();
+        $object->created_at = $request->created_at;
+        $object->updated_at = \Carbon\Carbon::now()->format('Y-m-d H:i:s');
         if($request->hasFile('picture')){
             dealWithPicture($request,$object,'picture', $request->name_fr,'products','store');
         }
@@ -211,7 +213,7 @@ class ProductController extends Controller
         $object->stock_methode = $request->stock_methode;
         $object->archive = $request->archive;
         $object->brand_id = $request->brand_id;
-        $object->updated_at = \Carbon\Carbon::now();
+        $object->updated_at = \Carbon\Carbon::now()->format('Y-m-d H:i:s');
         if($request->hasFile('picture')){
             dealWithPicture($request,$object,'picture', $request->name_fr,'products','update');
         }

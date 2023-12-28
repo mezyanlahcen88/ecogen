@@ -16,7 +16,7 @@
         @endif
 
         <select class="js-example-basic-single" name="{{ $column }}" id="{{ $id ?? '' }}">
-            <option value="" selected>{{ trans('translation.general_general_select') }}</option>
+            <option value="" >{{ trans('translation.general_general_select') }}</option>
 
                 @foreach ($options as $key => $value)
                 @if ($object)
@@ -31,7 +31,7 @@
 
                 @endforeach
 
-               
+
         </select>
     </div>
     @error($column)

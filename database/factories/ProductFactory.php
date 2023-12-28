@@ -50,7 +50,7 @@ class ProductFactory extends Factory
             'stock_methode' =>  'CMUP',
             'archive' =>  $this->faker->randomElement([0,1]),
             'active' =>  $this->faker->randomElement([0,1]),
-            'brand_id' =>  $this->faker->randomElement($brands ),
+            'brand_id' =>  $this->faker->randomElement($brands),
             'picture' => 'ddddd.jpg',
             'created_at' => now(),
             'updated_at' => now(),

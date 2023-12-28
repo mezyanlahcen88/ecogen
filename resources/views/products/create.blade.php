@@ -49,8 +49,8 @@
                         ])
     <div class="col-lg-6">
         <div>
-            <label class="form-label mb-0">Date de crétation</label>
-            <input type="text" class="form-control" data-provider="flatpickr" data-date-format="d/m/Y" placeholder="{{Carbon\Carbon::now()->format('d/m/Y')}}">
+            <label class="form-label my-1">Date de crétation</label>
+            <input type="text" class="form-control" data-provider="flatpickr" data-date-format="Y-m-d H:i:s" placeholder="{{Carbon\Carbon::now()->format('Y-m-d H:i:s')}}" name="created_at" value="{{Carbon\Carbon::now()->format('Y-m-d H:i:s')}}">
         </div>
     </div>
 

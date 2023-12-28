@@ -42,6 +42,12 @@ final class StaticOptions
         'Fournisseur'=>'Fournisseur',
     ];
 
+    const GARANTIES_TYPES =[
+        'Espece'=>'Espece',
+        'Cheque'=>'Cheque',
+        'Virsement'=>'Virsement',
+    ];
+
     const CLIENT_TYPES =[
         'Fidel'=>'Fidel',
         'Serieux'=>'Serieux',

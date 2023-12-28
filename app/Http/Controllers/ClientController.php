@@ -110,7 +110,7 @@ class ClientController extends Controller
         $object->parent_id = $request->parent_id;
         $object->parent_type = $request->parent_type;
         $object->save();
-        return redirect()->route('clients.index');
+        return redirect()->route('clients.createGaranty', $object->id);
     }
 
     /**
@@ -132,8 +132,14 @@ class ClientController extends Controller
      */
     public function edit($id)
     {
-        $object = client::findOrfail($id);
-        return view('clients.edit', compact('object'));
+        $object = client::findOrFail($id);
+        $regions = Region::pluck('name', 'id');
+        $client_types = $this->staticOptions::CLIENT_TYPES;
+        $parent_types = $this->staticOptions::PARENT_TYPES;
+        $garanties_types = $this->staticOptions::GARANTIES_TYPES;
+        $fonctions = Profession::pluck('name', 'id');
+
+        return view('clients.edit', compact( 'object' ,'regions', 'client_types', 'parent_types', 'fonctions','garanties_types'));
     }
 
     /**
@@ -206,5 +212,11 @@ class ClientController extends Controller
         $object->save();
         $message = $object->active ? trans('translation.client_message_activated') : trans('translation.client_message_inactivated');
         return response()->json(['code' => 200, 'active' => $object->active, 'message' => $message]);
+    }
+
+    public function createGaranty($id){
+        $object = Client::findOrFail($id);
+        $garanties_types = $this->staticOptions::GARANTIES_TYPES;
+        return view("clients.garanties.create",compact('object','garanties_types'));
     }
 }

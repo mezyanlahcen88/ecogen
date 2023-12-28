@@ -30,7 +30,7 @@
 
                         <div class="row">
                             @include('form.input', [
-                                'cols' => 'col-md-6',
+                                'cols' => 'col-md-6 ',
                                 'column' => 'name_fr',
                                 'model' => 'client',
                                 'optional' => 'text-danger',
@@ -41,7 +41,7 @@
                                 'readonly' => 'false',
                             ])
                             @include('form.input', [
-                                'cols' => 'col-md-6',
+                                'cols' => 'col-md-6 rtl',
                                 'column' => 'name_ar',
                                 'model' => 'client',
                                 'optional' => 'text-danger',
@@ -208,7 +208,7 @@
                 </div>
             </div>
 
-            <div class="col-12">
+            {{-- <div class="col-12">
                 <div class="card">
                     <div class="card-header bg-primary text-white">
                         <h6 class="card-title mb-0 text-white">informations de la garantie</h6>
@@ -216,6 +216,17 @@
                     <div class="card-body">
 
                         <div class="row repeater">
+                            @include('form.input', [
+                                'cols' => 'col-md-2',
+                                'column' => 'picture',
+                                'model' => 'garanty',
+                                'optional' => 'text-danger',
+                                'input_type' => 'file',
+                                'class_name' => '',
+                                'column_id' => 'picture',
+                                'column_value' => old('picture'),
+                                'readonly' => 'false',
+                            ])
                             @include('form.input', [
                                 'cols' => 'col-md-2',
                                 'column' => 'amount',
@@ -237,6 +248,7 @@
                                 'options' => [],
                                 'object' => false,
                             ])
+                            <input type="hidden" name="type_client" value="Client">
                             @include('form.input', [
                                 'cols' => 'col-md-2',
                                 'column' => 'doe',
@@ -250,17 +262,6 @@
                             ])
                             @include('form.input', [
                                 'cols' => 'col-md-3',
-                                'column' => 'picture',
-                                'model' => 'garanty',
-                                'optional' => 'text-danger',
-                                'input_type' => 'file',
-                                'class_name' => '',
-                                'column_id' => 'picture',
-                                'column_value' => old('picture'),
-                                'readonly' => 'false',
-                            ])
-                             {{-- @include('form.input', [
-                                'cols' => 'col-md-3 d-none',
                                 'column' => 'comment',
                                 'model' => 'garanty',
                                 'optional' => 'text-danger',
@@ -269,20 +270,29 @@
                                 'column_id' => 'comment',
                                 'column_value' => old('comment'),
                                 'readonly' => 'false',
-                            ]) --}}
-                             <div class="col-1 d-visible">
-                                <button class="btn add"><i class="las la-copy icon-xxxlg text-success"></i></button>
+                            ])
+                            <div class="col-1 d-visible mt-1">
+                                <button class="btn add"><i class="las la-plus icon-xxxlg text-success"></i></button>
                             </div>
-                            <div class="col-1 d-none">
-                                <button class="btn remove"><i class="las la-times icon-xxxlg text-danger"></i></button>
-                            </div>
+
                         </div>
                         <div class="repeater-container">
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h6 class="card-title mb-0 text-white">Details des garanties</h6>
+                    </div>
+                    <div class="card-body">
+                        @include('clients.create_table')
 
+
+                    </div>
+                </div>
+            </div> --}}
             <div class="col-lg-12">
                 <div class="text-start">
                     <button type="submit" class="btn btn-primary">{{ trans('translation.general_general_save') }}</button>
@@ -298,6 +308,7 @@
     <script src="{{ asset('assets/custom_js/validate_number.js') }}"></script>
     <script src="{{ asset('assets/custom_js/region_ville.js') }}"></script>
     <script src="{{ asset('assets/custom_js/ville_secteur.js') }}"></script>
-    <script src="{{ asset('assets/custom_js/shared/reapeter.js') }}"></script>
+    <script src="{{ asset('assets/custom_js/clients/saveClient.js') }}"></script>
+
     {!! JsValidator::formRequest('App\Http\Requests\StoreClientRequest') !!}
 @endsection

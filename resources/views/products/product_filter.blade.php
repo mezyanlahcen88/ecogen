@@ -39,8 +39,8 @@
                 <div>
                     <select class="js-example-basic-single"  name="archive" id="archive">
                         <option value="">Chosir Archive</option>
-                        <option value="0">Archive</option>
-                        <option value="1">Inarchive</option>
+                        <option value="1">Archive</option>
+                        <option value="0">Inarchive</option>
                     </select>
                 </div>
             </div>

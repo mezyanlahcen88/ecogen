@@ -13,6 +13,8 @@ Route::delete('/clients/{id}/force_delete', [ClientController::class, 'forceDele
 Route::put('/clients/{id}/restore', [ClientController::class, 'restore'])->name('clients.restore');
 //liste all deleted
 Route::get('/clients/trashed', [ClientController::class, 'trashed'])->name('clients.trashed');
+Route::get('/clients/{id}/create-garanty', [ClientController::class, 'createGaranty'])->name('clients.createGaranty');
+Route::get('/clients/store-garanty', [ClientController::class, 'storeGaranty'])->name('clients.storeGaranty');
 Route::resource('clients', ClientController::class);
 
 
