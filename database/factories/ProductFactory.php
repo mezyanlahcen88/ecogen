@@ -43,7 +43,7 @@ class ProductFactory extends Factory
             'tva' =>  $this->faker->numberBetween(1, 99),
             'min_stock' =>  $this->faker->numberBetween(1, 99),
             'unite' =>  $this->faker->randomElement(['KG', 'Piece', 'Ton']),
-            'warehouse_id'=>  '293c16e9-6344-4d42-b6b3-326fd1df8787',
+            'warehouse_id'=>  'fb7a7118-7b76-4cad-ba47-af7536686998',
             'bar_code'=>  $this->faker->numberBetween(1111111, 9999999),
             'stockable' =>  $this->faker->randomElement([0,1]),
             'created_by' =>  $user,

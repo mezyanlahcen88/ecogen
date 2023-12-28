@@ -28,18 +28,25 @@ class StoreProductRequest extends FormRequest
 
         return [
              'product_code' => ['bail', 'required', 'min:3',Rule::unique('products', 'product_code')->ignore($this)],
-            'buy_price' => ['bail', 'required',],
-            // 'adresse_complement' => ['bail'],
-            // 'post_code' => ['bail', 'required', 'min:3'],
-            // 'company_number' => ['bail', 'required', 'min:3'],
-            // 'vat_number' => ['bail'],
-            // 'country' => ['integer'],
-            // 'state' => ['integer'],
-            // 'city' => ['integer'],
-            // 'email' => ['required', 'email', 'regex:/(.+)@(.+)\.(.+)/i', Rule::unique('transport_companies', 'email')->ignore($model)],
-            // 'phone' => ['required', 'regex:' . RegexEnum::PHONE, 'min:11', 'max:15', Rule::unique('transport_companies', 'phone')->ignore($model)],
-            // 'fix' => ['nullable', 'regex:' . RegexEnum::PHONE, 'min:11', 'max:15', Rule::unique('transport_companies', 'fix')->ignore($model)],
-            // 'fax' => ['nullable', 'regex:' . RegexEnum::PHONE, 'min:11', 'max:15', Rule::unique('transport_companies', 'fax')->ignore($model)],
+             'name_fr' =>  ['bail', 'required', 'min:3'],
+             'scategory_id' =>  ['bail', 'required', 'min:3'],
+             'buy_price' =>  ['bail', 'required', 'min:3'],
+             'price_unit' =>  ['bail', 'required'],
+             'price_gros' =>  ['bail', 'required'],
+             'price_reseller' =>  ['bail', 'required'],
+             'latest_price' =>  ['bail', 'required'],
+             'remise' =>  ['bail', 'required'],
+             'tva' =>  ['bail', 'required'],
+             'min_stock' =>  ['bail', 'required'],
+             'unite' =>  ['bail', 'required'],
+             'warehouse_id' =>  ['bail', 'required'],
+             'bar_code' =>  ['bail', 'required'],
+            //  'stockable' =>  ['bail', 'nullable'],
+            //  'archive' =>  ['bail', 'required',],
+             'brand_id' =>  ['bail', 'required'],
+             'name_ar' =>  ['bail', 'required', 'min:3'],
+             'picture' =>  ['bail', 'required'],
+
         ];
     }
 }

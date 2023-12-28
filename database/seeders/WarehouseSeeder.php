@@ -17,7 +17,6 @@ class WarehouseSeeder extends Seeder
         Warehouse::create([
             'id' => 'fb7a7118-7b76-4cad-ba47-af7536686998',
             'name' => 'Depot Hay essalam',
-            'etat' => 'OUVERT',
             'address' => '<p>Depot Hty essalam</p>',
             'active' => 1,
             'created_at' => '2023-12-27 18:59:44',

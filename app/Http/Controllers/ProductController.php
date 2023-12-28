@@ -71,6 +71,9 @@ class ProductController extends Controller
         })
         ->rawColumns(['archive','actions'])
         ->editColumn('created_at','{{\Carbon\Carbon::parse($created_at)->format("d/m/Y")}}')
+        ->editColumn('picture',function (Product $object) {
+            return view('products.image', compact('object'));
+         })
         ->setRowAttr(['align'=>'center'])
         ->make(true);
     }
@@ -131,11 +134,13 @@ class ProductController extends Controller
         $object->unite = $request->unite;
         $object->warehouse_id = $request->warehouse_id;
         $object->bar_code = $request->bar_code;
-        $object->stockable = $request->stockable;
+        // $object->stockable = $request->stockable;
         $object->created_by = Auth::id();
         $object->stock_methode = 'CMUP';
-        $object->archive = 0;
+        // $object->archive = 0;
         $object->brand_id = $request->brand_id;
+        $object->created_at = \Carbon\Carbon::now();
+        $object->updated_at = \Carbon\Carbon::now();
         if($request->hasFile('picture')){
             dealWithPicture($request,$object,'picture', $request->name_fr,'products','store');
         }
@@ -206,6 +211,7 @@ class ProductController extends Controller
         $object->stock_methode = $request->stock_methode;
         $object->archive = $request->archive;
         $object->brand_id = $request->brand_id;
+        $object->updated_at = \Carbon\Carbon::now();
         if($request->hasFile('picture')){
             dealWithPicture($request,$object,'picture', $request->name_fr,'products','update');
         }
