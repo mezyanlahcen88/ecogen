@@ -39,7 +39,15 @@ class Garanty extends Model
 
 
 //  put the relation of this Model Here
-
+/**
+ * Get the user that owns the Garanty
+ *
+ * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+ */
+public function client()
+{
+    return $this->belongsTo(Client::class, 'parent_id', 'id');
+}
 
 
     /**

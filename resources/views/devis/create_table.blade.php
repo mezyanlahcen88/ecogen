@@ -13,7 +13,7 @@
             <th>{{ trans('translation.general_general_action') }}</th>
         </tr>
     </thead>
-    <tbody class="list form-check-all">
+    <tbody class="list form-check-all" id="productTableBody">
 <tr class="text-center">
     <td>PR-1</td>
     <td>Cima 45 | سيما 45</td>

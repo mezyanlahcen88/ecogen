@@ -60,7 +60,7 @@
                 {
                     data: 'active',
                     searchable: true,
-                    visible: true
+                    visible: false
                 },
                 {
                     data: 'archive',

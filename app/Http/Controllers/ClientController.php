@@ -17,6 +17,7 @@ use Illuminate\Http\Request;
 use App\Services\CrudService;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreClientRequest;
+use App\Models\Garanty;
 
 class ClientController extends Controller
 {
@@ -218,5 +219,23 @@ class ClientController extends Controller
         $object = Client::findOrFail($id);
         $garanties_types = $this->staticOptions::GARANTIES_TYPES;
         return view("clients.garanties.create",compact('object','garanties_types'));
+    }
+
+    public function storeGaranty(Request $request){
+        // dd($request->all());
+        $garanty = new Garanty();
+        $garanty->id = Str::uuid();
+        $garanty->amount = $request->amount;
+        $garanty->parent_id = $request->parent_id;
+        $garanty->parent_type = $request->parent_type;
+        $garanty->type = $request->type;
+        if($request->hasFile('picture')){
+            dealWithPicture($request,$garanty,'picture', $request->parent_type,'garanties','store');
+        }
+        $garanty->user_id = Auth::id();
+        $garanty->comment = $request->comment;
+        $garanty->doe = $request->doe;
+        $garanty->save();
+        return back();
     }
 }

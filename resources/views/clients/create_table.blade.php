@@ -12,6 +12,18 @@
         </tr>
     </thead>
     <tbody class="list form-check-all">
+     @foreach ($object->garanties as $gaanty)
+     <tr class="text-center">
+        <td>{{$gaanty->amount}}</td>
+        <td>{{$gaanty->amount}}</td>
+        <td>{{$gaanty->amount}}</td>
+        <td>{{$gaanty->amount}}</td>
+        <td>{{$gaanty->amount}}</td>
+        <td>{{$gaanty->amount}}</td>
+        <td>{{$gaanty->amount}}</td>
 
+     </tr>
+
+     @endforeach
     </tbody>
 </table>

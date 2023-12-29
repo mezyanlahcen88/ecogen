@@ -20,7 +20,6 @@
     <form action="{{route('clients.storeGaranty')}}" method="post" id="garantyForm" enctype="multipart/form-data">
         @csrf
         <div class="row">
-
            <div class="col-9">
                 <div class="card">
                     <div class="card-header bg-primary text-white between-center">
@@ -51,13 +50,14 @@
                                 'options' => $garanties_types,
                                 'object' => false,
                             ])
-                            <input type="hidden" name="type_garanty" value="Client">
+                            <input type="hidden" name="parent_type" value="Client">
+                            <input type="hidden" name="parent_id" value="{{$object->id}}">
                             {{-- @include('form.input', [
                                 'cols' => 'col-md-4',
                                 'column' => 'doe',
                                 'model' => 'garanty',
                                 'optional' => 'text-danger',
-                                'input_type' => 'date',
+                                'input_type' => 'datetime-local',
                                 'class_name' => '',
                                 'column_id' => 'doe',
                                 'column_value' => old('doe'),
@@ -66,7 +66,7 @@
                             <div class="col-md-4">
                                 <div>
                                     <label class="form-label my-1">{{ trans('translation.garanty_form_doe') }}</label>
-                                    <input type="text" class="form-control" data-provider="flatpickr" data-date-format="d/m/Y" placeholder="{{Carbon\Carbon::now()->format('d/m/Y')}}" name="created_at">
+                                    <input type="text" class="form-control" data-provider="flatpickr"  data-enable-time data-date-format="Y-m-d" placeholder="{{Carbon\Carbon::now()->format('d-m-Y H:i')}}" name="doe">
                                 </div>
                             </div>
                              <div class="col-md-12 col-xl-12 col-xs-12 col-sm-12">
@@ -94,7 +94,7 @@
                         <h6 class="card-title mb-0 text-white">Piece Jointes</h6>
                     </div>
                     <div class="card-body">
-                        <div class="profile-user position-relative d-inline-block mx-auto  mb-4">
+                        <div class="profile-user position-relative d-inline-block   mb-4">
                             <img src="{{ URL::asset('assets/images/no_image.jpg') }}"
                                 class="  rounded-circle avatar-xl img-thumbnail user-profile-image" alt="user-profile-image">
                             <div class="avatar-xs p-0 rounded-circle profile-photo-edit">
@@ -133,6 +133,5 @@
     <script src="{{ asset('assets/custom_js/ville_secteur.js') }}"></script>
     <script src="{{ asset('assets/custom_js/ckeditor.js') }}"></script>
     <script src="{{ asset('assets/custom_js/garanties/saveClient.js') }}"></script>
-
     {!! JsValidator::formRequest('App\Http\Requests\StoreGarantyRequest') !!}
 @endsection
