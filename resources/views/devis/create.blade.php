@@ -132,24 +132,24 @@
                             <div class="col-md-4">
                                 <div
                                     class="bg-info text-light h-25 w-100 d-flex  justify-content-between align-items-center px-4 mb-1">
-                                    <label for="" id="total_ttc">DEVIS N° :</label>
-                                    <label for="" id="total_ttc"
+                                    <label for="" >DEVIS N° :</label>
+                                    <label for="" id="dev_num"
                                         class="fs-3">{{ getDevisNumerotation() . '/' . getExercice() }}</label>
                                 </div>
                                 <div
                                     class="bg-primary text-light h-25 w-100 d-flex  justify-content-between align-items-center px-4 mb-1">
-                                    <label for="" id="total_ttc">Total TTC :</label>
-                                    <label for="" id="total_ttc" class="fs-3">1570</label>
+                                    <label for="" i>Total TTC :</label>
+                                    <label for="" id="total_ttc" class="fs-3">0</label>
                                 </div>
                                 <div
                                     class="bg-success text-light h-25 w-100 d-flex  justify-content-between align-items-center px-4 mb-1">
-                                    <label for="" id="total_ttc">Total HT :</label>
-                                    <label for="" id="total_ttc" class="fs-3">1500</label>
+                                    <label for="" >Total HT :</label>
+                                    <label for="" id="total_ht" class="fs-3">0</label>
                                 </div>
                                 <div
                                     class="bg-warning text-light h-25 w-100 d-flex  justify-content-between align-items-center px-4 mb-1">
-                                    <label for="" id="total_ttc">Total TVA :</label>
-                                    <label for="" id="total_ttc" class="fs-3">80000,222</label>
+                                    <label for="" >Total TVA :</label>
+                                    <label for="" id="total_ttva" class="fs-3">0</label>
                                 </div>
 
                             </div>
