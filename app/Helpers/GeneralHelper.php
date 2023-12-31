@@ -23,6 +23,7 @@ use App\Models\Numerotation;
 use Dotenv\Util\Str;
 use Illuminate\Support\Facades\Storage;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
+use Carbon\Carbon;
 
 /**
  * Get the ID of the default language.
@@ -116,7 +117,7 @@ if (!function_exists('getSidebar')) {
  * @return void
  */
 
- if (!function_exists('storeSetting')) {
+if (!function_exists('storeSetting')) {
     function storeSetting()
     {
         $settings = Setting::pluck('option_value', 'option_name');
@@ -127,8 +128,8 @@ if (!function_exists('getSidebar')) {
 if (!function_exists('getSettings')) {
     function getSettings()
     {
-        $settings  = json_decode(Storage::disk('public')->get('settings/setting.json'), true);
-        if(!$settings) {
+        $settings = json_decode(Storage::disk('public')->get('settings/setting.json'), true);
+        if (!$settings) {
             $settings = Setting::pluck('option_value', 'option_name');
             Storage::disk('public')->put('settings/setting.json', $settings);
         }
@@ -136,7 +137,6 @@ if (!function_exists('getSettings')) {
         return $settings;
     }
 }
-
 
 /**
  * Get the active languages.
@@ -164,7 +164,6 @@ if (!function_exists('getDefaultLanguage')) {
         return $langauge;
     }
 }
-
 
 /**
  * Accept file types.
@@ -234,7 +233,9 @@ if (!function_exists('acceptImageType')) {
 if (!function_exists('getProduitNumerotation')) {
     function getProduitNumerotation()
     {
-        $num = Numerotation::where('doc_type', 'Produit')->latest()->first();
+        $num = Numerotation::where('doc_type', 'Produit')
+            ->latest()
+            ->first();
 
         if (!$num) {
             throw new Exception('No Numerotation record found for doc_type "Client"');
@@ -248,18 +249,20 @@ if (!function_exists('getProduitNumerotation')) {
 if (!function_exists('incProduitNumerotation')) {
     function incProduitNumerotation()
     {
-        $num = Numerotation::where('doc_type', 'Produit')->latest()->first();
+        $num = Numerotation::where('doc_type', 'Produit')
+            ->latest()
+            ->first();
         $num->increment_num = $num->increment_num + 1;
         $num->save();
-
     }
 }
-
 
 if (!function_exists('getDevisNumerotation')) {
     function getDevisNumerotation()
     {
-        $num = Numerotation::where('doc_type', 'Devis')->latest()->first();
+        $num = Numerotation::where('doc_type', 'Devis')
+            ->latest()
+            ->first();
 
         if (!$num) {
             throw new Exception('No Numerotation record found for doc_type "Client"');
@@ -273,7 +276,9 @@ if (!function_exists('getDevisNumerotation')) {
 if (!function_exists('incDevisNumerotation')) {
     function incDevisNumerotation()
     {
-        $num = Numerotation::where('doc_type', 'Produit')->latest()->first();
+        $num = Numerotation::where('doc_type', 'Produit')
+            ->latest()
+            ->first();
         $num->increment_num = $num->increment_num + 1;
         $num->save();
     }
@@ -282,7 +287,39 @@ if (!function_exists('incDevisNumerotation')) {
 if (!function_exists('getExercice')) {
     function getExercice()
     {
-        $exercice = Exercice::where('etat', 'OUVERT')->latest()->first();
+        $exercice = Exercice::where('etat', 'OUVERT')
+            ->latest()
+            ->first();
         return $exercice->exercice;
+    }
+}
+
+if (!function_exists('getTotalGaranties')) {
+    function getTotalGaranties($garanties)
+    {
+        $totalAmount = 0;
+
+        foreach ($garanties as $gatanty) {
+            $totalAmount += $gatanty->amount;
+        }
+
+        return $totalAmount;
+    }
+}
+
+if (!function_exists('checkExpirationDate')) {
+    function checkExpirationDate($givenDate)
+    {
+        $givenDate = Carbon::parse($givenDate);
+        $currentDate = Carbon::now();
+        $thresholdDays = 7;
+
+        if ($givenDate->isPast()) {
+            return 'Expiré';
+        } elseif ($givenDate->diffInDays($currentDate) <= $thresholdDays) {
+            return 'Près d\'expirer';
+        } else {
+            return 'Toujours valide';
+        }
     }
 }

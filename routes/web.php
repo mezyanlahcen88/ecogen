@@ -33,9 +33,8 @@ Route::get(env('ADMIN_PREFIX'), function () {
 Route::get('/pass', function () {
     return bcrypt('azerty123');
 });
-Route::get('/get-number', function () {
-    // return storeTranslaionToLang();
-    return getClientNumerotation();
+Route::get('/check-date', function () {
+    return checkExpirationDate('2024-12-25');
 });
 Route::get('lang/{lang}', [LanguageController::class, 'switchLang'])->name('lang.switch');
 
@@ -88,6 +87,8 @@ require __DIR__ . '/base/warehouseRoute.php';
 require __DIR__ . '/base/productRoute.php';
 ############################### Devis ###############################
 require __DIR__ . '/base/devisRoute.php';
+require __DIR__ . '/base/carDocumentRoute.php';
+
     ############################### ReloadController ###############################
     Route::prefix('/')->group(__DIR__ . '/base/reload.routes.php');
 });

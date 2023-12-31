@@ -20,14 +20,12 @@
     <form action="{{ route('suppliers.store') }}" method="post" id="supplierForm">
         @csrf
         <div class="row">
-
             <div class="col-12">
                 <div class="card">
                     <div class="card-header  bg-primary text-white">
                         <h6 class="card-title mb-0 text-white">Informations du supplier</h6>
                     </div>
                     <div class="card-body">
-
                         <div class="row">
                             @include('form.input', [
                                 'cols' => 'col-md-6',
@@ -51,7 +49,6 @@
                                 'column_value' => old('name_ar'),
                                 'readonly' => 'false',
                             ])
-
                             @include('form.input', [
                                 'cols' => 'col-md-6',
                                 'column' => 'ice',
@@ -96,8 +93,6 @@
                                 'column_value' => old('email'),
                                 'readonly' => 'false',
                             ])
-
-
                             @include('form.singleSelect', [
                                 'cols' => 'col-md-3 ',
                                 'column' => 'region_id',
@@ -190,7 +185,6 @@
                                 'column_value' => old('address'),
                                 'readonly' => 'false',
                             ])
-
                             @include('form.input', [
                                 'cols' => 'col-md-6',
                                 'column' => 'obs',
@@ -202,58 +196,18 @@
                                 'column_value' => old('obs'),
                                 'readonly' => 'false',
                             ])
-
                         </div>
                     </div>
                 </div>
             </div>
-
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-header bg-primary text-white">
-                        <h6 class="card-title mb-0 text-white">informations de la garantie</h6>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            @include('form.input', [
-                                'cols' => 'col-md-4',
-                                'column' => 'garanty_img',
-                                'model' => 'garanty',
-                                'optional' => 'text-danger',
-                                'input_type' => 'file',
-                                'class_name' => '',
-                                'column_id' => 'garanty_img',
-                                'column_value' => old('garanty'),
-                                'readonly' => 'false',
-                            ])
-
-                            @include('form.input', [
-                                'cols' => 'col-md-4',
-                                'column' => 'garanty',
-                                'model' => 'garanty',
-                                'optional' => 'text-danger',
-                                'input_type' => 'text',
-                                'class_name' => '',
-                                'column_id' => 'garanty',
-                                'column_value' => old('garanty'),
-                                'readonly' => 'false',
-                            ])
-                        </div>
-                    </div>
+            <div class="col-lg-12">
+                <div class="text-start">
+                    <button type="submit" class="btn btn-primary">{{ trans('translation.general_general_save') }}</button>
                 </div>
             </div>
-
-                <div class="col-lg-12">
-                    <div class="text-start">
-                        <button type="submit"
-                            class="btn btn-primary">{{ trans('translation.general_general_save') }}</button>
-                    </div>
-                </div>
     </form>
-
     </div>
 @endsection
-
 @section('js')
     @include('layouts.includes.form_js')
     <script src="{{ asset('assets/custom_js/validate_number.js') }}"></script>

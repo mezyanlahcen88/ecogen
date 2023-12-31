@@ -320,7 +320,15 @@
                                 <span class="text-uppercase">
                                     <a href="{{ route('cars.index') }}" class="nav-link" data-key="t-starter">
                                         {{ trans('translation.navigation_navigation_cars') }}
-                                        <span class="badge badge-pill bg-danger" data-key="cars">1</span>
+                                        {{-- <span class="badge badge-pill bg-danger" data-key="cars">1</span> --}}
+                                    </a>
+                                </span>
+                            </li>
+                            <li class="nav-item">
+                                <span class="text-uppercase">
+                                    <a href="{{ route('car-documents.index') }}" class="nav-link" data-key="t-starter">
+                                        {{ trans('translation.navigation_navigation_car_documents') }}
+                                        {{-- <span class="badge badge-pill bg-danger" data-key="cars">1</span> --}}
                                     </a>
                                 </span>
                             </li>

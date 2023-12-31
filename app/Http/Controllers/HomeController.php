@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Car;
+use App\Models\CarDocument;
 use App\Models\Setting;
 use Illuminate\Http\Request;
 
@@ -25,6 +27,7 @@ class HomeController extends Controller
     public function index()
     {
         $setting = Setting::first();
+        $car_documents = CarDocument::get();
         return view('dashboard',compact('setting'));
     }
 }

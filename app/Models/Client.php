@@ -46,7 +46,7 @@ class Client extends Model
  */
 public function garanties()
 {
-    return $this->hasMany(Garanty::class, 'parent_id', 'id');
+    return $this->hasMany(Garanty::class, 'parent_id');
 }
 
 

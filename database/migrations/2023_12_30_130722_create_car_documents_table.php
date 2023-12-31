@@ -13,20 +13,18 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('garanties', function (Blueprint $table) {
+        Schema::create('car_documents', function (Blueprint $table) {
             $table->uuid('id')->unique();
-            $table->double('amount', 8, 2)->nullable();
-            $table->string('parent_id');
-            $table->string('parent_type')->comment('Client/Supplier');
-            $table->string('type')->comment('CHEQUE/ESPECE');
+            $table->foreignUuid('car_id')->constrained('cars')->onDelete('cascade');
+            $table->string('nature');
+            $table->string('tranche');
+            $table->date('start_date');
+            $table->date('end_date');
+            $table->string('status');
             $table->string('picture');
-            $table->string('document_ref')->nullable;
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->text('comment');
-            $table->date('doe')->comment('experation date');
             $table->timestamps();
             $table->softDeletes();
-
         });
     }
 
@@ -37,7 +35,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('garanties');
+        Schema::dropIfExists('car_documents');
     }
 };
-

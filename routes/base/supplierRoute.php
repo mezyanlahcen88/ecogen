@@ -13,6 +13,8 @@ Route::delete('/suppliers/{id}/force_delete', [SupplierController::class, 'force
 Route::put('/suppliers/{id}/restore', [SupplierController::class, 'restore'])->name('suppliers.restore');
 //liste all deleted
 Route::get('/suppliers/trashed', [SupplierController::class, 'trashed'])->name('suppliers.trashed');
+Route::get('/suppliers/{id}/create-garanty', [SupplierController::class, 'createGaranty'])->name('suppliers.createGaranty');
+Route::post('/suppliers/store-garanty', [SupplierController::class, 'storeGaranty'])->name('suppliers.storeGaranty');
 Route::resource('suppliers', SupplierController::class);
 
 

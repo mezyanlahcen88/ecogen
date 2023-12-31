@@ -11,13 +11,13 @@
         'title' => trans('translation.garanty_form_manage_garanties'),
         'subtitle' => trans('translation.garanty_action_add'),
         'route' => route('clients.index'),
-        'text' => trans('translation.client_form_clients_list'),
+        'text' => trans('translation.garanty_form_garanties_list'),
         'permission' => 'garanty-list',
         'icon' => 'lab la-stack-exchange',
     ])
 @endsection
 @section('content')
-    <form action="{{ route('clients.storeGaranty') }}" method="post" id="garantyForm" enctype="multipart/form-data">
+    <form action="{{ route('suppliers.storeGaranty') }}" method="post" id="garantyForm" enctype="multipart/form-data">
         @csrf
         <div class="row">
             <div class="col-9">
@@ -143,15 +143,14 @@
                         <h6 class="card-title mb-0 text-white">Details des garanties</h6>
                     </div>
                     <div class="card-body">
-                        @include('clients.create_table')
-
+                        @include('suppliers.create_table')
 
                     </div>
                 </div>
             </div>
-        </div>
+      </div>
 
-        </form>
+    </form>
 
 @endsection
 

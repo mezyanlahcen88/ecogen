@@ -8,6 +8,7 @@ use App\Models\Ville;
 use App\Dto\ClientDto;
 use App\Models\Client;
 use App\Models\Region;
+use App\Models\Garanty;
 use App\Models\Secteur;
 use App\Forms\ClientForm;
 use App\Models\Profession;
@@ -17,7 +18,7 @@ use Illuminate\Http\Request;
 use App\Services\CrudService;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreClientRequest;
-use App\Models\Garanty;
+use App\Http\Requests\StoreGarantyRequest;
 
 class ClientController extends Controller
 {
@@ -45,7 +46,8 @@ class ClientController extends Controller
     public function index()
     {
         $tableRows = (new Client())->getRowsTable();
-        $objects = Client::get();
+        $objects = Client::with('garanties')->get();
+        // return $objects;
         return view('clients.index', compact('tableRows', 'objects'));
     }
     /**
@@ -221,8 +223,8 @@ class ClientController extends Controller
         return view("clients.garanties.create",compact('object','garanties_types'));
     }
 
-    public function storeGaranty(Request $request){
-        // dd($request->all());
+    public function storeGaranty(StoreGarantyRequest $request){
+        $validated = $request->validated();
         $garanty = new Garanty();
         $garanty->id = Str::uuid();
         $garanty->amount = $request->amount;
@@ -232,6 +234,7 @@ class ClientController extends Controller
         if($request->hasFile('picture')){
             dealWithPicture($request,$garanty,'picture', $request->parent_type,'garanties','store');
         }
+        $garanty->document_ref = $request->document_ref;
         $garanty->user_id = Auth::id();
         $garanty->comment = $request->comment;
         $garanty->doe = $request->doe;

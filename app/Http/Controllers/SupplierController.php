@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Region;
+use App\Models\Garanty;
 use App\Dto\SupplierDto;
 use App\Models\Supplier;
 use App\Models\Profession;
@@ -12,6 +13,7 @@ use App\Enums\StaticOptions;
 use Illuminate\Http\Request;
 use App\Services\CrudService;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\StoreGarantyRequest;
 use App\Http\Requests\StoreSupplierRequest;
 
 
@@ -203,5 +205,29 @@ class SupplierController extends Controller
         $object->save();
         $message = $object->active ? trans('translation.supplier_message_activated') : trans('translation.supplier_message_inactivated');
         return response()->json(['code' => 200, 'active' => $object->active, 'message' => $message]);
+    }
+
+    public function createGaranty($id){
+        $object = Supplier::findOrFail($id);
+        $garanties_types = $this->staticOptions::GARANTIES_TYPES;
+        return view("suppliers.garanties.create",compact('object','garanties_types'));
+    }
+
+    public function storeGaranty(StoreGarantyRequest $request){
+        $validated = $request->validated();
+        $garanty = new Garanty();
+        $garanty->id = Str::uuid();
+        $garanty->amount = $request->amount;
+        $garanty->parent_id = $request->parent_id;
+        $garanty->parent_type = $request->parent_type;
+        $garanty->type = $request->type;
+        if($request->hasFile('picture')){
+            dealWithPicture($request,$garanty,'picture', $request->parent_type,'garanties','store');
+        }
+        $garanty->user_id = Auth::id();
+        $garanty->comment = $request->comment;
+        $garanty->doe = $request->doe;
+        $garanty->save();
+        return back();
     }
 }

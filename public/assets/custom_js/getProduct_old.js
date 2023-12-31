@@ -67,14 +67,15 @@ $(document).ready(function () {
         var p = Object.assign({}, newProduit);
         p.ref = data.product_code;
         p.id = data.id;
-        p.designation = data.name_fr + ' | ' + data.name_ar;
+        p.designation = data.name_fr + '|' + data.name_ar;
         p.unite = data.unite;
         p.quantite = 1;
-        p.prix = data.price_unit;
+        p.prix = data.buy_price;
         p.tva = data.tva;
-        p.ht = Math.round((data.price_unit  * p.quantite) );
-        p.ttva = Math.round((p.prix * p.quantite) *(p.tva / 100) );
-        p.ttc = Math.round((p.prix * p.quantite) * (1+(p.tva / 100)));
+        p.ht = Math.round((data.buy_price / (1 + p.tva / 100) * p.quantite) * 100) / 100;
+        // Math.round(data.ht * 100) / 100;
+        p.ttva = Math.round(((p.tva / 100) * p.ht * p.quantite) * 100) / 100;
+        p.ttc = Math.round((p.ht * (1 + p.tva / 100) * p.quantite) * 100) / 100;
         return p;
     }
 
@@ -87,7 +88,7 @@ $(document).ready(function () {
         if (existingProduct) {
             // If it exists, update the quantity
             existingProduct.quantite += 1;
-            existingProduct.ht = Math.round((existingProduct.prix  * existingProduct.quantite));
+            existingProduct.ht = Math.round(((existingProduct.prix / (1 + existingProduct.tva / 100) * existingProduct.quantite)) * 100) / 100;
             existingProduct.ttva = Math.round((((existingProduct.tva / 100) * existingProduct.ht * existingProduct.quantite)) * 100) / 100;
         } else {
             // If it doesn't exist, add it to the list
@@ -148,7 +149,7 @@ $(document).ready(function () {
                 const quantityInput = document.createElement('input');
                 quantityInput.type = 'number';
                 quantityInput.classList.add('product-quantity');
-                quantityInput.id = `product-qty-${product.id}`;
+                quantityInput.id = product-qty-`${product.id}`;
                 quantityInput.value = product.quantite;
                 quantityInput.readOnly = true;
 
@@ -176,13 +177,13 @@ $(document).ready(function () {
 
         // Créez un bouton pour supprimer le produit
         const removeButton = document.createElement('button');
-        removeButton.classList.add('btn');
+        removeButton.classList.add('btn','remove');
         // removeButton.classList.add('btn', 'remove');
         removeButton.innerHTML = '<i class="las la-times text-danger fs-1"></i>';
         const tdRemove = document.createElement('td');
         removeButton.addEventListener('click', function () {
             // Appelez la fonction deleteProduct en passant l'ID du produit
-            deleteProduct(product.id);
+            // deleteProduct(product.id);
         });
         tdRemove.appendChild(removeButton);
         tr.appendChild(tdRemove);
@@ -191,7 +192,7 @@ $(document).ready(function () {
     }
 
     function increase(id) {
-        var qteInput = $(`#product-qty-${id}`);
+        var qteInput = $('#product-qty-`${id}`');
         var qte = parseFloat(qteInput.val());
 
         if (!isNaN(qte)) {
@@ -206,12 +207,12 @@ $(document).ready(function () {
             updateLocalStorageHTTTTVA(id, qte);
             tableProducts();
         } else {
-            console.error(`La quantité n'est pas un nombre valide.`);
+            console.error('La quantité n\'est pas un nombre valide.');
         }
     }
 
     function decrease(id) {
-        var quantityInput = document.getElementById(`product-qty-${id}`);
+        var quantityInput = document.getElementById(product-qty-`${id}`);
         var qte = parseFloat(quantityInput.value);
 
         if (!isNaN(qte) && qte > 1) {
@@ -249,11 +250,11 @@ $(document).ready(function () {
 
         if (existingProduct) {
             // Update ht based on the new quantity
-            existingProduct.ht = Math.round((parseFloat(existingProduct.prix) * parseFloat(newQuantity)));
+            existingProduct.ht = Math.round((parseFloat(existingProduct.prix) / (1 + parseFloat(existingProduct.tva) / 100) * parseFloat(newQuantity)) * 100) / 100;
 
             // Update tttva based on the updated ht and tva
-            existingProduct.ttva = Math.round((parseFloat(existingProduct.prix) * parseFloat(newQuantity)* (existingProduct.tva / 100)));
-            existingProduct.ttc = Math.round((parseFloat(existingProduct.prix) * parseFloat(newQuantity) *( 1+ (existingProduct.tva / 100))));
+            existingProduct.ttva = Math.round(((parseFloat(existingProduct.tva) / 100) * parseFloat(existingProduct.ht) * parseFloat(newQuantity)) * 100) / 100;
+            existingProduct.ttc = Math.round((parseFloat(existingProduct.ht) * (1 + parseFloat(existingProduct.tva) / 100) * parseFloat(newQuantity)) * 100) / 100;
             localStorage.setItem('product_devis', JSON.stringify(listeProd));
         }
     }
@@ -276,37 +277,35 @@ $(document).ready(function () {
         $("#total_ttc").text(prixTTC.toFixed(2));
     }
 
-    function deleteProduct(productId ,e) {
-        e.preventDefault();
-        // Récupérer les produits actuels depuis le localStorage
-        var listeProd = JSON.parse(localStorage.getItem('product_devis'));
+    // function deleteProduct(productId) {
+    //     // Récupérer les produits actuels depuis le localStorage
+    //     var listeProd = JSON.parse(localStorage.getItem('product_devis'));
 
-        // Vérifier s'il y a des produits dans le localStorage
-        if (listeProd) {
-            // Convertir la chaîne JSON en objet JavaScript
-            var products = JSON.parse(listeProd);
+    //     // Vérifier s'il y a des produits dans le localStorage
+    //     if (listeProd) {
+    //         // Convertir la chaîne JSON en objet JavaScript
+    //         var products = JSON.parse(listeProd);
 
-            // Trouver l'index du produit avec l'ID donné
-            var productIndex = products.findIndex(function (product) {
-                return product.id === productId;
-            });
+    //         // Trouver l'index du produit avec l'ID donné
+    //         var productIndex = products.findIndex(function (product) {
+    //             return product.id === productId;
+    //         });
 
-            // Vérifier si le produit a été trouvé
-            if (productIndex !== -1) {
-                // Supprimer le produit de la liste des produits
-                products.splice(productIndex, 1);
+    //         // Vérifier si le produit a été trouvé
+    //         if (productIndex !== -1) {
+    //             // Supprimer le produit de la liste des produits
+    //             products.splice(productIndex, 1);
 
-                // Mettre à jour le localStorage avec la nouvelle liste de produits
-                localStorage.setItem('product_devis', JSON.stringify(products));
-                console.log('Produit supprimé avec succès.');
-            } else {
-                console.log('Produit non trouvé.');
-            }
-        } else {
-            console.log('Aucun produit trouvé dans le localStorage.');
-        }
-        tableProducts();
-    }
+    //             // Mettre à jour le localStorage avec la nouvelle liste de produits
+    //             localStorage.setItem('product_devis', JSON.stringify(products));
+    //             console.log('Produit supprimé avec succès.');
+    //         } else {
+    //             console.log('Produit non trouvé.');
+    //         }
+    //     } else {
+    //         console.log('Aucun produit trouvé dans le localStorage.');
+    //     }
+    //     tableProducts();
+    // }
 
 });
-

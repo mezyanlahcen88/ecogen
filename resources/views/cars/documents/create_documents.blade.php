@@ -11,66 +11,76 @@
         'title' => trans('translation.garanty_form_manage_garanties'),
         'subtitle' => trans('translation.garanty_action_add'),
         'route' => route('clients.index'),
-        'text' => trans('translation.client_form_clients_list'),
+        'text' => trans('translation.garanty_form_garanties_list'),
         'permission' => 'garanty-list',
         'icon' => 'lab la-stack-exchange',
     ])
 @endsection
 @section('content')
-    <form action="{{ route('clients.storeGaranty') }}" method="post" id="garantyForm" enctype="multipart/form-data">
+    <form action="{{ route('cars.storeDocument') }}" method="post" id="storeDocument" enctype="multipart/form-data">
         @csrf
         <div class="row">
             <div class="col-9">
                 <div class="card">
                     <div class="card-header bg-primary text-white between-center">
-                        <h6 class="card-title mb-0 text-white">informations de la garantie</h6>
+                        <h6 class="card-title mb-0 text-white">informations de la documents</h6>
                         <h6 class="card-title mb-0 text-white">{{ $object->name_fr }} &nbsp; {{ $object->name_ar }}</h6>
                     </div>
                     <div class="card-body">
 
                         <div class="row">
-                            @include('form.input', [
-                                'cols' => 'col-md-4',
-                                'column' => 'amount',
-                                'model' => 'garanty',
-                                'optional' => 'text-danger',
-                                'input_type' => 'text',
-                                'class_name' => '',
-                                'column_id' => 'amount',
-                                'column_value' => old('amount'),
-                                'readonly' => 'false',
-                            ])
                             @include('form.singleSelect', [
                                 'cols' => 'col-md-4 ',
-                                'column' => 'type',
+                                'column' => 'nature',
                                 'isReload' => false,
-                                'label' => 'garanty_form_type',
+                                'label' => 'cardocuments_form_nature',
                                 'optional' => 'text-danger',
-                                'divID' => 'ville_id',
-                                'options' => $garanties_types,
+                                'divID' => 'nature',
+                                'options' => $documents,
                                 'object' => false,
                             ])
-                            <input type="hidden" name="parent_type" value="Client">
-                            <input type="hidden" name="parent_id" value="{{ $object->id }}">
-                            {{-- @include('form.input', [
-                                'cols' => 'col-md-4',
-                                'column' => 'doe',
-                                'model' => 'garanty',
-                                'optional' => 'text-danger',
-                                'input_type' => 'datetime-local',
-                                'class_name' => '',
-                                'column_id' => 'doe',
-                                'column_value' => old('doe'),
-                                'readonly' => 'false',
-                            ]) --}}
                             <div class="col-md-4">
                                 <div>
-                                    <label class="form-label my-1">{{ trans('translation.garanty_form_doe') }}</label>
+                                    <label class="form-label my-1">{{ trans('translation.cardocuments_form_start_date') }}
+                                        &nbsp;<span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" data-provider="flatpickr" data-enable-time
                                         data-date-format="Y-m-d"
-                                        placeholder="{{ Carbon\Carbon::now()->format('d-m-Y H:i') }}" name="doe">
+                                        placeholder="{{ Carbon\Carbon::now()->format('d-m-Y H:i') }}" name="start_date">
                                 </div>
                             </div>
+                            <div class="col-md-4">
+                                <div>
+                                    <label class="form-label my-1">{{ trans('translation.cardocuments_form_end_date') }}
+                                        &nbsp;<span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" data-provider="flatpickr" data-enable-time
+                                    data-date-format="Y-m-d"
+                                    placeholder="{{ Carbon\Carbon::now()->format('d-m-Y H:i') }}" name="end_date">
+                                </div>
+                            </div>
+
+                            @include('form.singleSelect', [
+                                'cols' => 'col-md-4 ',
+                                'column' => 'tranche',
+                                'isReload' => false,
+                                'label' => 'cardocuments_form_tranche',
+                                'optional' => 'text-danger',
+                                'divID' => 'tranche',
+                                'options' => $tranches,
+                                'object' => false,
+                            ])
+
+                            @include('form.singleSelect', [
+                                'cols' => 'col-md-4',
+                                'column' => 'status',
+                                'isReload' => false,
+                                'label' => 'cardocuments_form_status',
+                                'optional' => 'text-danger',
+                                'divID' => 'statusDiv',
+                                'options' => $etats,
+                                'object' => false,
+                            ])
+
+                            <input type="hidden" name="car_id" value="{{ $object->id }}">
                             <div class="col-md-12 col-xl-12 col-xs-12 col-sm-12">
                                 <div class="form-group">
                                     <label for="content">{{ trans('translation.garanty_form_comment') }} &nbsp;
@@ -78,10 +88,10 @@
                                     <textarea class="form-control ckeditor" name="comment" id="comment" style="height: 213px">{{ old('comment') }}</textarea>
                                 </div>
                                 @error('comment')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
 
 
@@ -99,10 +109,10 @@
             <div class="col-3">
                 <div class="card">
                     <div class="card-header bg-primary text-white">
-                        <h6 class="card-title mb-0 text-white">Piece Jointes</h6>
+                        <h6 class="card-title mb-0 text-white">Piece Jointe</h6>
                     </div>
                     <div class="card-body mx-auto">
-                        <div class="profile-user position-relative d-inline-block  mb-4">
+                        <div class="profile-user position-relative d-inline-block   mb-4">
                             <img src="{{ URL::asset('assets/images/no_image.jpg') }}"
                                 class="  rounded-circle avatar-xl img-thumbnail user-profile-image"
                                 alt="user-profile-image">
@@ -122,19 +132,6 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="card-footer">
-                                                    @include('form.input', [
-                                'cols' => 'col-md-12',
-                                'column' => 'document_ref',
-                                'model' => 'garanty',
-                                'optional' => 'text-danger',
-                                'input_type' => 'text',
-                                'class_name' => '',
-                                'column_id' => 'document_ref',
-                                'column_value' => old('document_ref'),
-                                'readonly' => 'false',
-                            ])
-                    </div>
                 </div>
             </div>
             <div class="col-12">
@@ -143,24 +140,18 @@
                         <h6 class="card-title mb-0 text-white">Details des garanties</h6>
                     </div>
                     <div class="card-body">
-                        @include('clients.create_table')
-
-
+                        @include('cars.documents.create_table')
                     </div>
                 </div>
             </div>
-        </div>
+    </div>
 
-        </form>
+    </form>
 
 @endsection
 
 @section('js')
     @include('layouts.includes.form_js')
-    <script src="{{ asset('assets/custom_js/validate_number.js') }}"></script>
-    <script src="{{ asset('assets/custom_js/region_ville.js') }}"></script>
-    <script src="{{ asset('assets/custom_js/ville_secteur.js') }}"></script>
     <script src="{{ asset('assets/custom_js/ckeditor.js') }}"></script>
-    {{-- <script src="{{ asset('assets/custom_js/garanties/saveClient.js') }}"></script> --}}
-    {!! JsValidator::formRequest('App\Http\Requests\StoreGarantyRequest') !!}
+    {!! JsValidator::formRequest('App\Http\Requests\StoreCarDocumentsRequest') !!}
 @endsection

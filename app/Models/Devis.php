@@ -49,8 +49,13 @@ class Devis extends Model
 
     public function getRowsTable(){
         return [
-             'name' => 'name',
-             'matricule' => 'matricule',
+             'devis_code' => 'devis_code',
+             'ht' => 'ht',
+             'tva' => 'tva',
+             'tttc' => 'tttc',
+             'status' => 'status',
+             'status_date' => 'status_date',
+             'client_id' => 'client_id',
 
          ];
      }
@@ -62,8 +67,13 @@ class Devis extends Model
 
      public function getRowsTableTrashed(){
          return [
-             'name' => 'name',
-             'matricule' => 'matricule',
+            'devis_code' => 'devis_code',
+            'ht' => 'ht',
+            'tva' => 'tva',
+            'tttc' => 'tttc',
+            'status' => 'status',
+            'status_date' => 'status_date',
+            'client_id' => 'client_id',
           ];
           }
 
