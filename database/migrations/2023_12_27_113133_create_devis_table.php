@@ -17,7 +17,7 @@ return new class extends Migration
             $table->uuid('id')->unique();
             $table->string('devis_code')->unique();
             $table->double('HT',8,2);
-            $table->tinyInteger('TVA');
+            $table->integer('TVA');
             $table->double('TTTC',8,2);
             $table->string('status');
             $table->date('status_date');

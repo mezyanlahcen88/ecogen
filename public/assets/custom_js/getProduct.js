@@ -322,6 +322,7 @@ $(document).ready(function () {
             total_ttc : $('#total_ttc').text(),
             total_ht : $('#total_ht').text(),
             total_ttva : $('#total_ttva').text(),
+            products : JSON.parse(localStorage.getItem('product_devis'))
         }
         $.ajaxSetup({
             headers: {

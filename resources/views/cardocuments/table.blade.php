@@ -32,7 +32,13 @@
                             <td>
                                 {{\Carbon\Carbon::parse($object->end_date)->diffForHumans()}}
                             </td>
-                            <td>{{checkExpirationDate($object->end_date)}}</td>
+                            @if (checkExpirationDate($object->end_date) === 'expire')
+                            <td> <span class="badge text-bg-danger">Expiré</span></td>
+                            @elseif (checkExpirationDate($object->end_date) === 'near')
+                            <td> <span class="badge text-bg-warning">Près d'expirer</span></td>
+                            @else
+                            <td> <span class="badge text-bg-success">Toujours valide</span></td>
+                            @endif
                             <td>
                                 @include('cardocuments.actions')
                             </td>

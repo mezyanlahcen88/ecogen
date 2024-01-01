@@ -8,16 +8,17 @@ use App\Models\Client;
 use App\Models\Product;
 use App\Forms\DevisForm;
 use App\Models\Category;
+use Illuminate\Support\Str;
 use App\Enums\StaticOptions;
 use Illuminate\Http\Request;
 use App\Services\CrudService;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreDevisRequest;
 use RealRashid\SweetAlert\Facades\Alert;
 
-
 class DevisController extends Controller
 {
-
     public $staticOptions;
     public $crudService;
     public function __construct(CrudService $crudService, StaticOptions $staticOptions)
@@ -41,10 +42,9 @@ class DevisController extends Controller
      */
     public function index()
     {
-
-           $tableRows =(new Devis())->getRowsTable();
+        $tableRows = (new Devis())->getRowsTable();
         $objects = Devis::get();
-        return view('devis.index',compact('tableRows','objects'));
+        return view('devis.index', compact('tableRows', 'objects'));
     }
     /**
      * Display a list of soft-deleted records.
@@ -54,8 +54,8 @@ class DevisController extends Controller
     public function trashed(Request $request)
     {
         $objects = Devis::onlyTrashed()->get();
-        $tableRows =(new Devis())->getRowsTableTrashed();
-        return view('devis.trashedIndex', compact('tableRows','objects'));
+        $tableRows = (new Devis())->getRowsTableTrashed();
+        return view('devis.trashedIndex', compact('tableRows', 'objects'));
     }
 
     /**
@@ -66,13 +66,12 @@ class DevisController extends Controller
     public function create()
     {
         $object = new Devis();
-        $products = Product::pluck('name_fr','id');
-        $categories = Category::where('parent_id',null)->pluck('name','id');
-        $clients = Client::pluck('name_fr','id');
+        $products = Product::pluck('name_fr', 'id');
+        $categories = Category::where('parent_id', null)->pluck('name', 'id');
+        $clients = Client::pluck('name_fr', 'id');
         // $clients = Client::select('id','name_fr','name_ar')->get();
         $devis_status = $this->staticOptions::DEVIS_STATUS;
-        return view('devis.create',compact('products','devis_status','categories','clients'));
-
+        return view('devis.create', compact('products', 'devis_status', 'categories', 'clients'));
     }
 
     /**
@@ -85,12 +84,42 @@ class DevisController extends Controller
     public function store(Request $request)
     {
         // $validated = $request->validated();
+        $data = $request->all();
 
-        //  dd($request->all());
-         $data = $request->all();
-         return response()->json($data );
-        return redirect()->route('devis.index');
+        $devis = new Devis();
+        $devis->id = Str::uuid();
+        $devis->devis_code = $data['num_devis'];
+        $devis->HT = $data['total_ht'];
+        $devis->TVA = $data['total_ttva'];
+        $devis->TTTC = $data['total_ttc'];
+        $devis->status = $data['status'];
+        $devis->status_date = $data['status_date'];
+        $devis->client_id = $data['client'];
+        $devis->created_by = Auth::id();
+        $devis->comment = $data['comment'];
+        $devis->client_id = $data['client'];
+        $devis->client_id = $data['client'];
+        $devis->save();
+        foreach ($data['products'] as $item) {
+            DB::table('product_devis')->insert([
+                'id' => Str::uuid(),
+                'devis_id' => $devis->id,
+                'product_id' => $item['id'],
+                'designation' => $item['designation'],
+                'quantity' => $item['quantite'],
+                'price' => $item['prix'],
+                'remise' => 5,
+                'total_remise' => 5,
+                'TOTAL_HT' => $item['ht'],
+                'TVA' => $item['tva'],
+                'TOTAL_TVA' => $item['ttva'],
+                'TOTAL_TTC' => $item['ttc'],
+                'unite' => $item['unite'],
+            ]);
         }
+        incDevisNumerotation();
+        return response()->json(['success',true]);
+    }
 
     /**
      * Display the specified resource.
@@ -112,7 +141,7 @@ class DevisController extends Controller
     public function edit($id)
     {
         $object = devis::findOrfail($id);
-        return view('devis.edit',compact('object'));
+        return view('devis.edit', compact('object'));
     }
 
     /**
@@ -122,10 +151,10 @@ class DevisController extends Controller
      * @param  \App\Models\Devis  $devis
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreDevisRequest $request,string $id)
+    public function update(StoreDevisRequest $request, string $id)
     {
         $validated = $request->validated();
-        $this->crudService->updateRecord(new Devis(),$validated,$id);
+        $this->crudService->updateRecord(new Devis(), $validated, $id);
         return redirect()->route('devis.index');
     }
 
@@ -137,11 +166,10 @@ class DevisController extends Controller
      */
     public function destroy(Request $request)
     {
-      $object = Devis::findOrFail($request->id)->delete();
-
+        $object = Devis::findOrFail($request->id)->delete();
     }
 
-            /**
+    /**
      * Restore a soft-deleted user.
      *
      * @param \Illuminate\Http\Request $request The HTTP request object.
@@ -150,8 +178,9 @@ class DevisController extends Controller
      */
     public function restore(Request $request, $id)
     {
-
-        $object = Devis::withTrashed()->findOrFail($id)->restore();
+        $object = Devis::withTrashed()
+            ->findOrFail($id)
+            ->restore();
         // storeSidebar();
         return redirect()->route('devis.index');
     }
@@ -165,7 +194,6 @@ class DevisController extends Controller
      */
     public function forceDelete(Request $request, $id)
     {
-
         $object = Devis::withTrashed()->findOrFail($id);
         // deletePicture($object,'devis','picture');
         $object->forceDelete();

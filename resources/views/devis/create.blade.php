@@ -115,10 +115,10 @@
                                     ])
                                     <div class="col-md-6">
                                         <div>
-                                            <label class="form-label">Date de crétation</label>
-                                            <input type="text" class="form-control" data-provider="flatpickr"
-                                                data-date-format="d/m/Y"
-                                                placeholder="{{ Carbon\Carbon::now()->format('d/m/Y') }}" name="status_date">
+                                            <label class="form-label my-1">Date de crétation</label>
+                                            <input type="text" class="form-control" data-provider="flatpickr" data-enable-time
+                                                data-date-format="Y-m-d"
+                                                placeholder="{{ Carbon\Carbon::now()->format('d-m-Y H:i') }}" name="status_date">
                                         </div>
                                     </div>
                                     <div class="col-md-12 col-xl-12 col-xs-12 col-sm-12">

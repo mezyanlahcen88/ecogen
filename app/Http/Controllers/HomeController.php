@@ -28,6 +28,6 @@ class HomeController extends Controller
     {
         $setting = Setting::first();
         $car_documents = CarDocument::get();
-        return view('dashboard',compact('setting'));
+        return view('dashboard',compact('setting','car_documents'));
     }
 }

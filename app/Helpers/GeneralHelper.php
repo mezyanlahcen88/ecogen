@@ -314,12 +314,12 @@ if (!function_exists('checkExpirationDate')) {
         $currentDate = Carbon::now();
         $thresholdDays = 7;
 
-        if ($givenDate->isPast()) {
-            return 'Expiré';
+       if ($givenDate->isPast()) {
+            return 'expire';
         } elseif ($givenDate->diffInDays($currentDate) <= $thresholdDays) {
-            return 'Près d\'expirer';
+            return 'near';
         } else {
-            return 'Toujours valide';
+            return 'still';
         }
     }
 }
