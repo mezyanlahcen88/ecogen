@@ -14,7 +14,7 @@
         </tr>
     </thead>
     <tbody class="list form-check-all" id="productTableBody">
-<tr class="text-center">
+{{-- <tr class="text-center">
     <td>PR-1</td>
     <td>Cima 45 | سيما 45</td>
     <td>Piece</td>
@@ -30,6 +30,6 @@
     <td>20</td>
     <td>90</td>
     <td><button class="btn remove"><i class="las la-times text-danger fs-1"></i></button></td>
-</tr>
+</tr> --}}
     </tbody>
 </table>

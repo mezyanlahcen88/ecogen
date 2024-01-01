@@ -97,8 +97,6 @@ class DevisController extends Controller
         $devis->client_id = $data['client'];
         $devis->created_by = Auth::id();
         $devis->comment = $data['comment'];
-        $devis->client_id = $data['client'];
-        $devis->client_id = $data['client'];
         $devis->save();
         foreach ($data['products'] as $item) {
             DB::table('product_devis')->insert([
@@ -118,7 +116,7 @@ class DevisController extends Controller
             ]);
         }
         incDevisNumerotation();
-        return response()->json(['success',true]);
+        return response()->json(['success'=>true]);
     }
 
     /**

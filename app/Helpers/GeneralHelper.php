@@ -276,7 +276,7 @@ if (!function_exists('getDevisNumerotation')) {
 if (!function_exists('incDevisNumerotation')) {
     function incDevisNumerotation()
     {
-        $num = Numerotation::where('doc_type', 'Produit')
+        $num = Numerotation::where('doc_type', 'Devis')
             ->latest()
             ->first();
         $num->increment_num = $num->increment_num + 1;

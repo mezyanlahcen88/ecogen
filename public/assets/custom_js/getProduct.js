@@ -72,9 +72,9 @@ $(document).ready(function () {
         p.quantite = 1;
         p.prix = data.price_unit;
         p.tva = data.tva;
-        p.ht = Math.round((data.price_unit  * p.quantite) );
-        p.ttva = Math.round((p.prix * p.quantite) *(p.tva / 100) );
-        p.ttc = Math.round((p.prix * p.quantite) * (1+(p.tva / 100)));
+        p.ht = Math.round((data.price_unit * p.quantite));
+        p.ttva = Math.round((p.prix * p.quantite) * (p.tva / 100));
+        p.ttc = Math.round((p.prix * p.quantite) * (1 + (p.tva / 100)));
         return p;
     }
 
@@ -87,8 +87,8 @@ $(document).ready(function () {
         if (existingProduct) {
             // If it exists, update the quantity
             existingProduct.quantite += 1;
-            existingProduct.ht = Math.round((existingProduct.prix  * existingProduct.quantite));
-            existingProduct.ttva = Math.round((((existingProduct.tva / 100) * existingProduct.ht * existingProduct.quantite)) * 100) / 100;
+            existingProduct.ht = Math.round((existingProduct.prix * existingProduct.quantite));
+            existingProduct.ttva = Math.round((((existingProduct.tva / 100) * existingProduct.ht)));
         } else {
             // If it doesn't exist, add it to the list
             listeProd.push(prod);
@@ -150,7 +150,7 @@ $(document).ready(function () {
                 quantityInput.classList.add('product-quantity');
                 quantityInput.id = `product-qty-${product.id}`;
                 quantityInput.value = product.quantite;
-                quantityInput.readOnly = true;
+                // quantityInput.readOnly = false;
 
                 const plusButton = document.createElement('button');
                 plusButton.type = 'button';
@@ -253,8 +253,10 @@ $(document).ready(function () {
             existingProduct.ht = Math.round((parseFloat(existingProduct.prix) * parseFloat(newQuantity)));
 
             // Update tttva based on the updated ht and tva
-            existingProduct.ttva = Math.round((parseFloat(existingProduct.prix) * parseFloat(newQuantity)* (existingProduct.tva / 100)));
-            existingProduct.ttc = Math.round((parseFloat(existingProduct.prix) * parseFloat(newQuantity) *( 1+ (existingProduct.tva / 100))));
+            existingProduct.ttva = Math.round((parseFloat(existingProduct.prix) * parseFloat(newQuantity) * (existingProduct.tva /
+                100)));
+            existingProduct.ttc = Math.round((parseFloat(existingProduct.prix) * parseFloat(newQuantity) * (1 + (existingProduct.tva /
+                100))));
             localStorage.setItem('product_devis', JSON.stringify(listeProd));
         }
     }
@@ -266,7 +268,7 @@ $(document).ready(function () {
         var prixTTC = 0;
         if (listeProd && listeProd.length > 0) {
             // Calcule le prix hors taxe
-            prixHT = listeProd.reduce((acc, product) => acc + product.ht , 0);
+            prixHT = listeProd.reduce((acc, product) => acc + product.ht, 0);
             // Calcule la TVA
             tva = listeProd.reduce((acc, product) => acc + product.ttva, 0);
             // Calcule le prix toutes taxes comprises
@@ -308,21 +310,23 @@ $(document).ready(function () {
     }
 
 
-    $('.storeDevis').on('click' ,function(e){
+    $('.storeDevis').on('click', function (e) {
+
         e.preventDefault();
-        let formData= new FormData($('#formAddDevis')[0]);
+
+        let formData = new FormData($('#formAddDevis')[0]);
         data = {
-            client : $('select[name="client_id"]').val(),
-            category : $('select[name="category_id"]').val(),
-            scategory : $('select[name="scategory_id"]').val(),
-            status : $('select[name="status"]').val(),
-            status_date : $('input[name="status_date"]').val(),
-            comment : $('textarea[name="comment"]').val(),
-            num_devis : $('#num_devis').text(),
-            total_ttc : $('#total_ttc').text(),
-            total_ht : $('#total_ht').text(),
-            total_ttva : $('#total_ttva').text(),
-            products : JSON.parse(localStorage.getItem('product_devis'))
+            client: $('select[name="client_id"]').val(),
+            category: $('select[name="category_id"]').val(),
+            scategory: $('select[name="scategory_id"]').val(),
+            status: $('select[name="status"]').val(),
+            status_date: $('input[name="status_date"]').val(),
+            comment: $('textarea[name="comment"]').val(),
+            num_devis: $('#num_devis').text(),
+            total_ttc: $('#total_ttc').text(),
+            total_ht: $('#total_ht').text(),
+            total_ttva: $('#total_ttva').text(),
+            products: JSON.parse(localStorage.getItem('product_devis'))
         }
         $.ajaxSetup({
             headers: {
@@ -335,11 +339,22 @@ $(document).ready(function () {
             data: data,
             dataType: "json",
             success: function (data) {
-              console.log(data);
+                if (data.success) {
+                    localStorage.removeItem("product_devis");
+                    // $('#productTableBody').empty();
+                    loadTableFromLocalStorage();
+                    location.reload();
+                    console.log("delete storage");
+
+                    Swal.fire(
+                        'Super!',
+                        'devis added successfully',
+                        'success'
+                    )
+                }
             },
         });
 
     });
 
 });
-
