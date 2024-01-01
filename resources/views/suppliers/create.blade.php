@@ -39,7 +39,7 @@
                                 'readonly' => 'false',
                             ])
                             @include('form.input', [
-                                'cols' => 'col-md-6',
+                                'cols' => 'col-md-6 rtl',
                                 'column' => 'name_ar',
                                 'model' => 'supplier',
                                 'optional' => 'text-danger',

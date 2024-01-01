@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('phone');
             $table->string('fax');
             $table->string('email');
-            $table->string('type_client')->nullable();
+            $table->string('type_supplier')->nullable();
             $table->integer('region_id')->nullable();
             $table->integer('ville_id')->nullable();
             $table->integer('secteur_id')->nullable();

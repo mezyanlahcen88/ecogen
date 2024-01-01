@@ -51,7 +51,7 @@ class SettingsSeeder extends Seeder
         ]);
         DB::table('settings')->insert([
             'option_name' => 'copyrigth',
-            'option_value' => 'copyrigth.jpg',
+            'option_value' => 'copyrigth',
         ]);
 
 

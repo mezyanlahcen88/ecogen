@@ -81,11 +81,14 @@ class DevisController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreDevisRequest $request)
+    // public function store(StoreDevisRequest $request)
+    public function store(Request $request)
     {
-        $validated = $request->validated();
-        $this->crudService->storeRecord(new Devis(),$request->except('_token','proengsoft_jsvalidation'));
+        // $validated = $request->validated();
 
+        //  dd($request->all());
+         $data = $request->all();
+         return response()->json($data );
         return redirect()->route('devis.index');
         }
 

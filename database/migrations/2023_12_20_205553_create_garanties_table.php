@@ -19,8 +19,8 @@ return new class extends Migration
             $table->string('parent_id');
             $table->string('parent_type')->comment('Client/Supplier');
             $table->string('type')->comment('CHEQUE/ESPECE');
-            $table->string('picture');
-            $table->string('document_ref')->nullable;
+            $table->string('picture')->nullable();
+            $table->string('document_ref')->nullable();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->text('comment');
             $table->date('doe')->comment('experation date');

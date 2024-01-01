@@ -17,12 +17,12 @@ return new class extends Migration
             $table->uuid('id')->unique();
             $table->foreignUuid('car_id')->constrained('cars')->onDelete('cascade');
             $table->string('nature');
-            $table->string('tranche');
+            $table->string('tranche')->nullable();
             $table->date('start_date');
             $table->date('end_date');
             $table->string('status');
-            $table->string('picture');
-            $table->text('comment');
+            $table->string('picture')->nullable();
+            $table->text('comment')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

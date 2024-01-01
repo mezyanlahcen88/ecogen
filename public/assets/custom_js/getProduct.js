@@ -176,6 +176,7 @@ $(document).ready(function () {
 
         // Créez un bouton pour supprimer le produit
         const removeButton = document.createElement('button');
+        removeButton.type = 'button';
         removeButton.classList.add('btn');
         // removeButton.classList.add('btn', 'remove');
         removeButton.innerHTML = '<i class="las la-times text-danger fs-1"></i>';
@@ -265,7 +266,7 @@ $(document).ready(function () {
         var prixTTC = 0;
         if (listeProd && listeProd.length > 0) {
             // Calcule le prix hors taxe
-            prixHT = listeProd.reduce((acc, product) => acc + product.ht * product.quantite, 0);
+            prixHT = listeProd.reduce((acc, product) => acc + product.ht , 0);
             // Calcule la TVA
             tva = listeProd.reduce((acc, product) => acc + product.ttva, 0);
             // Calcule le prix toutes taxes comprises
@@ -276,28 +277,26 @@ $(document).ready(function () {
         $("#total_ttc").text(prixTTC.toFixed(2));
     }
 
-    function deleteProduct(productId ,e) {
-        e.preventDefault();
+    function deleteProduct(productId) {
+        // e.preventDefault();
         // Récupérer les produits actuels depuis le localStorage
         var listeProd = JSON.parse(localStorage.getItem('product_devis'));
 
         // Vérifier s'il y a des produits dans le localStorage
         if (listeProd) {
-            // Convertir la chaîne JSON en objet JavaScript
-            var products = JSON.parse(listeProd);
 
             // Trouver l'index du produit avec l'ID donné
-            var productIndex = products.findIndex(function (product) {
+            var productIndex = listeProd.findIndex(function (product) {
                 return product.id === productId;
             });
 
             // Vérifier si le produit a été trouvé
             if (productIndex !== -1) {
                 // Supprimer le produit de la liste des produits
-                products.splice(productIndex, 1);
+                listeProd.splice(productIndex, 1);
 
                 // Mettre à jour le localStorage avec la nouvelle liste de produits
-                localStorage.setItem('product_devis', JSON.stringify(products));
+                localStorage.setItem('product_devis', JSON.stringify(listeProd));
                 console.log('Produit supprimé avec succès.');
             } else {
                 console.log('Produit non trouvé.');
@@ -307,6 +306,39 @@ $(document).ready(function () {
         }
         tableProducts();
     }
+
+
+    $('.storeDevis').on('click' ,function(e){
+        e.preventDefault();
+        let formData= new FormData($('#formAddDevis')[0]);
+        data = {
+            client : $('select[name="client_id"]').val(),
+            category : $('select[name="category_id"]').val(),
+            scategory : $('select[name="scategory_id"]').val(),
+            status : $('select[name="status"]').val(),
+            status_date : $('input[name="status_date"]').val(),
+            comment : $('textarea[name="comment"]').val(),
+            num_devis : $('#num_devis').text(),
+            total_ttc : $('#total_ttc').text(),
+            total_ht : $('#total_ht').text(),
+            total_ttva : $('#total_ttva').text(),
+        }
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: "/devis",
+            type: "POST",
+            data: data,
+            dataType: "json",
+            success: function (data) {
+              console.log(data);
+            },
+        });
+
+    });
 
 });
 
