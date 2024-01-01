@@ -67,12 +67,12 @@ $(document).ready(function () {
         var p = Object.assign({}, newProduit);
         p.ref = data.product_code;
         p.id = data.id;
-        p.designation = data.name_fr + '|' + data.name_ar;
+        p.designation = data.name_fr + ' | ' + data.name_ar;
         p.unite = data.unite;
         p.quantite = 1;
         p.prix = data.price_unit;
         p.tva = data.tva;
-        p.ht = Math.round((p.prix * p.quantite));
+        p.ht = Math.round((data.price_unit * p.quantite));
         p.ttva = Math.round((p.prix * p.quantite) * (p.tva / 100));
         p.ttc = Math.round((p.prix * p.quantite) * (1 + (p.tva / 100)));
         return p;
@@ -87,8 +87,8 @@ $(document).ready(function () {
         if (existingProduct) {
             // If it exists, update the quantity
             existingProduct.quantite += 1;
-            existingProduct.ht = Math.round(existingProduct.prix * existingProduct.quantite);
-            existingProduct.ttva = Math.round((existingProduct.prix * existingProduct.quantite) * (existingProduct.tva / 100));
+            existingProduct.ht = Math.round((existingProduct.prix * existingProduct.quantite));
+            existingProduct.ttva = Math.round((((existingProduct.tva / 100) * existingProduct.ht)));
         } else {
             // If it doesn't exist, add it to the list
             listeProd.push(prod);
@@ -150,7 +150,7 @@ $(document).ready(function () {
                 quantityInput.classList.add('product-quantity');
                 quantityInput.id = `product-qty-${product.id}`;
                 quantityInput.value = product.quantite;
-                quantityInput.readOnly = true;
+                // quantityInput.readOnly = false;
 
                 const plusButton = document.createElement('button');
                 plusButton.type = 'button';
@@ -176,8 +176,8 @@ $(document).ready(function () {
 
         // Créez un bouton pour supprimer le produit
         const removeButton = document.createElement('button');
-        removeButton.classList.add('btn', 'remove');
-        removeButton.type = ('button');
+        removeButton.type = 'button';
+        removeButton.classList.add('btn');
         // removeButton.classList.add('btn', 'remove');
         removeButton.innerHTML = '<i class="las la-times text-danger fs-1"></i>';
         const tdRemove = document.createElement('td');
@@ -250,10 +250,13 @@ $(document).ready(function () {
 
         if (existingProduct) {
             // Update ht based on the new quantity
-            existingProduct.ht = Math.round(parseFloat(existingProduct.prix) * parseFloat(newQuantity));
+            existingProduct.ht = Math.round((parseFloat(existingProduct.prix) * parseFloat(newQuantity)));
+
             // Update tttva based on the updated ht and tva
-            existingProduct.ttva = Math.round(parseFloat(existingProduct.prix) * parseFloat(newQuantity) * (parseFloat(existingProduct.tva) / 100));
-            existingProduct.ttc = Math.round(parseFloat(existingProduct.prix) * parseFloat(newQuantity) * (1 + (parseFloat(existingProduct.tva) / 100)));
+            existingProduct.ttva = Math.round((parseFloat(existingProduct.prix) * parseFloat(newQuantity) * (existingProduct.tva /
+                100)));
+            existingProduct.ttc = Math.round((parseFloat(existingProduct.prix) * parseFloat(newQuantity) * (1 + (existingProduct.tva /
+                100))));
             localStorage.setItem('product_devis', JSON.stringify(listeProd));
         }
     }
@@ -265,7 +268,7 @@ $(document).ready(function () {
         var prixTTC = 0;
         if (listeProd && listeProd.length > 0) {
             // Calcule le prix hors taxe
-            prixHT = listeProd.reduce((acc, product) => acc + product.ht * product.quantite, 0);
+            prixHT = listeProd.reduce((acc, product) => acc + product.ht, 0);
             // Calcule la TVA
             tva = listeProd.reduce((acc, product) => acc + product.ttva, 0);
             // Calcule le prix toutes taxes comprises
@@ -277,14 +280,16 @@ $(document).ready(function () {
     }
 
     function deleteProduct(productId) {
+        // e.preventDefault();
         // Récupérer les produits actuels depuis le localStorage
         var listeProd = JSON.parse(localStorage.getItem('product_devis'));
 
         // Vérifier s'il y a des produits dans le localStorage
         if (listeProd) {
+
             // Trouver l'index du produit avec l'ID donné
             var productIndex = listeProd.findIndex(function (product) {
-                return product.id === productId.toString();
+                return product.id === productId;
             });
 
             // Vérifier si le produit a été trouvé
@@ -294,17 +299,62 @@ $(document).ready(function () {
 
                 // Mettre à jour le localStorage avec la nouvelle liste de produits
                 localStorage.setItem('product_devis', JSON.stringify(listeProd));
-                tableProducts();
                 console.log('Produit supprimé avec succès.');
-                // Afficher une boîte de dialogue de confirmation
-                alert('Produit supprimé avec succès.');
             } else {
                 console.log('Produit non trouvé.');
             }
         } else {
             console.log('Aucun produit trouvé dans le localStorage.');
         }
+        tableProducts();
     }
 
+
+    $('.storeDevis').on('click', function (e) {
+
+        e.preventDefault();
+
+        let formData = new FormData($('#formAddDevis')[0]);
+        data = {
+            client: $('select[name="client_id"]').val(),
+            category: $('select[name="category_id"]').val(),
+            scategory: $('select[name="scategory_id"]').val(),
+            status: $('select[name="status"]').val(),
+            status_date: $('input[name="status_date"]').val(),
+            comment: $('textarea[name="comment"]').val(),
+            num_devis: $('#num_devis').text(),
+            total_ttc: $('#total_ttc').text(),
+            total_ht: $('#total_ht').text(),
+            total_ttva: $('#total_ttva').text(),
+            products: JSON.parse(localStorage.getItem('product_devis'))
+        }
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: "/devis",
+            type: "POST",
+            data: data,
+            dataType: "json",
+            success: function (data) {
+                if (data.success) {
+                    localStorage.removeItem("product_devis");
+                    // $('#productTableBody').empty();
+                    loadTableFromLocalStorage();
+                    location.reload();
+                    console.log("delete storage");
+
+                    Swal.fire(
+                        'Super!',
+                        'devis added successfully',
+                        'success'
+                    )
+                }
+            },
+        });
+
+    });
 
 });

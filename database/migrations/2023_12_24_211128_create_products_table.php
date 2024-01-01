@@ -25,32 +25,22 @@ return new class extends Migration
             $table->double('price_gros',8,2);
             $table->double('price_reseller',8,2);
             $table->double('latest_price',8,2);
-            $table->tinyInteger('remise');
-            $table->tinyInteger('tva');
-            $table->tinyInteger('min_stock');
+            $table->integer('remise');
+            $table->integer('tva');
+            $table->integer('min_stock');
             $table->string('unite');
             $table->string('bar_code');
-            $table->boolean('stockable');
+            $table->boolean('stockable')->default(0);
             $table->string('created_by');
             $table->string('stock_methode')->comment('CMUP/FIFO/LIFO');
-            $table->string('archive');
+            $table->string('archive')->default(0);
             $table->foreignUuid('brand_id')->constrained()->onDelete('cascade');
             $table->string('picture')->nullable();
             $table->foreignUuid('warehouse_id')->constrained()->onDelete('cascade');
             $table->boolean('active')->default(1);
-            $table->timestamps();
+            $table->date('created_at');
+            $table->date('updated_at');
             $table->softDeletes();
-
-
-
-
-
-
-
-
-
-
-
         });
 
 

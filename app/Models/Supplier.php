@@ -35,8 +35,15 @@ class Supplier extends Model
 
 
 
-//  put the relation of this Model Here
-
+/**
+ * Get all of the comments for the Client
+ *
+ * @return \Illuminate\Database\Eloquent\Relations\HasMany
+ */
+public function garanties()
+{
+    return $this->hasMany(Garanty::class, 'parent_id', 'id');
+}
 
 //  put the relation of this Model Here
 

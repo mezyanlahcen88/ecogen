@@ -193,7 +193,7 @@
                             <ul class="nav nav-sm flex-column">
                                 @can('user-list')
                                     <li class="nav-item">
-                                        <a href="{{ route('users.index') }}" class="nav-link" data-key="users">
+                                        <a href="{{ route('devis.index') }}" class="nav-link" data-key="users">
                                             <span class="text-uppercase">{{ trans('translation.navigation_navigation_devis') }}</span>
                                             <span class="badge badge-pill bg-danger" data-key="users">
                                                 {{-- {{ getSidebar()['users'] }} --}}
@@ -320,7 +320,15 @@
                                 <span class="text-uppercase">
                                     <a href="{{ route('cars.index') }}" class="nav-link" data-key="t-starter">
                                         {{ trans('translation.navigation_navigation_cars') }}
-                                        <span class="badge badge-pill bg-danger" data-key="cars">1</span>
+                                        {{-- <span class="badge badge-pill bg-danger" data-key="cars">1</span> --}}
+                                    </a>
+                                </span>
+                            </li>
+                            <li class="nav-item">
+                                <span class="text-uppercase">
+                                    <a href="{{ route('car-documents.index') }}" class="nav-link" data-key="t-starter">
+                                        {{ trans('translation.navigation_navigation_car_documents') }}
+                                        {{-- <span class="badge badge-pill bg-danger" data-key="cars">1</span> --}}
                                     </a>
                                 </span>
                             </li>

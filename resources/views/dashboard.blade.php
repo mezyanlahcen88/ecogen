@@ -210,6 +210,12 @@
             </div> <!-- end .h-100-->
 
         </div> <!-- end col -->
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            @include('dashboard.table')
+        </div>
+    </div>
 @endsection
 
 

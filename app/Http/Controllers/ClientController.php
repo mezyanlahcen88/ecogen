@@ -8,6 +8,7 @@ use App\Models\Ville;
 use App\Dto\ClientDto;
 use App\Models\Client;
 use App\Models\Region;
+use App\Models\Garanty;
 use App\Models\Secteur;
 use App\Forms\ClientForm;
 use App\Models\Profession;
@@ -17,6 +18,7 @@ use Illuminate\Http\Request;
 use App\Services\CrudService;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreClientRequest;
+use App\Http\Requests\StoreGarantyRequest;
 
 class ClientController extends Controller
 {
@@ -44,7 +46,8 @@ class ClientController extends Controller
     public function index()
     {
         $tableRows = (new Client())->getRowsTable();
-        $objects = Client::get();
+        $objects = Client::with('garanties')->get();
+        // return $objects;
         return view('clients.index', compact('tableRows', 'objects'));
     }
     /**
@@ -110,7 +113,7 @@ class ClientController extends Controller
         $object->parent_id = $request->parent_id;
         $object->parent_type = $request->parent_type;
         $object->save();
-        return redirect()->route('clients.index');
+        return redirect()->route('clients.createGaranty', $object->id);
     }
 
     /**
@@ -132,8 +135,14 @@ class ClientController extends Controller
      */
     public function edit($id)
     {
-        $object = client::findOrfail($id);
-        return view('clients.edit', compact('object'));
+        $object = client::findOrFail($id);
+        $regions = Region::pluck('name', 'id');
+        $client_types = $this->staticOptions::CLIENT_TYPES;
+        $parent_types = $this->staticOptions::PARENT_TYPES;
+        $garanties_types = $this->staticOptions::GARANTIES_TYPES;
+        $fonctions = Profession::pluck('name', 'id');
+
+        return view('clients.edit', compact( 'object' ,'regions', 'client_types', 'parent_types', 'fonctions','garanties_types'));
     }
 
     /**
@@ -206,5 +215,30 @@ class ClientController extends Controller
         $object->save();
         $message = $object->active ? trans('translation.client_message_activated') : trans('translation.client_message_inactivated');
         return response()->json(['code' => 200, 'active' => $object->active, 'message' => $message]);
+    }
+
+    public function createGaranty($id){
+        $object = Client::findOrFail($id);
+        $garanties_types = $this->staticOptions::GARANTIES_TYPES;
+        return view("clients.garanties.create",compact('object','garanties_types'));
+    }
+
+    public function storeGaranty(StoreGarantyRequest $request){
+        $validated = $request->validated();
+        $garanty = new Garanty();
+        $garanty->id = Str::uuid();
+        $garanty->amount = $request->amount;
+        $garanty->parent_id = $request->parent_id;
+        $garanty->parent_type = $request->parent_type;
+        $garanty->type = $request->type;
+        if($request->hasFile('picture')){
+            dealWithPicture($request,$garanty,'picture', $request->parent_type,'garanties','store');
+        }
+        $garanty->document_ref = $request->document_ref;
+        $garanty->user_id = Auth::id();
+        $garanty->comment = $request->comment;
+        $garanty->doe = $request->doe;
+        $garanty->save();
+        return back();
     }
 }

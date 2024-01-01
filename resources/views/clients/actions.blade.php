@@ -1,6 +1,12 @@
 
     <div class="d-flex justify-content-center gap-2">
         @can('client-edit')
+        <div class="edit">
+            <a href="{{ route('clients.createGaranty', $object->id)}}" title="Create"><span class="badge  text-bg-warning"><i class="las la-money-check-alt"></i></span></a>
+            </a>
+        </div>
+      @endcan
+        @can('client-edit')
             <div class="edit">
                 <a href="{{ route('clients.edit', $object->id)}}" title="Edit"><span class="badge  text-bg-info"><i class="las la-edit"></i></span></a>
                 </a>

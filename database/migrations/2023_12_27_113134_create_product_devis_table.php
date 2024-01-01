@@ -17,13 +17,14 @@ return new class extends Migration
             $table->uuid('id')->unique();
             $table->foreignUuid('devis_id')->constrained('devis')->onDelete('cascade');
             $table->foreignUuid('product_id')->constrained('products')->onDelete('cascade');
+            $table->string('designation');
             $table->integer('quantity');
             $table->double('price',8,2);
-            $table->tinyInteger('remise');
+            $table->integer('remise');
             $table->integer('total_remise');
             $table->double('TOTAL_HT',8,2);
-            $table->tinyInteger('TVA');
-            $table->tinyInteger('TOTAL_TVA');
+            $table->integer('TVA');
+            $table->integer('TOTAL_TVA');
             $table->double('TOTAL_TTC',8,2);
             $table->string('unite');
             $table->timestamps();

@@ -39,7 +39,15 @@ class Car extends Model
 
 
 //  put the relation of this Model Here
-
+/**
+ * Get all of the comments for the Car
+ *
+ * @return \Illuminate\Database\Eloquent\Relations\HasMany
+ */
+public function documents()
+{
+    return $this->hasMany(CarDocument::class, 'car_id', 'id');
+}
 
 
     /**
@@ -53,7 +61,6 @@ class Car extends Model
              'marque' => 'marque',
              'type' => 'type',
              'dae' => 'dae',
-             'nbplace' => 'nbplace',
 
 
          ];
@@ -70,7 +77,6 @@ class Car extends Model
             'marque' => 'marque',
             'type' => 'type',
             'dae' => 'dae',
-            'nbplace' => 'nbplace',
           ];
           }
 

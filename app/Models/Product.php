@@ -47,6 +47,12 @@ public function category()
 }
 
 
+public function devis()
+{
+    return $this->belongsToMany(Devis::class)
+        ->withPivot(['quantity', 'price', 'remise', 'total_remise', 'TOTAL_HT', 'TVA', 'TOTAL_TVA', 'TOTAL_TTC', 'unite']);
+}
+
 /**
  * Get the user that owns the Product
  *

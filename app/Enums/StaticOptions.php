@@ -10,13 +10,6 @@ namespace App\Enums;
 final class StaticOptions
 {
 
-    const GENDER = [
-        'mr' => "Mr",
-        'mde' => "Mde",
-        'mlle' => "Mlle",
-    ];
-
-
     const PERMIS_TYPES =[
         'category_A'=>'Category A',
         'category_B'=>'Category B',
@@ -42,6 +35,12 @@ final class StaticOptions
         'Fournisseur'=>'Fournisseur',
     ];
 
+    const GARANTIES_TYPES =[
+        'Espece'=>'Espece',
+        'Cheque'=>'Cheque',
+        'Virsement'=>'Virsement',
+    ];
+
     const CLIENT_TYPES =[
         'Fidel'=>'Fidel',
         'Serieux'=>'Serieux',
@@ -52,16 +51,37 @@ final class StaticOptions
         'PIECE'=>'PIECE',
     ];
 
-    const STOCK_METHODS =[
+    const STOCK_METHODS = [
         'CMUP'=>'CMUP',
         'FIFO'=>'FIFO',
         'LIFO'=>'LIFO',
     ];
 
-    const DEVIS_STATUS =[
+    const DEVIS_STATUS = [
         'En attente'=>'En attente',
         'Validé'=>'Validé',
         'Rejeté'=>'Rejeté',
     ];
 
+    const CAR_DOCUMENTS = [
+        'CARTE GRISE'=>'CARTE GRISE',
+        'ASSURANCE'=>'ASSURANCE',
+        'TAXE'=>'TAXE',
+        'LA VISTE'=>'LA VISTE',
+        'CARNET DE CIRCULATION'=>'CARNET DE CIRCULATION',
+        'CARNET DE METROLOGIQUE'=>'CARNET DE METROLOGIQUE',
+        'ATTESTATION ASSURANCE'=>'ATTESTATION ASSURANCE',
+    ];
+
+    const TRANCHES = [
+        '1ER TRANCHE'=>'1ER TRANCHE',
+        '2EME TRANCHE'=>'2EME TRANCHE',
+        '3EME TRANCHE'=>'3EME TRANCHE',
+        '4EME TRANCHE'=>'4EME TRANCHE',
+    ];
+
+    const ETATS = [
+        'OUVERT' => "OUVERT",
+        'FERME' => "FERME",
+    ];
 }

@@ -57,6 +57,7 @@ class LanguageTranslateSeeder extends Seeder
             ['language_id'=>$lang_id,'label'=>'navigation_navigation_numerotations','translation'=>'Numerotations','created_at'=>$now,'updated_at'=>$now],
             ['language_id'=>$lang_id,'label'=>'navigation_navigation_exercices','translation'=>'exercies','created_at'=>$now,'updated_at'=>$now],
             ['language_id'=>$lang_id,'label'=>'navigation_navigation_mdreglement','translation'=>'Mode de reglements','created_at'=>$now,'updated_at'=>$now],
+            ['language_id'=>$lang_id,'label'=>'navigation_navigation_car_documents','translation'=>'Documents des véhicules','created_at'=>$now,'updated_at'=>$now],
 
 
             ['language_id' => $lang_id, 'label' => 'general_general_action', 'translation' => 'Action', 'created_at' => $now, 'updated_at' => $now],
@@ -627,6 +628,7 @@ class LanguageTranslateSeeder extends Seeder
 ['language_id'=>$lang_id,'label'=>'garanty_form_parent_type','translation'=>'Type de parent','created_at'=>$now,'updated_at'=>$now],
 ['language_id'=>$lang_id,'label'=>'garanty_form_type','translation'=>'Type','created_at'=>$now,'updated_at'=>$now],
 ['language_id'=>$lang_id,'label'=>'garanty_form_picture','translation'=>'Image','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'garanty_form_document_ref','translation'=>'Référence du document','created_at'=>$now,'updated_at'=>$now],
 ['language_id'=>$lang_id,'label'=>'garanty_form_user_id','translation'=>'ID de l\'utilisateur','created_at'=>$now,'updated_at'=>$now],
 ['language_id'=>$lang_id,'label'=>'garanty_form_comment','translation'=>'Commentaire','created_at'=>$now,'updated_at'=>$now],
 ['language_id'=>$lang_id,'label'=>'garanty_form_doe','translation'=>'Date d\'expiration','created_at'=>$now,'updated_at'=>$now],
@@ -635,6 +637,7 @@ class LanguageTranslateSeeder extends Seeder
 ['language_id'=>$lang_id,'label'=>'garanty_form_parent_type_placeholder','translation'=>'Entrez le type de parent','created_at'=>$now,'updated_at'=>$now],
 ['language_id'=>$lang_id,'label'=>'garanty_form_type_placeholder','translation'=>'Entrez le type','created_at'=>$now,'updated_at'=>$now],
 ['language_id'=>$lang_id,'label'=>'garanty_form_picture_placeholder','translation'=>'Entrer l\'image','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'garanty_form_document_ref_placeholder','translation'=>'Entrer référence du document','created_at'=>$now,'updated_at'=>$now],
 ['language_id'=>$lang_id,'label'=>'garanty_form_user_id_placeholder','translation'=>'Entrez l\'ID utilisateur','created_at'=>$now,'updated_at'=>$now],
 ['language_id'=>$lang_id,'label'=>'garanty_form_comment_placeholder','translation'=>'Entrez le commentaire','created_at'=>$now,'updated_at'=>$now],
 ['language_id'=>$lang_id,'label'=>'garanty_form_doe_placeholder','translation'=>'Entrez la date d\'expiration','created_at'=>$now,'updated_at'=>$now],
@@ -836,6 +839,41 @@ class LanguageTranslateSeeder extends Seeder
 ['language_id'=>$lang_id,'label'=>'devis_form_total_ttc_placeholder','translation'=>'Entrez TTTC','created_at'=>$now,'updated_at'=>$now],
 ['language_id'=>$lang_id,'label'=>'devis_form_unite_placeholder','translation'=>'Entrez unité','created_at'=>$now,'updated_at'=>$now],
 
-        ]);
+
+['language_id'=>$lang_id,'label'=>'cardocuments_action_add','translation'=>'Ajouter des documents de voiture','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'cardocuments_action_show','translation'=>'Afficher les documents de voiture','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'cardocuments_action_edit','translation'=>'Modifier les documents de voiture','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'cardocuments_action_delete','translation'=>'Supprimer les documents de voiture','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'cardocuments_action_restore','translation'=>'Restaurer les documents de voiture','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'cardocuments_message_add','translation'=>'Documents de voiture Créé avec succès','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'cardocuments_message_show','translation'=>'Les documents de voiture ont montré avec succès','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'cardocuments_message_edit','translation'=>'Documents de voiture à jour avec succès','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'cardocuments_message_delete','translation'=>'Documents de voiture','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'cardocuments_message_restore','translation'=>'Les documents de voiture ont réussi à restaurer','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'cardocuments_message_activated','translation'=>'Les documents de voiture ont réussi à activer','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'cardocuments_message_inactivted','translation'=>'Les documents de voiture ont réussi à inactiver','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'cardocuments_form_manage_cardocuments','translation'=>'Gérer les documents','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'cardocuments_form_cardocuments_list','translation'=>'Liste des documents','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'cardocuments_form_deleted_cardocuments_list','translation'=>'Liste des documents supprimés','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'cardocuments_form_manage_deleted_cardocuments','translation'=>'Gérer les documents supprimés','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'cardocuments_table_car_id','translation'=>'ID de voiture','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'cardocuments_table_nature','translation'=>'Nature','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'cardocuments_table_start_date','translation'=>'Date de début','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'cardocuments_table_end_date','translation'=>'Date de fin','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'cardocuments_table_status','translation'=>'Statut','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'cardocuments_table_comment','translation'=>'Commentaire','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'cardocuments_table_picture','translation'=>'Image','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'cardocuments_table_tranche','translation'=>'Tranche','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'cardocuments_form_car_id','translation'=>'ID de voiture','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'cardocuments_form_nature','translation'=>'Nature','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'cardocuments_form_start_date','translation'=>'Date de début','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'cardocuments_form_end_date','translation'=>'Date de fin','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'cardocuments_form_status','translation'=>'Statut','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'cardocuments_form_comment','translation'=>'Commentaire','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'cardocuments_form_picture','translation'=>'Image','created_at'=>$now,'updated_at'=>$now],
+['language_id'=>$lang_id,'label'=>'cardocuments_form_tranche','translation'=>'Tranche','created_at'=>$now,'updated_at'=>$now],
+
+
+]);
     }
 }

@@ -39,6 +39,23 @@
                     <div class="row">
                         @include('form.input', [
                             'cols' => 'col-md-6',
+                            'column' => 'product_code',
+                            'model' => 'product',
+                            'optional' => 'text-danger',
+                            'input_type' => 'text',
+                            'class_name' => '',
+                            'column_id' => 'product_code',
+                            'column_value' => $object->product_code,
+                            'readonly' => 'false',
+                        ])
+    <div class="col-lg-6">
+        <div>
+            <label class="form-label my-1">Date de crétation</label>
+            <input type="text" class="form-control" data-provider="flatpickr" data-date-format="d/m/Y" value="{{$object->created_at}}" name="created_at" readonly>
+        </div>
+    </div>
+                        @include('form.input', [
+                            'cols' => 'col-md-6',
                             'column' => 'name_fr',
                             'model' => 'product',
                             'optional' => 'text-danger',

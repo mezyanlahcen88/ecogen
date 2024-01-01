@@ -37,8 +37,11 @@ class Devis extends Model
 
 //  put the relation of this Model Here
 
-
-//  put the relation of this Model Here
+public function products()
+{
+    return $this->belongsToMany(Product::class)
+        ->withPivot(['quantity', 'price', 'remise', 'total_remise', 'TOTAL_HT', 'TVA', 'TOTAL_TVA', 'TOTAL_TTC', 'unite']);
+}
 
 
 
@@ -49,8 +52,13 @@ class Devis extends Model
 
     public function getRowsTable(){
         return [
-             'name' => 'name',
-             'matricule' => 'matricule',
+             'devis_code' => 'devis_code',
+             'HT' => 'ht',
+             'TVA' => 'tva',
+             'TTTC' => 'tttc',
+             'status' => 'status',
+             'status_date' => 'status_date',
+             'client_id' => 'client_id',
 
          ];
      }
@@ -62,8 +70,13 @@ class Devis extends Model
 
      public function getRowsTableTrashed(){
          return [
-             'name' => 'name',
-             'matricule' => 'matricule',
+            'devis_code' => 'devis_code',
+            'ht' => 'ht',
+            'tva' => 'tva',
+            'tttc' => 'tttc',
+            'status' => 'status',
+            'status_date' => 'status_date',
+            'client_id' => 'client_id',
           ];
           }
 

@@ -2,7 +2,11 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
+use App\Models\Brand;
+use App\Models\Category;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,14 +21,19 @@ class ProductFactory extends Factory
      */
     public function definition()
     {
-        return [
+        $categories = Category::where('parent_id',null)->pluck('id')->toArray();
+        $scategories = Category::where('parent_id','!=',null)->pluck('id')->toArray();
+        $brands = Brand::pluck('id')->toArray();
+        $user = User::first()->uuid;
 
+
+        return [
             'id' =>  Str::uuid(),
             'product_code' =>  'PR-'.Str::random(6),
             'name_fr' =>  $this->faker->name,
             'name_ar' =>  $this->faker->name,
-            'category_id' =>  $this->faker->randomElement(['48ce88da-cc8d-4643-9a4e-16bffb4fc813', '67912cd2-1888-4478-bc36-cc558ef7276d']),
-            'scategory_id' =>  $this->faker->randomElement(['44c728dc-7f59-457d-ad90-10a633722b91', 'dc04578d-bcc1-4b9f-aac6-c884dad0ea3f']),
+            'category_id' =>  $this->faker->randomElement($categories),
+            'scategory_id' =>  $this->faker->randomElement($scategories),
             'buy_price' =>  $this->faker->randomFloat(2, 0, 999999.99),
             'price_unit'=>  $this->faker->randomFloat(2, 0, 999999.99),
             'price_gros'=>  $this->faker->randomFloat(2, 0, 999999.99),
@@ -34,14 +43,14 @@ class ProductFactory extends Factory
             'tva' =>  $this->faker->numberBetween(1, 99),
             'min_stock' =>  $this->faker->numberBetween(1, 99),
             'unite' =>  $this->faker->randomElement(['KG', 'Piece', 'Ton']),
-            'warehouse_id'=>  '99b9efa5-b139-4502-bc5c-83c7824c53be',
+            'warehouse_id'=>  'fb7a7118-7b76-4cad-ba47-af7536686998',
             'bar_code'=>  $this->faker->numberBetween(1111111, 9999999),
             'stockable' =>  $this->faker->randomElement([0,1]),
-            'created_by' =>  '142a514b-faef-4b89-b5fc-34811f151cf4',
-            'stock_methode' =>  $this->faker->randomElement(['CMUP','FIFO','LIFO']),
+            'created_by' =>  $user,
+            'stock_methode' =>  'CMUP',
             'archive' =>  $this->faker->randomElement([0,1]),
             'active' =>  $this->faker->randomElement([0,1]),
-            'brand_id' =>  $this->faker->randomElement(['26100eda-f80f-40d0-8d56-2aa55d537a2e','a8a2358c-a31e-4036-8916-14eb00a85352']),
+            'brand_id' =>  $this->faker->randomElement($brands),
             'picture' => 'ddddd.jpg',
             'created_at' => now(),
             'updated_at' => now(),

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Car;
+use App\Models\CarDocument;
+use Illuminate\Support\Str;
 use App\Enums\StaticOptions;
 use Illuminate\Http\Request;
 use App\Services\CrudService;
@@ -180,4 +182,31 @@ class CarController extends Controller
         $message = $object->active ? trans('translation.car_message_activated') : trans('translation.car_message_inactivated');
         return response()->json(['code' => 200, 'active' => $object->active, 'message' => $message]);
     }
+    public function createDocument($id){
+        $object = Car::findOrFail($id);
+        $documents = $this->staticOptions::CAR_DOCUMENTS;
+        $tranches = $this->staticOptions::TRANCHES;
+        $etats = $this->staticOptions::ETATS;
+        return view("cars.documents.create_documents",compact('object','documents','tranches','etats'));
+    }
+
+    public function storeDocument(Request $request){
+        // dd($request->all());
+        // $validated = $request->validated();
+        $document = new CarDocument();
+        $document->id = Str::uuid();
+        $document->car_id = $request->car_id;
+        $document->nature = $request->nature;
+        $document->start_date = $request->start_date;
+        $document->end_date = $request->end_date;
+        $document->tranche = $request->tranche;
+        if($request->hasFile('picture')){
+            dealWithPicture($request,$document,'picture', $request->nature,'documents','store');
+        }
+        $document->comment = $request->comment;
+        $document->status = $request->status;
+        $document->save();
+        return back();
+    }
+
 }
