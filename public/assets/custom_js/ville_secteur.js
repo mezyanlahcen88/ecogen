@@ -13,6 +13,7 @@ $(document).ready(function () {
                 dataType: "json",
                 success: function (data) {
                     $('select[name="secteur_id"]').empty();
+                    $('select[name="secteur_id"]').append('<option value="">Choisir secteur</option>');
                     $.each(data, function (key, value) {
                         $('select[name="secteur_id"]').append('<option value="' +
                             key + '">' + value + '</option>');

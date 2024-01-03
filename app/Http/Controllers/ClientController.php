@@ -88,7 +88,7 @@ class ClientController extends Controller
     {
         $validated = $request->validated();
 
-        // dd($request->all());
+        dd($request->all());
         $object = new Client();
         $object->id = Str::uuid();
         // $object->code_client = getClientNumerotation();

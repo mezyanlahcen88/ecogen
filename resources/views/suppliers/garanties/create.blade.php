@@ -52,20 +52,10 @@
                             ])
                             <input type="hidden" name="parent_type" value="Client">
                             <input type="hidden" name="parent_id" value="{{ $object->id }}">
-                            {{-- @include('form.input', [
-                                'cols' => 'col-md-4',
-                                'column' => 'doe',
-                                'model' => 'garanty',
-                                'optional' => 'text-danger',
-                                'input_type' => 'datetime-local',
-                                'class_name' => '',
-                                'column_id' => 'doe',
-                                'column_value' => old('doe'),
-                                'readonly' => 'false',
-                            ]) --}}
+
                             <div class="col-md-4">
                                 <div>
-                                    <label class="form-label my-1">{{ trans('translation.garanty_form_doe') }}</label>
+                                    <label class="form-label my-1">{{ trans('translation.garanty_form_doe') }} &nbsp; <span class="text-danger"></span></label>
                                     <input type="text" class="form-control" data-provider="flatpickr" data-enable-time
                                         data-date-format="Y-m-d"
                                         placeholder="{{ Carbon\Carbon::now()->format('d-m-Y H:i') }}" name="doe">

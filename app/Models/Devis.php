@@ -32,7 +32,9 @@ class Devis extends Model
     ];
 
 
-
+public function getDesignation() {
+    return $this->name_fr . ' | ' . $this->name_ar ;
+}
 
 
 //  put the relation of this Model Here
@@ -67,7 +69,6 @@ public function client()
              'TTTC' => 'tttc',
              'status' => 'status',
              'status_date' => 'status_date',
-             'client_id' => 'client_id',
 
          ];
      }
@@ -85,7 +86,6 @@ public function client()
             'tttc' => 'tttc',
             'status' => 'status',
             'status_date' => 'status_date',
-            'client_id' => 'client_id',
           ];
           }
 

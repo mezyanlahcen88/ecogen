@@ -16,17 +16,6 @@
     ])
 @endsection
 @section('content')
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-
-
         <form action="{{route('clients.update',$object->id)}}" method="post" id="userForm">
             @csrf
              @method('PUT')
@@ -53,7 +42,7 @@
                                     'readonly' => 'false',
                                 ])
                                 @include('form.input', [
-                                    'cols' => 'col-md-6',
+                                    'cols' => 'col-md-6 rtl',
                                     'column' => 'name_ar',
                                     'model' => 'client',
                                     'optional' => 'text-danger',
@@ -68,7 +57,7 @@
                                     'cols' => 'col-md-6',
                                     'column' => 'ice',
                                     'model' => 'client',
-                                    'optional' => 'text-danger',
+                                    'optional' => 'text-secondary',
                                     'input_type' => 'text',
                                     'class_name' => '',
                                     'column_id' => 'ice',
@@ -79,7 +68,7 @@
                                     'cols' => 'col-md-6',
                                     'column' => 'phone',
                                     'model' => 'client',
-                                    'optional' => 'text-danger',
+                                    'optional' => 'text-secondary',
                                     'input_type' => 'number',
                                     'class_name' => '',
                                     'column_id' => 'phone',
@@ -90,7 +79,7 @@
                                     'cols' => 'col-md-6',
                                     'column' => 'fax',
                                     'model' => 'client',
-                                    'optional' => 'text-danger',
+                                    'optional' => 'text-secondary',
                                     'input_type' => 'number',
                                     'class_name' => '',
                                     'column_id' => 'fax',
@@ -101,7 +90,7 @@
                                     'cols' => 'col-md-6',
                                     'column' => 'email',
                                     'model' => 'client',
-                                    'optional' => 'text-danger',
+                                    'optional' => 'text-secondary',
                                     'input_type' => 'email',
                                     'class_name' => '',
                                     'column_id' => 'email',
@@ -115,7 +104,7 @@
                                     'column' => 'region_id',
                                     'isReload' => false,
                                     'label' => 'client_form_region_id',
-                                    'optional' => 'text-danger',
+                                    'optional' => 'text-secondary',
                                     'divID' => 'region_id',
                                     'options' => $regions,
                                     'object' => false,
@@ -125,7 +114,7 @@
                                     'column' => 'ville_id',
                                     'isReload' => false,
                                     'label' => 'client_form_ville_id',
-                                    'optional' => 'text-danger',
+                                    'optional' => 'text-secondary',
                                     'divID' => 'ville_id',
                                     'options' => [],
                                     'object' => false,
@@ -135,7 +124,7 @@
                                     'column' => 'secteur_id',
                                     'isReload' => false,
                                     'label' => 'client_form_secteur_id',
-                                    'optional' => 'text-danger',
+                                    'optional' => 'text-secondary',
                                     'divID' => 'secteur_id',
                                     'options' => [],
                                     'object' => false,
@@ -144,7 +133,7 @@
                                     'cols' => 'col-md-3',
                                     'column' => 'cd_postale',
                                     'model' => 'client',
-                                    'optional' => 'text-danger',
+                                    'optional' => 'text-secondary',
                                     'input_type' => 'text',
                                     'class_name' => '',
                                     'column_id' => 'cd_postale',
@@ -166,7 +155,7 @@
                                     'column' => 'fonction',
                                     'isReload' => false,
                                     'label' => 'client_form_fonction',
-                                    'optional' => 'text-danger',
+                                    'optional' => 'text-secondary',
                                     'divID' => 'fonction',
                                     'options' => $fonctions,
                                     'object' => false,
@@ -176,7 +165,7 @@
                                     'column' => 'parent_type',
                                     'isReload' => false,
                                     'label' => 'client_form_parent_type',
-                                    'optional' => 'text-danger',
+                                    'optional' => 'text-secondary',
                                     'divID' => 'parent_type',
                                     'options' => $parent_types,
                                     'object' => false,
@@ -186,7 +175,7 @@
                                     'column' => 'parent_id',
                                     'isReload' => false,
                                     'label' => 'client_form_parent_id',
-                                    'optional' => 'text-danger',
+                                    'optional' => 'text-secondary',
                                     'divID' => 'parent_id',
                                     'options' => [],
                                     'object' => false,
@@ -207,7 +196,7 @@
                                     'cols' => 'col-md-6',
                                     'column' => 'obs',
                                     'model' => 'client',
-                                    'optional' => 'text-danger',
+                                    'optional' => 'text-secondary',
                                     'input_type' => 'text',
                                     'class_name' => '',
                                     'column_id' => 'obs',
@@ -219,80 +208,6 @@
                         </div>
                     </div>
                 </div>
-
-                {{-- <div class="col-12">
-                    <div class="card">
-                        <div class="card-header bg-primary text-white">
-                            <h6 class="card-title mb-0 text-white">informations de la garantie</h6>
-                        </div>
-                        <div class="card-body">
-
-                            <div class="row repeater">
-                                @include('form.input', [
-                                    'cols' => 'col-md-2',
-                                    'column' => 'picture',
-                                    'model' => 'garanty',
-                                    'optional' => 'text-danger',
-                                    'input_type' => 'file',
-                                    'class_name' => '',
-                                    'column_id' => 'picture',
-                                    'column_value' => old('picture'),
-                                    'readonly' => 'false',
-                                ])
-                                @include('form.input', [
-                                    'cols' => 'col-md-2',
-                                    'column' => 'amount',
-                                    'model' => 'garanty',
-                                    'optional' => 'text-danger',
-                                    'input_type' => 'text',
-                                    'class_name' => '',
-                                    'column_id' => 'amount',
-                                    'column_value' => old('amount'),
-                                    'readonly' => 'false',
-                                ])
-                                @include('form.singleSelect', [
-                                    'cols' => 'col-md-2 ',
-                                    'column' => 'type',
-                                    'isReload' => false,
-                                    'label' => 'garanty_form_type',
-                                    'optional' => 'text-danger',
-                                    'divID' => 'ville_id',
-                                    'options' => $garanties_types,
-                                    'object' => false,
-                                ])
-                                <input type="hidden" name="type_client" value="Client">
-                                @include('form.input', [
-                                    'cols' => 'col-md-2',
-                                    'column' => 'doe',
-                                    'model' => 'garanty',
-                                    'optional' => 'text-danger',
-                                    'input_type' => 'date',
-                                    'class_name' => '',
-                                    'column_id' => 'doe',
-                                    'column_value' => old('doe'),
-                                    'readonly' => 'false',
-                                ])
-                                @include('form.input', [
-                                    'cols' => 'col-md-3',
-                                    'column' => 'comment',
-                                    'model' => 'garanty',
-                                    'optional' => 'text-danger',
-                                    'input_type' => 'text',
-                                    'class_name' => '',
-                                    'column_id' => 'comment',
-                                    'column_value' => old('comment'),
-                                    'readonly' => 'false',
-                                ])
-                                <div class="col-1 d-visible mt-1">
-                                    <button class="btn add"><i class="las la-plus icon-xxxlg text-success"></i></button>
-                                </div>
-
-                            </div>
-                            <div class="repeater-container">
-                            </div>
-                        </div>
-                    </div>
-                </div> --}}
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header bg-primary text-white">

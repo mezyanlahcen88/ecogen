@@ -14,6 +14,7 @@ $(document).ready(function () {
                 success: function (data) {
                     $('select[name="ville_id"]').empty();
                     $('select[name="secteur_id"]').empty();
+                    $('select[name="ville_id"]').append('<option value="">Choisir ville</option>');
                     $.each(data, function (key, value) {
                         $('select[name="ville_id"]').append('<option value="' +
                             key + '">' + value + '</option>');

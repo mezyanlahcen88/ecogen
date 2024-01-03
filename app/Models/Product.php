@@ -89,6 +89,8 @@ public function scategory()
           }
 
 
-
+          public function getDesignation() {
+            return $this->name_fr . ' | ' . $this->name_ar ;
+        }
 
 }

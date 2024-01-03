@@ -2,8 +2,9 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Enums\RegexEnum;
 use Illuminate\Validation\Rule;
+use Illuminate\Foundation\Http\FormRequest;
 
 class StoreSupplierRequest extends FormRequest
 {
@@ -29,20 +30,30 @@ class StoreSupplierRequest extends FormRequest
         return [
             'name_fr' => ['bail', 'required', 'min:3'],
             'name_ar' => ['bail', 'required', 'min:3'],
-             // 'name' => ['bail', 'required', 'min:3'],
-            // 'adresse' => ['bail', 'required', 'min:3'],
-            // 'adresse_complement' => ['bail'],
-            // 'post_code' => ['bail', 'required', 'min:3'],
-            // 'company_number' => ['bail', 'required', 'min:3'],
-            // 'vat_number' => ['bail'],
-            // 'country' => ['integer'],
-            // 'state' => ['integer'],
-            // 'city' => ['integer'],
-            // 'email' => ['required', 'email', 'regex:/(.+)@(.+)\.(.+)/i', Rule::unique('transport_companies', 'email')->ignore($model)],
-            // 'phone' => ['required', 'regex:' . RegexEnum::PHONE, 'min:11', 'max:15', Rule::unique('transport_companies', 'phone')->ignore($model)],
-            // 'fix' => ['nullable', 'regex:' . RegexEnum::PHONE, 'min:11', 'max:15', Rule::unique('transport_companies', 'fix')->ignore($model)],
-            // 'fax' => ['nullable', 'regex:' . RegexEnum::PHONE, 'min:11', 'max:15', Rule::unique('transport_companies', 'fax')->ignore($model)],
-        ];
-    }
+           "ice" => ['bail', 'nullable', 'min:3','alpha_num'],
+           "phone" => ['bail','nullable','min:10','max:10','regex:'.RegexEnum::PHONE,Rule::unique('suppliers' ,'phone')->ignore($this)],
+           "fax" => ['bail','nullable','min:10','max:10','regex:'.RegexEnum::PHONE,Rule::unique('suppliers' ,'fax')->ignore($this)],
+           "email" => ['bail','nullable','regex:'.RegexEnum::EMAIL,Rule::unique('suppliers' ,'email')->ignore($this)],
+           "region_id" => ['bail', 'nullable'],
+           "ville_id" => ['bail', 'nullable'],
+           "secteur_id" => ['bail', 'nullable'],
+           "cd_postale" => ['bail', 'nullable','numeric', 'min:3'],
+           "type_supplier" => ['bail', 'required', 'min:3'],
+           "fonction" => ['bail', 'nullable', 'min:3'],
+           "parent_type" => ['bail', 'nullable', 'min:3'],
+           "parent_id" => ['bail', 'nullable', 'min:3'],
+           "address" => ['bail', 'required', 'min:3'],
+           "obs" => ['bail', 'nullable', 'min:3'],
+
+
+       ];
+   }
+
+   public function messages()
+   {
+       return [
+           'name_ar.required' => 'المرجو إدخال المعلومات',
+       ];
+   }
 }
 ?>
