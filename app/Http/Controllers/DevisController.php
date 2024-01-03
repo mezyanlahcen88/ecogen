@@ -127,7 +127,9 @@ class DevisController extends Controller
      */
     public function show($id)
     {
-        //
+        $object = devis::with('products')->findOrfail($id);
+        // return $object;
+        return view('devis.show', compact('object'));
     }
 
     /**

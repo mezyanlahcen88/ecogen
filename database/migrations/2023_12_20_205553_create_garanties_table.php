@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('picture')->nullable();
             $table->string('document_ref')->nullable();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->text('comment');
+            $table->text('comment')->nullable();
             $table->date('doe')->comment('experation date');
             $table->timestamps();
             $table->softDeletes();

@@ -1,6 +1,7 @@
 @extends('layouts.main_layout')
 @section('title')
-    {{ env('APP_NAME') }} | {{ trans('translation.supplier_form_manage_suppliers') }} | {{ trans('translation.supplier_action_add') }}
+    {{ env('APP_NAME') }} | {{ trans('translation.supplier_form_manage_suppliers') }} |
+    {{ trans('translation.supplier_action_add') }}
 @stop
 @section('css')
     @include('layouts.includes.form_css')
@@ -16,138 +17,202 @@
     ])
 @endsection
 @section('content')
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
 
-
-        <form action="{{route('suppliers.update',$object->id)}}" method="post" id="userForm">
+        <form action="{{ route('suppliers.update', $object->id) }}" method="post" id="userForm">
             @csrf
-             @method('PUT')
+            @method('PUT')
             <div class="row">
-
-        <div class="col-9">
-            <div class="card card-body">
-
-                    <div class="row">
-                        @include('form.input', [
-                            'cols' => 'col-md-6',
-                            'column' => 'first_name',
-                            'model' => 'user',
-                            'optional' => 'text-danger',
-                            'input_type' => 'text',
-                            'class_name' => '',
-                            'column_id' => 'first_name',
-                            'column_value' => old('first_name'),
-                            'readonly' => 'false',
-                        ])
-                        @include('form.input', [
-                            'cols' => 'col-md-6',
-                            'column' => 'last_name',
-                            'model' => 'user',
-                            'optional' => 'text-danger',
-                            'input_type' => 'text',
-                            'class_name' => '',
-                            'column_id' => 'last_name',
-                            'column_value' => old('last_name'),
-                            'readonly' => 'false',
-                        ])
-                        @include('form.input', [
-                            'cols' => 'col-md-6',
-                            'column' => 'email',
-                            'model' => 'user',
-                            'optional' => 'text-danger',
-                            'input_type' => 'email',
-                            'class_name' => '',
-                            'column_id' => 'email',
-                            'column_value' => old('email'),
-                            'readonly' => 'false',
-                        ])
-                        @include('form.input', [
-                            'cols' => 'col-md-6',
-                            'column' => 'phone',
-                            'model' => 'user',
-                            'optional' => 'text-danger',
-                            'input_type' => 'email',
-                            'class_name' => 'phone',
-                            'column_id' => 'phone',
-                            'column_value' => old('phone'),
-                            'readonly' => 'false',
-                        ])
-                        @include('form.input', [
-                            'cols' => 'col-md-6',
-                            'column' => 'password',
-                            'model' => 'user',
-                            'optional' => 'text-danger',
-                            'input_type' => 'password',
-                            'class_name' => '',
-                            'column_id' => 'password',
-                            'column_value' => old('password'),
-                            'readonly' => 'false',
-                        ])
-                                                @include('form.input', [
-                                                    'cols' => 'col-md-6',
-                                                    'column' => 'password_confirmation',
-                                                    'model' => 'user',
-                                                    'optional' => 'text-danger',
-                                                    'input_type' => 'password',
-                                                    'class_name' => '',
-                                                    'column_id' => 'confirm_password',
-                                                    'column_value' => old('confirm_password'),
-                                                    'readonly' => 'false',
-                                                    // password_confirmation
-                                                ])
-                    </div>
-            </div>
-        </div>
-
-        <div class="col-3">
-            <div class="card card-body">
-                <div class="profile-user position-relative d-inline-block mx-auto  mb-4">
-                    <img src=""
-                        class="  rounded-circle avatar-xl img-thumbnail user-profile-image"
-                        alt="user-profile-image">
-                    <div class="avatar-xs p-0 rounded-circle profile-photo-edit">
-                        <input id="profile-img-file-input" type="file" class="profile-img-file-input" name="picture">
-                        <label for="profile-img-file-input" class="profile-photo-edit avatar-xs">
-                            <span class="avatar-title rounded-circle bg-light text-body">
-                                <i class="ri-camera-fill"></i>
-                            </span>
-                        </label>
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header  bg-primary text-white">
+                            <h6 class="card-title mb-0 text-white">Informations du supplier</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                @include('form.input', [
+                                    'cols' => 'col-md-6',
+                                    'column' => 'name_fr',
+                                    'model' => 'supplier',
+                                    'optional' => 'text-danger',
+                                    'input_type' => 'text',
+                                    'class_name' => '',
+                                    'column_id' => 'name_fr',
+                                    'column_value' => $object->name_fr,
+                                    'readonly' => 'false',
+                                ])
+                                @include('form.input', [
+                                    'cols' => 'col-md-6 rtl',
+                                    'column' => 'name_ar',
+                                    'model' => 'supplier',
+                                    'optional' => 'text-danger',
+                                    'input_type' => 'text',
+                                    'class_name' => '',
+                                    'column_id' => 'name_ar',
+                                    'column_value' => $object->name_ar,
+                                    'readonly' => 'false',
+                                ])
+                                @include('form.input', [
+                                    'cols' => 'col-md-6',
+                                    'column' => 'ice',
+                                    'model' => 'supplier',
+                                    'optional' => 'text-danger',
+                                    'input_type' => 'text',
+                                    'class_name' => '',
+                                    'column_id' => 'ice',
+                                    'column_value' => $object->ice,
+                                    'readonly' => 'false',
+                                ])
+                                @include('form.input', [
+                                    'cols' => 'col-md-6',
+                                    'column' => 'phone',
+                                    'model' => 'supplier',
+                                    'optional' => 'text-danger',
+                                    'input_type' => 'number',
+                                    'class_name' => '',
+                                    'column_id' => 'phone',
+                                    'column_value' => $object->phone,
+                                    'readonly' => 'false',
+                                ])
+                                @include('form.input', [
+                                    'cols' => 'col-md-6',
+                                    'column' => 'fax',
+                                    'model' => 'supplier',
+                                    'optional' => 'text-danger',
+                                    'input_type' => 'number',
+                                    'class_name' => '',
+                                    'column_id' => 'fax',
+                                    'column_value' => $object->fax,
+                                    'readonly' => 'false',
+                                ])
+                                @include('form.input', [
+                                    'cols' => 'col-md-6',
+                                    'column' => 'email',
+                                    'model' => 'supplier',
+                                    'optional' => 'text-danger',
+                                    'input_type' => 'email',
+                                    'class_name' => '',
+                                    'column_id' => 'email',
+                                    'column_value' => $object->email,
+                                    'readonly' => 'false',
+                                ])
+                                @include('form.singleSelect', [
+                                    'cols' => 'col-md-3 ',
+                                    'column' => 'region_id',
+                                    'isReload' => false,
+                                    'label' => 'supplier_form_region_id',
+                                    'optional' => 'text-danger',
+                                    'divID' => 'region_id',
+                                    'options' => $regions,
+                                    'object' => $object,
+                                ])
+                                @include('form.singleSelect', [
+                                    'cols' => 'col-md-3 ',
+                                    'column' => 'ville_id',
+                                    'isReload' => false,
+                                    'label' => 'supplier_form_ville_id',
+                                    'optional' => 'text-danger',
+                                    'divID' => 'ville_id',
+                                    'options' => [],
+                                    'object' => $object,
+                                ])
+                                @include('form.singleSelect', [
+                                    'cols' => 'col-md-3 ',
+                                    'column' => 'secteur_id',
+                                    'isReload' => false,
+                                    'label' => 'supplier_form_secteur_id',
+                                    'optional' => 'text-danger',
+                                    'divID' => 'secteur_id',
+                                    'options' => [],
+                                    'object' => $object,
+                                ])
+                                @include('form.input', [
+                                    'cols' => 'col-md-3',
+                                    'column' => 'cd_postale',
+                                    'model' => 'supplier',
+                                    'optional' => 'text-danger',
+                                    'input_type' => 'text',
+                                    'class_name' => '',
+                                    'column_id' => 'cd_postale',
+                                    'column_value' => $object->cd_postale,
+                                    'readonly' => 'false',
+                                ])
+                                @include('form.singleSelect', [
+                                    'cols' => 'col-md-3 ',
+                                    'column' => 'type_supplier',
+                                    'isReload' => false,
+                                    'label' => 'supplier_form_type_supplier',
+                                    'optional' => 'text-danger',
+                                    'divID' => 'type_supplier',
+                                    'options' => $supplier_types,
+                                    'object' => $object,
+                                ])
+                                @include('form.singleSelect', [
+                                    'cols' => 'col-md-3 ',
+                                    'column' => 'fonction',
+                                    'isReload' => false,
+                                    'label' => 'supplier_form_fonction',
+                                    'optional' => 'text-danger',
+                                    'divID' => 'fonction',
+                                    'options' => $fonctions,
+                                    'object' => $object,
+                                ])
+                                @include('form.singleSelect', [
+                                    'cols' => 'col-md-3 ',
+                                    'column' => 'parent_type',
+                                    'isReload' => false,
+                                    'label' => 'supplier_form_parent_type',
+                                    'optional' => 'text-danger',
+                                    'divID' => 'parent_type',
+                                    'options' => $parent_types,
+                                    'object' => $object,
+                                ])
+                                @include('form.singleSelect', [
+                                    'cols' => 'col-md-3 ',
+                                    'column' => 'parent_id',
+                                    'isReload' => false,
+                                    'label' => 'supplier_form_parent_id',
+                                    'optional' => 'text-danger',
+                                    'divID' => 'parent_id',
+                                    'options' => [],
+                                    'object' => $object,
+                                ])
+                                @include('form.input', [
+                                    'cols' => 'col-md-6',
+                                    'column' => 'address',
+                                    'model' => 'supplier',
+                                    'optional' => 'text-danger',
+                                    'input_type' => 'text',
+                                    'class_name' => '',
+                                    'column_id' => 'address',
+                                    'column_value' => $object->address,
+                                    'readonly' => 'false',
+                                ])
+                                @include('form.input', [
+                                    'cols' => 'col-md-6',
+                                    'column' => 'obs',
+                                    'model' => 'supplier',
+                                    'optional' => 'text-danger',
+                                    'input_type' => 'text',
+                                    'class_name' => '',
+                                    'column_id' => 'obs',
+                                    'column_value' => $object->obs,
+                                    'readonly' => 'false',
+                                ])
+                            </div>
+                        </div>
                     </div>
                 </div>
-                @include('form.singleSelect', [
-                    'cols' => 'col-md-12 ',
-                    'column' => 'roles_name',
-                    'isReload' => false,
-                    'label' => 'user_form_role_name',
-                    'optional' => 'text-danger',
-                    'divID' => 'roles_name',
-                    'options' => [],
-                    'object' => $object,
-                ])
+                <div class="col-lg-12">
+                    <div class="text-start">
+                        <button type="submit"
+                            class="btn btn-primary">{{ trans('translation.general_general_update') }}</button>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-    <div class="col-lg-12">
-        <div class="text-start">
-            <button type="submit" class="btn btn-primary">{{ trans('translation.general_general_update') }}</button>
-        </div>
-    </div>
-    </form>
-
-    </div>
-@endsection
-
-@section('js')
-    @include('layouts.includes.form_js')
-    <script src="{{ asset('assets/custom_js/validate_number.js') }}"></script>
-    {!! JsValidator::formRequest('App\Http\Requests\StoresupplierRequest') !!}
-
-@endsection
+        </form>
+    @endsection
+    @section('js')
+        @include('layouts.includes.form_js')
+        <script src="{{ asset('assets/custom_js/validate_number.js') }}"></script>
+        {!! JsValidator::formRequest('App\Http\Requests\StoreSupplierRequest') !!}
+    @endsection

@@ -1,6 +1,12 @@
 
     <div class="d-flex justify-content-center gap-2">
         @can('devis-edit')
+        <div class="show">
+            <a href="{{ route('devis.show', $object->id)}}" title="Voir"><span class="badge  text-bg-primary"><i class="las la-eye"></i></span></a>
+            </a>
+        </div>
+    @endcan
+        @can('devis-edit')
             <div class="edit">
                 <a href="{{ route('devis.edit', $object->id)}}" title="Edit"><span class="badge  text-bg-info"><i class="las la-edit"></i></span></a>
                 </a>

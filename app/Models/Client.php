@@ -32,7 +32,9 @@ class Client extends Model
     ];
 
 
-
+public function getDesignation(){
+    return $this->name_fr .' | '.$this->name_fr ;
+}
 
 
 //  put the relation of this Model Here

@@ -205,8 +205,9 @@
                     <button type="submit" class="btn btn-primary">{{ trans('translation.general_general_save') }}</button>
                 </div>
             </div>
-    </form>
     </div>
+
+    </form>
 @endsection
 @section('js')
     @include('layouts.includes.form_js')

@@ -34,8 +34,9 @@
 
                 <div class="col-12">
                     <div class="card">
-                        <div class="card-header  bg-primary text-white">
+                        <div class="card-header  bg-primary text-white between-center">
                             <h6 class="card-title mb-0 text-white">Informations du client</h6>
+                            <h6 class="card-title mb-0 text-white">Total des garanties :{{getTotalGaranties(collect($object->garanties))}}</h6>
                         </div>
                         <div class="card-body">
 
@@ -317,6 +318,9 @@
 @section('js')
     @include('layouts.includes.form_js')
     <script src="{{ asset('assets/custom_js/validate_number.js') }}"></script>
+    <script src="{{ asset('assets/custom_js/region_ville.js') }}"></script>
+    <script src="{{ asset('assets/custom_js/ville_secteur.js') }}"></script>
+    <script src="{{ asset('assets/custom_js/clients/saveClient.js') }}"></script>
     {!! JsValidator::formRequest('App\Http\Requests\StoreClientRequest') !!}
 
 @endsection

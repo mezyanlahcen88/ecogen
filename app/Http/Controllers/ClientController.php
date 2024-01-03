@@ -155,7 +155,27 @@ class ClientController extends Controller
     public function update(StoreClientRequest $request, string $id)
     {
         $validated = $request->validated();
-        $this->crudService->updateRecord(new Client(), $validated, $id);
+        $object = Client::findOrFail($id);
+        $object->ice = $request->ice;
+        $object->name_ar = $request->name_ar;
+        $object->name_fr = $request->name_fr;
+        $object->fonction = $request->fonction;
+        $object->phone = $request->phone;
+        $object->fax = $request->fax;
+        $object->email = $request->email;
+        $object->type_client = $request->type_client;
+        $object->region_id = $request->region_id;
+        $object->ville_id = $request->ville_id;
+        $object->secteur_id = $request->secteur_id;
+        $object->cd_postale = $request->cd_postale;
+        $object->address = $request->address;
+        $object->obs = $request->obs;
+        $object->created_by = Auth::id();
+        // $object->remise = $request->remise;
+        $object->remise = 5;
+        $object->parent_id = $request->parent_id;
+        $object->parent_type = $request->parent_type;
+        $object->save();
         return redirect()->route('clients.index');
     }
 

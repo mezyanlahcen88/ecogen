@@ -131,8 +131,12 @@ class SupplierController extends Controller
      */
     public function edit($id)
     {
-        $object = supplier::findOrfail($id);
-        return view('suppliers.edit', compact('object'));
+        $object = Supplier::findOrFail($id);
+        $regions = Region::pluck('name', 'id');
+        $supplier_types = $this->staticOptions::CLIENT_TYPES;
+        $parent_types = $this->staticOptions::PARENT_TYPES;
+        $fonctions = Profession::pluck('name', 'id');
+        return view('suppliers.edit', compact('object','regions', 'supplier_types', 'parent_types', 'fonctions'));
     }
 
     /**
@@ -145,7 +149,27 @@ class SupplierController extends Controller
     public function update(StoreSupplierRequest $request, string $id)
     {
         $validated = $request->validated();
-        $this->crudService->updateRecord(new Supplier(), $validated, $id);
+        $object = Supplier::findOrFail($id);
+        $object->ice = $request->ice;
+        $object->name_ar = $request->name_ar;
+        $object->name_fr = $request->name_fr;
+        $object->fonction = $request->fonction;
+        $object->phone = $request->phone;
+        $object->fax = $request->fax;
+        $object->email = $request->email;
+        $object->type_supplier = $request->type_supplier;
+        $object->region_id = $request->region_id;
+        $object->ville_id = $request->ville_id;
+        $object->secteur_id = $request->secteur_id;
+        $object->cd_postale = $request->cd_postale;
+        $object->address = $request->address;
+        $object->obs = $request->obs;
+        $object->created_by = Auth::id();
+        // $object->remise = $request->remise;
+        $object->remise = 5;
+        $object->parent_id = $request->parent_id;
+        $object->parent_type = $request->parent_type;
+        $object->save();
         return redirect()->route('suppliers.index');
     }
 

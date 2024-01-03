@@ -26,8 +26,6 @@ class StoreGarantyRequest extends FormRequest
         return [
            'amount' => ['bail','required'],
             'type' => ['bail','required'],
-            'picture' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'comment' => ['bail','required'],
             'doe' => ['bail','required'],
         ];
     }

@@ -39,10 +39,19 @@ class Devis extends Model
 
 public function products()
 {
-    return $this->belongsToMany(Product::class)
-        ->withPivot(['quantity', 'price', 'remise', 'total_remise', 'TOTAL_HT', 'TVA', 'TOTAL_TVA', 'TOTAL_TTC', 'unite']);
+    return $this->belongsToMany(Product::class,'product_devis')
+        ->withPivot(['designation','quantity', 'price', 'remise', 'total_remise', 'TOTAL_HT', 'TVA', 'TOTAL_TVA', 'TOTAL_TTC', 'unite']);
 }
 
+/**
+ * Get the user that owns the Devis
+ *
+ * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+ */
+public function client()
+{
+    return $this->belongsTo(Client::class, 'client_id', 'id');
+}
 
 
     /**
