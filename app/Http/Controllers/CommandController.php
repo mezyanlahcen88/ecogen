@@ -75,7 +75,7 @@ class CommandController extends Controller
         $categories = Category::where('parent_id', null)->pluck('name', 'id');
         $clients = Client::pluck('name_fr', 'id');
         // $clients = Client::select('id','name_fr','name_ar')->get();
-        $command_status = $this->staticOptions::DEVIS_STATUS;
+        $command_status = $this->staticOptions::COMMAND_STATUS;
         return view('commands.create', compact('products', 'command_status', 'categories', 'clients'));
 
     }

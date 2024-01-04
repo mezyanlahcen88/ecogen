@@ -261,7 +261,7 @@ class ClientController extends Controller
         $garanty->save();
 
         $object = Client::findOrFail($request->parent_id);
-        $object->total_garanties = $request->amount;
+        $object->total_garanties = $object->total_garanties + $request->amount;
         $object->save();
         return back();
     }
