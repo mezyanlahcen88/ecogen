@@ -57,9 +57,10 @@ public function client()
 
     public function getRowsTable(){
         return [
-             'name' => 'name',
-             'matricule' => 'matricule',
-
+            'parent_type' => 'parent_type',
+             'amount' => 'amount',
+             'type' => 'type',
+             'document_ref' => 'document_ref',
          ];
      }
 
@@ -70,8 +71,10 @@ public function client()
 
      public function getRowsTableTrashed(){
          return [
-             'name' => 'name',
-             'matricule' => 'matricule',
+            'parent_type' => 'parent_type',
+             'amount' => 'amount',
+             'type' => 'type',
+             'document_ref' => 'document_ref',
           ];
           }
 

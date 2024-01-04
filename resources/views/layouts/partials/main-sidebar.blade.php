@@ -58,9 +58,9 @@
                                     <li class="nav-item">
                                         <a href="{{ route('clients.index') }}" class="nav-link" data-key="users">
                                             <span class="text-uppercase">{{ trans('translation.navigation_navigation_clients') }}</span>
-                                            <span class="badge badge-pill bg-danger" data-key="users">
-                                                {{-- {{ getSidebar()['users'] }} --}}
-                                            </span>
+                                            {{-- <span class="badge badge-pill bg-danger" data-key="users">
+                                                {{ getSidebar()['users'] }}
+                                            </span> --}}
                                         </a>
                                     </li>
                                 @endcan
@@ -69,16 +69,25 @@
                                         <a href="{{ route('suppliers.index') }}" class="nav-link" data-key="suppliers"> <span
                                                 class="text-uppercase">{{ trans('translation.navigation_navigation_suppliers') }}
                                             </span>
-                                            <span class="badge badge-pill bg-danger" data-key="users">1</span>
+                                            {{-- <span class="badge badge-pill bg-danger" data-key="users">1</span> --}}
                                         </a>
                                     </li>
                                 @endcan
+                                @can('role-list')
+                                <li class="nav-item">
+                                    <a href="{{ route('garanties.index') }}" class="nav-link" data-key="suppliers"> <span
+                                            class="text-uppercase">{{ trans('translation.navigation_navigation_garanties') }}
+                                        </span>
+                                        {{-- <span class="badge badge-pill bg-danger" data-key="users">1</span> --}}
+                                    </a>
+                                </li>
+                            @endcan
                                 @can('role-list')
                                     <li class="nav-item">
                                         <a href="{{ route('employes.index') }}" class="nav-link" data-key="roles"> <span
                                                 class="text-uppercase">{{ trans('translation.navigation_navigation_employes') }}
                                             </span>
-                                            <span class="badge badge-pill bg-danger" data-key="users">1</span>
+                                            {{-- <span class="badge badge-pill bg-danger" data-key="users">1</span> --}}
                                         </a>
                                     </li>
                                 @endcan
@@ -99,9 +108,9 @@
                                     <li class="nav-item">
                                         <a href="{{ route('devis.index') }}" class="nav-link" data-key="users">
                                             <span class="text-uppercase">Demande de prix</span>
-                                            <span class="badge badge-pill bg-danger" data-key="users">
-                                                {{-- {{ getSidebar()['users'] }} --}}
-                                            </span>
+                                            {{-- <span class="badge badge-pill bg-danger" data-key="users">
+                                                {{ getSidebar()['users'] }}
+                                            </span> --}}
                                         </a>
                                     </li>
                                 @endcan
@@ -110,7 +119,7 @@
                                         <a href="{{ route('roles.index') }}" class="nav-link" data-key="roles"> <span
                                                 class="text-uppercase">Bon de récéption
                                             </span>
-                                            <span class="badge badge-pill bg-danger" data-key="users">1</span>
+                                            {{-- <span class="badge badge-pill bg-danger" data-key="users">1</span> --}}
                                         </a>
                                     </li>
                                 @endcan
@@ -119,7 +128,7 @@
                                         <a href="{{ route('roles.index') }}" class="nav-link" data-key="roles"> <span
                                                 class="text-uppercase">Bon de retour
                                             </span>
-                                            <span class="badge badge-pill bg-danger" data-key="users">1</span>
+                                            {{-- <span class="badge badge-pill bg-danger" data-key="users">1</span> --}}
                                         </a>
                                     </li>
                                 @endcan
@@ -140,8 +149,8 @@
                                     <li class="nav-item">
                                         <a href="{{ route('products.index') }}" class="nav-link" data-key="users">
                                             <span class="text-uppercase">{{ trans('translation.navigation_navigation_products') }}</span>
-                                            <span class="badge badge-pill bg-danger" data-key="users">
-                                            </span>
+                                            {{-- <span class="badge badge-pill bg-danger" data-key="users">1
+                                            </span> --}}
                                         </a>
                                     </li>
                                 @endcan
@@ -195,9 +204,9 @@
                                     <li class="nav-item">
                                         <a href="{{ route('devis.index') }}" class="nav-link" data-key="users">
                                             <span class="text-uppercase">{{ trans('translation.navigation_navigation_devis') }}</span>
-                                            <span class="badge badge-pill bg-danger" data-key="users">
-                                                {{-- {{ getSidebar()['users'] }} --}}
-                                            </span>
+                                            {{-- <span class="badge badge-pill bg-danger" data-key="users">
+                                                {{ getSidebar()['users'] }}
+                                            </span> --}}
                                         </a>
                                     </li>
                                 @endcan

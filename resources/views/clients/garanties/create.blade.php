@@ -35,7 +35,7 @@
                                 'model' => 'garanty',
                                 'optional' => 'text-danger',
                                 'input_type' => 'text',
-                                'class_name' => '',
+                                'class_name' => 'num_point',
                                 'column_id' => 'amount',
                                 'column_value' => old('amount'),
                                 'readonly' => 'false',
@@ -157,7 +157,7 @@
 
 @section('js')
     @include('layouts.includes.form_js')
-    <script src="{{ asset('assets/custom_js/validate_number.js') }}"></script>
+    <script src="{{ asset('assets/custom_js/num_point.js') }}"></script>
     <script src="{{ asset('assets/custom_js/region_ville.js') }}"></script>
     <script src="{{ asset('assets/custom_js/ville_secteur.js') }}"></script>
     <script src="{{ asset('assets/custom_js/ckeditor.js') }}"></script>

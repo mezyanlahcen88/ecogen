@@ -88,7 +88,7 @@ class ClientController extends Controller
     {
         $validated = $request->validated();
 
-        dd($request->all());
+        // dd($request->all());
         $object = new Client();
         $object->id = Str::uuid();
         // $object->code_client = getClientNumerotation();
@@ -259,6 +259,10 @@ class ClientController extends Controller
         $garanty->comment = $request->comment;
         $garanty->doe = $request->doe;
         $garanty->save();
+
+        $object = Client::findOrFail($request->parent_id);
+        $object->total_garanties = $request->amount;
+        $object->save();
         return back();
     }
 }

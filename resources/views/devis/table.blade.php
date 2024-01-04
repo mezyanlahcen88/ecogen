@@ -16,7 +16,7 @@
                             @foreach ($tableRows as $key => $value)
                                  <td> {{ $object->$key }}</td>
                             @endforeach
-                            <td>{{$object->get}}</td>
+                            <td>{{$object->client->name_fr}} | {{$object->client->name_ar}}</td>
                                                 <td class="isactive ">
                         <div class="form-check form-switch d-flex justify-content-center">
                             <input class="form-check-input changeStatus" type="checkbox" role="switch" id="check"

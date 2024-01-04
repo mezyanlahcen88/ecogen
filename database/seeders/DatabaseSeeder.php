@@ -27,7 +27,7 @@ class DatabaseSeeder extends Seeder
             SettingsSeeder::class,
             RegionSeeder::class,
             VilleSeeder::class,
-            SecteurSeeder::class,
+            SecteursTableSeeder::class,
             ProfessionSeeder::class,
             NumerotationSeeder::class,
             ExerciceSeeder::class,
@@ -37,5 +37,6 @@ class DatabaseSeeder extends Seeder
             ProductSeeder::class,
         ]);
 
+        $this->call(SecteursTableSeeder::class);
     }
 }

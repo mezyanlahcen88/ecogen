@@ -252,6 +252,10 @@ class SupplierController extends Controller
         $garanty->comment = $request->comment;
         $garanty->doe = $request->doe;
         $garanty->save();
+
+        $object = Supplier::findOrFail($request->parent_id);
+        $object->total_garanties = $request->amount;
+        $object->save();
         return back();
     }
 }

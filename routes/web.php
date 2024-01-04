@@ -79,17 +79,20 @@ Route::group(['middleware' => 'auth'], function () {
     ############################### Payment ###############################
     require __DIR__ . '/base/paymentRoute.php';
     ############################### Supplier ###############################
-require __DIR__ . '/base/supplierRoute.php';
-############################### Employe ###############################
-require __DIR__ . '/base/employeRoute.php';
-############################### Warehouse ###############################
-require __DIR__ . '/base/warehouseRoute.php';
-############################### Product ###############################
-require __DIR__ . '/base/productRoute.php';
-############################### Devis ###############################
-require __DIR__ . '/base/devisRoute.php';
-require __DIR__ . '/base/carDocumentRoute.php';
-
+    require __DIR__ . '/base/supplierRoute.php';
+    ############################### Employe ###############################
+    require __DIR__ . '/base/employeRoute.php';
+    ############################### Warehouse ###############################
+    require __DIR__ . '/base/warehouseRoute.php';
+    ############################### Product ###############################
+    require __DIR__ . '/base/productRoute.php';
+    ############################### Devis ###############################
+    require __DIR__ . '/base/devisRoute.php';
+    require __DIR__ . '/base/carDocumentRoute.php';
+    ############################### Garanty ###############################
+    require __DIR__ . '/base/garantyRoute.php';
+    ############################### Command ###############################
+require __DIR__ . '/base/commandRoute.php';
     ############################### ReloadController ###############################
     Route::prefix('/')->group(__DIR__ . '/base/reload.routes.php');
 });

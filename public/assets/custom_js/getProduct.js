@@ -589,6 +589,9 @@ $(document).ready(function () {
                         'devis added successfully',
                         'success'
                     )
+                    // if (data.hasOwnProperty('redirectTo')) {
+                    //     window.location.href = data.redirectTo;
+                    // }
                 }
             },
         });

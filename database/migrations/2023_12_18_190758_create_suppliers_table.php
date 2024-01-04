@@ -32,6 +32,7 @@ return new class extends Migration
             $table->text('obs')->nullable();
             $table->string('created_by');
             $table->tinyInteger('remise')->nullable();
+            $table->double('total_garanties',8,2)->default(0.00);
             $table->string('parent_type')->nullable();
             $table->string('parent_id')->nullable();
             $table->boolean('active')->default(1);

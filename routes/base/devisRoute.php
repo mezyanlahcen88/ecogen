@@ -13,6 +13,7 @@ Route::delete('/devis/{id}/force_delete', [DevisController::class, 'forceDelete'
 Route::put('/devis/{id}/restore', [DevisController::class, 'restore'])->name('devis.restore');
 //liste all deleted
 Route::get('/devis/trashed', [DevisController::class, 'trashed'])->name('devis.trashed');
+Route::get('/devis/{id}/print_devis', [DevisController::class, 'generatePdf'])->name('devis.generatePdf');
 Route::resource('devis', DevisController::class);
 
 

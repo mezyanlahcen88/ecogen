@@ -185,6 +185,7 @@ return [
         Spatie\Permission\PermissionServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
         Yajra\DataTables\DataTablesServiceProvider::class,
+        Orangehill\Iseed\IseedServiceProvider::class,
 
 
         /*

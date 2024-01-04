@@ -128,8 +128,8 @@
                                 'column' => 'cd_postale',
                                 'model' => 'supplier',
                                 'optional' => 'text-secondary',
-                                'input_type' => 'text',
-                                'class_name' => '',
+                                'input_type' => 'number',
+                                'class_name' => 'onlyNumber',
                                 'column_id' => 'cd_postale',
                                 'column_value' => old('cd_postale'),
                                 'readonly' => 'false',
@@ -214,5 +214,5 @@
     <script src="{{ asset('assets/custom_js/validate_number.js') }}"></script>
     <script src="{{ asset('assets/custom_js/region_ville.js') }}"></script>
     <script src="{{ asset('assets/custom_js/ville_secteur.js') }}"></script>
-    {!! JsValidator::formRequest('App\Http\Requests\StoresupplierRequest') !!}
+    {!! JsValidator::formRequest('App\Http\Requests\StoreSupplierRequest') !!}
 @endsection

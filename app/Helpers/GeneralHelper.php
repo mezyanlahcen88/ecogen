@@ -273,6 +273,33 @@ if (!function_exists('getDevisNumerotation')) {
     }
 }
 
+if (!function_exists('getCommandNumerotation')) {
+    function getCommandNumerotation()
+    {
+        $num = Numerotation::where('doc_type', 'Command')
+            ->latest()
+            ->first();
+
+        if (!$num) {
+            throw new Exception('No Numerotation record found for doc_type "Client"');
+        }
+        $codeCommand = $num->prefix . $num->increment_num + 1;
+
+        return $codeCommand;
+    }
+}
+
+if (!function_exists('incCommandNumerotation')) {
+    function incCommandNumerotation()
+    {
+        $num = Numerotation::where('doc_type', 'Command')
+            ->latest()
+            ->first();
+        $num->increment_num = $num->increment_num + 1;
+        $num->save();
+    }
+}
+
 if (!function_exists('incDevisNumerotation')) {
     function incDevisNumerotation()
     {

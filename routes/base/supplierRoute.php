@@ -15,6 +15,8 @@ Route::put('/suppliers/{id}/restore', [SupplierController::class, 'restore'])->n
 Route::get('/suppliers/trashed', [SupplierController::class, 'trashed'])->name('suppliers.trashed');
 Route::get('/suppliers/{id}/create-garanty', [SupplierController::class, 'createGaranty'])->name('suppliers.createGaranty');
 Route::post('/suppliers/store-garanty', [SupplierController::class, 'storeGaranty'])->name('suppliers.storeGaranty');
+Route::get('/suppliers/{id}/garanties/{garanty}/edit-garanty', [SupplierController::class, 'editGaranty'])->name('suppliers.editGaranty');
+Route::post('/suppliers/{id}/garanties/{garanty}/update-garanty', [SupplierController::class, 'editGaranty'])->name('suppliers.updateGaranty');
 Route::resource('suppliers', SupplierController::class);
 
 

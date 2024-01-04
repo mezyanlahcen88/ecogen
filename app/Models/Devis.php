@@ -33,7 +33,7 @@ class Devis extends Model
 
 
 public function getDesignation() {
-    return $this->name_fr . ' | ' . $this->name_ar ;
+    return $this->name_fr.' | '.$this->name_ar ;
 }
 
 

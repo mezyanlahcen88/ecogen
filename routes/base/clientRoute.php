@@ -15,6 +15,8 @@ Route::put('/clients/{id}/restore', [ClientController::class, 'restore'])->name(
 Route::get('/clients/trashed', [ClientController::class, 'trashed'])->name('clients.trashed');
 Route::get('/clients/{id}/create-garanty', [ClientController::class, 'createGaranty'])->name('clients.createGaranty');
 Route::post('/clients/store-garanty', [ClientController::class, 'storeGaranty'])->name('clients.storeGaranty');
+Route::get('/clients/{id}/garanties/{garanty}/edit-garanty', [ClientController::class, 'editGaranty'])->name('clients.editGaranty');
+Route::post('/clients/{id}/garanties/{garanty}/update-garanty', [ClientController::class, 'editGaranty'])->name('clients.updateGaranty');
 Route::resource('clients', ClientController::class);
 
 

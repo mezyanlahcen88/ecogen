@@ -8,6 +8,7 @@ use App\Models\Client;
 use App\Models\Product;
 use App\Forms\DevisForm;
 use App\Models\Category;
+// use Barryvdh\DomPDF\PDF;
 use Illuminate\Support\Str;
 use App\Enums\StaticOptions;
 use Illuminate\Http\Request;
@@ -16,7 +17,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreDevisRequest;
 use RealRashid\SweetAlert\Facades\Alert;
-
+use PDF;
 class DevisController extends Controller
 {
     public $staticOptions;
@@ -117,6 +118,7 @@ class DevisController extends Controller
         }
         incDevisNumerotation();
         return response()->json(['success'=>true]);
+        // ->with('redirectTo', route('devis.index'));
     }
 
     /**
@@ -127,8 +129,7 @@ class DevisController extends Controller
      */
     public function show($id)
     {
-        $object = devis::with('products')->findOrfail($id);
-        // return $object;
+        $object = Devis::with('products')->findOrfail($id);
         return view('devis.show', compact('object'));
     }
 
@@ -141,7 +142,12 @@ class DevisController extends Controller
     public function edit($id)
     {
         $object = devis::findOrfail($id);
-        return view('devis.edit', compact('object'));
+        $products = Product::pluck('name_fr', 'id');
+        $categories = Category::where('parent_id', null)->pluck('name', 'id');
+        $clients = Client::pluck('name_fr', 'id');
+
+        $devis_status = $this->staticOptions::DEVIS_STATUS;
+        return view('devis.edit', compact('object','products', 'devis_status', 'categories', 'clients'));
     }
 
     /**
@@ -215,4 +221,14 @@ class DevisController extends Controller
         $message = $object->active ? trans('translation.devis_message_activated') : trans('translation.devis_message_inactivated');
         return response()->json(['code' => 200, 'active' => $object->active, 'message' => $message]);
     }
+
+    public function generatePdf($id)
+{
+    $object = Devis::with('products')->findOrfail($id)->toArray();
+
+    $pdf = PDF::loadView('devis.devis_pdf', $object);
+    $filename = $object['devis_code'] . '_' . now()->format('YmdHis') . '.pdf';
+    return $pdf->download($filename);
+}
+
 }
