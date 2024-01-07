@@ -63,6 +63,11 @@ final class StaticOptions
         'Rejeté'=>'Rejeté',
     ];
 
+    const COMMAND_STATUS = [
+        'En attente'=>'En attente',
+        'Validé'=>'Validé',
+    ];
+
     const CAR_DOCUMENTS = [
         'CARTE GRISE'=>'CARTE GRISE',
         'ASSURANCE'=>'ASSURANCE',
