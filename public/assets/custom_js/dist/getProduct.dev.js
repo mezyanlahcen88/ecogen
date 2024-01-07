@@ -1,8 +1,7 @@
 "use strict";
 
 $(document).ready(function () {
-  var tableBody = $('#productTableBody'); // Existing code...
-  // Call this function to initialize the table with data from localStorage
+  var tableBody = $('#productTableBody'); // Call this function to initialize the table with data from localStorage
 
   loadTableFromLocalStorage();
   calculeTotals(); // Existing code...
@@ -144,22 +143,9 @@ $(document).ready(function () {
 
           var idProd = id.slice(12);
           updateLocalStorageQuantityPrixTva(idProd, tvaInput.value, 'quantite');
-          updateLocalStorageHTTTTVA(idProd, tvaInput.value, $("#product-prix-".concat(product.id)).val(), 20);
+          updateLocalStorageHTTTTVA(idProd, tvaInput.value, $("#product-prix-".concat(product.id)).val(), $("#product-tva-".concat(product.id)).val());
           tableProducts();
-        }); // const tvaInput = $('<input>')
-        //     .attr('type', 'number')
-        //     .addClass('product-quantity')
-        //     .attr('id', `product-qty-${product.id}`)
-        //     .val(product.quantite)
-        //     .on('blur', () => {
-        //         const id = $(this).attr('id');
-        //         const idProd = id.slice(12);
-        //         console.log("idProd qte :" + idProd);
-        //         updateLocalStorageQuantityPrixTva(idProd, $(this).val(), 'quantite');
-        //         updateLocalStorageHTTTTVA(idProd, $(this).val(), $(`#product-prix-${product.id}`).val(), 20);
-        //         tableProducts();
-        //     });
-        // Create plus button
+        }); // Create plus button
 
         var plusButton = $('<button>').addClass('plus').text('+').on('click', function () {
           return increase(product.id, 'quantite');
@@ -189,25 +175,10 @@ $(document).ready(function () {
           var id = input.attr("id"); // Appelez la fonction increase en passant l'ID du produit
 
           var idProd = id.slice(13);
-          console.log(idProd);
-          console.log($("#product-qty-".concat(product.id)).val());
           updateLocalStorageQuantityPrixTva(idProd, prixInput.value, 'prix');
-          updateLocalStorageHTTTTVA(idProd, $("#product-qty-".concat(product.id)).val(), prixInput.value, 20);
+          updateLocalStorageHTTTTVA(idProd, $("#product-qty-".concat(product.id)).val(), prixInput.value, $("#product-tva-".concat(product.id)).val());
           tableProducts();
-        }); // const prixInput = $('<input>')
-        //     .attr('type', 'number')
-        //     .addClass('product-prix')
-        //     .attr('id', `product-prix-${product.id}`)
-        //     .val(product.prix)
-        //     .on('blur', () => {
-        //         const id = $(this).attr('id');
-        //         const idProd = id.slice(13);
-        //         console.log("idProd prix :" + idProd);
-        //         updateLocalStorageQuantityPrixTva(idProd, $(this).val(), 'prix');
-        //         updateLocalStorageHTTTTVA(idProd, $(`#product-qty-${product.id}`).val(), $(this).val(), 20);
-        //         tableProducts();
-        //     });
-        // Create plus button
+        }); // Create plus button
 
         var plusButtonPrix = $('<button>').addClass('plus').text('+').on('click', function () {
           return increase(product.id, 'prix');
@@ -243,20 +214,7 @@ $(document).ready(function () {
           updateLocalStorageQuantityPrixTva(idProd, _tvaInput.value, 'tva');
           updateLocalStorageHTTTTVA(idProd, $("#product-qty-".concat(product.id)).val(), $("#product-prix-".concat(product.id)).val(), _tvaInput.value);
           tableProducts();
-        }); // const tvaInput = $('<input>')
-        //     .attr('type', 'number')
-        //     .addClass('product-tva')
-        //     .attr('id', `product-tva-${product.id}`)
-        //     .val(product.tva)
-        //     .on('blur', () => {
-        //         const id = $(this).attr('id');
-        //         const idProd = id.slice(12);
-        //         console.log("idProd tva :" + idProd);
-        //         updateLocalStorageQuantityPrixTva(idProd, $(this).val(), 'tva');
-        //         updateLocalStorageHTTTTVA(idProd, $(`#product-qty-${product.id}`).val(), $(`#product-prix-${product.id}`).val(), $(this).val());
-        //         tableProducts();
-        //     });
-        // Create plus button
+        }); // Create plus button
 
 
         var plusButtonTva = $('<button>').addClass('plus').text('+').on('click', function () {
@@ -534,7 +492,9 @@ $(document).ready(function () {
           loadTableFromLocalStorage();
           location.reload();
           console.log("delete storage");
-          Swal.fire('Super!', 'devis added successfully', 'success');
+          Swal.fire('Super!', 'devis added successfully', 'success'); // if (data.hasOwnProperty('redirectTo')) {
+          //     window.location.href = data.redirectTo;
+          // }
         }
       }
     });

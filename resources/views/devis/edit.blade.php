@@ -16,7 +16,7 @@
     ])
 @endsection
 @section('content')
-    <form action="{{ route('devis.update',$object->id) }}" method="post" id="devis_form" enctype="multipart/form-data">
+    <form action="{{ route('devis.update','idDevis') }}" method="post" id="devis_form" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <div class="row">
@@ -49,8 +49,8 @@
                                         'label' => 'devis_form_client_id',
                                         'optional' => 'text-danger',
                                         'divID' => 'client_id',
-                                        'options' => $clients,
-                                        'object' => $object,
+                                        'options' => [],
+                                        'object' => false,
                                     ])
                                     @include('form.singleSelect', [
                                         'cols' => 'col-md-6 ',
@@ -59,8 +59,8 @@
                                         'label' => 'product_form_category_id',
                                         'optional' => 'text-danger',
                                         'divID' => 'category',
-                                        'options' => $categories,
-                                        'object' => $object,
+                                        'options' => [],
+                                        'object' => false,
                                     ])
                                     @include('form.singleSelect', [
                                         'cols' => 'col-md-6 ',
@@ -81,7 +81,7 @@
                                         'label' => 'devis_form_product_id',
                                         'optional' => 'text-danger',
                                         'divID' => 'client_id',
-                                        'options' => $products,
+                                        'options' => [],
                                         'object' => false,
                                     ])
                                     @include('form.input', [
@@ -111,22 +111,22 @@
                                         'label' => 'devis_form_status',
                                         'optional' => 'text-danger',
                                         'divID' => 'statusDiv',
-                                        'options' => $devis_status,
-                                        'object' => $object,
+                                        'options' => [],
+                                        'object' => false,
                                     ])
                                     <div class="col-md-6">
                                         <div>
                                             <label class="form-label my-1">Date de crétation</label>
                                             <input type="text" class="form-control" data-provider="flatpickr" data-enable-time
                                                 data-date-format="Y-m-d"
-                                                placeholder="{{ Carbon\Carbon::now()->format('d-m-Y H:i') }}" name="status_date" value="{{$object->status_date}}">
+                                                placeholder="{{ Carbon\Carbon::now()->format('d-m-Y H:i') }}" name="status_date" id="status_date" value="">
                                         </div>
                                     </div>
                                     <div class="col-md-12 col-xl-12 col-xs-12 col-sm-12">
                                         <div class="form-group">
                                             <label for="content">{{ trans('translation.devis_form_comment') }} &nbsp;
                                                 <span class="text-secondary">*</span></label>
-                                            <textarea class="form-control" name="comment" id="comment" rows="5">{{ $object->comment }}</textarea>
+                                            <textarea class="form-control" name="comment" id="comment" rows="5"></textarea>
                                         </div>
                                     </div>
 
@@ -137,22 +137,22 @@
                                     class="bg-info text-light h-25 w-100 d-flex  justify-content-between align-items-center px-4 mb-1">
                                     <label for="" id="devis">DEVIS N° :</label>
                                     <label for="" id="num_devis"
-                                        class="fs-3">{{ $object->devis_code }}</label>
+                                        class="fs-3"></label>
                                 </div>
                                 <div
                                     class="bg-primary text-light h-25 w-100 d-flex  justify-content-between align-items-center px-4 mb-1">
                                     <label for="">Total TTC :</label>
-                                    <label for="" id="total_ttc" class="fs-3">{{ $object->TTTC }}</label>
+                                    <label for="" id="total_ttc" class="fs-3"></label>
                                 </div>
                                 <div
                                     class="bg-success text-light h-25 w-100 d-flex  justify-content-between align-items-center px-4 mb-1">
                                     <label for="">Total HT :</label>
-                                    <label for="" id="total_ht" class="fs-3">{{ $object->HT }}</label>
+                                    <label for="" id="total_ht" class="fs-3"></label>
                                 </div>
                                 <div
                                     class="bg-warning text-light h-25 w-100 d-flex  justify-content-between align-items-center px-4 mb-1">
                                     <label for="">Total TVA :</label>
-                                    <label for="" id="total_ttva" class="fs-3">{{ $object->TVA }}</label>
+                                    <label for="" id="total_ttva" class="fs-3"></label>
                                 </div>
 
                             </div>
@@ -183,6 +183,6 @@
     <script src="{{ asset('assets/custom_js/validate_number.js') }}"></script>
     <script src="{{ asset('assets/custom_js/categories_scategories.js') }}"></script>
     <script src="{{ asset('assets/custom_js/get_last_price.js') }}"></script>
-    {{-- <script src="{{ asset('assets/custom_js/getProduct.js') }}"></script> --}}
+    <script src="{{ asset('assets/custom_js/getProductEdit.js') }}"></script>
     {!! JsValidator::formRequest('App\Http\Requests\StoreDevisRequest') !!}
 @endsection

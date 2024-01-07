@@ -75,7 +75,7 @@
                                 @endcan
                                 @can('role-list')
                                 <li class="nav-item">
-                                    <a href="{{ route('garanties.index') }}" class="nav-link" data-key="suppliers"> <span
+                                    <a href="" class="nav-link" data-key="suppliers"> <span
                                             class="text-uppercase">{{ trans('translation.navigation_navigation_garanties') }}
                                         </span>
                                         {{-- <span class="badge badge-pill bg-danger" data-key="users">1</span> --}}
