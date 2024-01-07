@@ -145,9 +145,17 @@ class DevisController extends Controller
         $products = Product::pluck('name_fr', 'id');
         $categories = Category::where('parent_id', null)->pluck('name', 'id');
         $clients = Client::pluck('name_fr', 'id');
-
         $devis_status = $this->staticOptions::DEVIS_STATUS;
-        return view('devis.edit', compact('object','products', 'devis_status', 'categories', 'clients'));
+
+        return response()->json([
+            'success' => true,
+            'object' => $object,
+            'products' => $products,
+            'devis_status' => $devis_status,
+            'categories' => $categories,
+            'clients' => $clients,
+        ])->with('redirectTo', route('devis.edit',$object->id));
+        // return view('devis.edit', compact('object','products', 'devis_status', 'categories', 'clients'));
     }
 
     /**
