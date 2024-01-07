@@ -1,8 +1,6 @@
 $(document).ready(function () {
     const tableBody = $('#productTableBody');
 
-    // Existing code...
-
     // Call this function to initialize the table with data from localStorage
     loadTableFromLocalStorage();
     calculeTotals();
@@ -156,23 +154,9 @@ $(document).ready(function () {
                     const idProd = id.slice(12);
 
                     updateLocalStorageQuantityPrixTva(idProd, tvaInput.value, 'quantite');
-                    updateLocalStorageHTTTTVA(idProd, tvaInput.value, $(`#product-prix-${product.id}`).val(), 20);
+                    updateLocalStorageHTTTTVA(idProd, tvaInput.value, $(`#product-prix-${product.id}`).val(), $(`#product-tva-${product.id}`).val());
                     tableProducts();
                 });
-
-                // const tvaInput = $('<input>')
-                //     .attr('type', 'number')
-                //     .addClass('product-quantity')
-                //     .attr('id', `product-qty-${product.id}`)
-                //     .val(product.quantite)
-                //     .on('blur', () => {
-                //         const id = $(this).attr('id');
-                //         const idProd = id.slice(12);
-                //         console.log("idProd qte :" + idProd);
-                //         updateLocalStorageQuantityPrixTva(idProd, $(this).val(), 'quantite');
-                //         updateLocalStorageHTTTTVA(idProd, $(this).val(), $(`#product-prix-${product.id}`).val(), 20);
-                //         tableProducts();
-                //     });
 
                 // Create plus button
                 const plusButton = $('<button>')
@@ -209,28 +193,11 @@ $(document).ready(function () {
                     const id = input.attr("id");
                     // Appelez la fonction increase en passant l'ID du produit
                     const idProd = id.slice(13);
-                    console.log(idProd);
-                    console.log($(`#product-qty-${product.id}`).val());
+
                     updateLocalStorageQuantityPrixTva(idProd, prixInput.value, 'prix');
-                    updateLocalStorageHTTTTVA(idProd, $(`#product-qty-${product.id}`).val(), prixInput.value, 20);
+                    updateLocalStorageHTTTTVA(idProd, $(`#product-qty-${product.id}`).val(), prixInput.value, $(`#product-tva-${product.id}`).val());
                     tableProducts();
                 });
-
-
-                // const prixInput = $('<input>')
-                //     .attr('type', 'number')
-                //     .addClass('product-prix')
-                //     .attr('id', `product-prix-${product.id}`)
-                //     .val(product.prix)
-                //     .on('blur', () => {
-                //         const id = $(this).attr('id');
-                //         const idProd = id.slice(13);
-                //         console.log("idProd prix :" + idProd);
-
-                //         updateLocalStorageQuantityPrixTva(idProd, $(this).val(), 'prix');
-                //         updateLocalStorageHTTTTVA(idProd, $(`#product-qty-${product.id}`).val(), $(this).val(), 20);
-                //         tableProducts();
-                //     });
 
                 // Create plus button
                 const plusButtonPrix = $('<button>')
@@ -271,21 +238,6 @@ $(document).ready(function () {
                     updateLocalStorageHTTTTVA(idProd, $(`#product-qty-${product.id}`).val(), $(`#product-prix-${product.id}`).val(), tvaInput.value);
                     tableProducts();
                 });
-
-                // const tvaInput = $('<input>')
-                //     .attr('type', 'number')
-                //     .addClass('product-tva')
-                //     .attr('id', `product-tva-${product.id}`)
-                //     .val(product.tva)
-                //     .on('blur', () => {
-                //         const id = $(this).attr('id');
-                //         const idProd = id.slice(12);
-                //         console.log("idProd tva :" + idProd);
-
-                //         updateLocalStorageQuantityPrixTva(idProd, $(this).val(), 'tva');
-                //         updateLocalStorageHTTTTVA(idProd, $(`#product-qty-${product.id}`).val(), $(`#product-prix-${product.id}`).val(), $(this).val());
-                //         tableProducts();
-                //     });
 
                 // Create plus button
                 const plusButtonTva = $('<button>')

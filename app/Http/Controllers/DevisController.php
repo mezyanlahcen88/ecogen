@@ -139,17 +139,86 @@ class DevisController extends Controller
      * @param  \App\Models\Devis  $devis
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        $object = devis::findOrfail($id);
-        $products = Product::pluck('name_fr', 'id');
-        $categories = Category::where('parent_id', null)->pluck('name', 'id');
-        $clients = Client::pluck('name_fr', 'id');
+    // public function edit($id)
+    // {
+    //     $object = devis::findOrfail($id);
+    //     $products = Product::pluck('name_fr', 'id');
+    //     $categories = Category::where('parent_id', null)->pluck('name', 'id');
+    //     $clients = Client::pluck('name_fr', 'id');
 
-        $devis_status = $this->staticOptions::DEVIS_STATUS;
-        return view('devis.edit', compact('object','products', 'devis_status', 'categories', 'clients'));
+    //     $devis_status = $this->staticOptions::DEVIS_STATUS;
+    //     return view('devis.edit', compact('object','products', 'devis_status', 'categories', 'clients'));
+    // }
+
+    public function edit($id)
+{
+    $object = Devis::findOrFail($id);
+    $products = Product::pluck('name_fr', 'id');
+    $categories = Category::where('parent_id', null)->pluck('name', 'id');
+    $clients = Client::pluck('name_fr', 'id');
+
+    $devis_status = $this->staticOptions::DEVIS_STATUS;
+    $devisProducts = $object->products()->get();
+
+    // Pass data to the "devis.edit" view
+    $viewData = [
+        'object' => $object,
+        'products' => $products,
+        'devis_status' => $devis_status,
+        'categories' => $categories,
+        'clients' => $clients,
+        'devisProducts' => $devisProducts,
+    ];
+
+    // Check if the request expects JSON
+    if (request()->expectsJson()) {
+        return response()->json($viewData);
     }
 
+    // If it's not an AJAX request, return the HTML view
+    return view('devis.edit', $viewData);
+}
+
+//     public function edit($id)
+//     {
+//         $object = Devis::findOrFail($id);
+//         $products = Product::pluck('name_fr', 'id');
+//         $categories = Category::where('parent_id', null)->pluck('name', 'id');
+//         $clients = Client::pluck('name_fr', 'id');
+
+//         $devis_status = $this->staticOptions::DEVIS_STATUS;
+//         // Récupérer les données de la table pivot devis_products
+//     $devisProducts = $object->products()->get();
+// // dd($devisProducts);
+//         $viewContent = (string) view('devis.edit');
+//         // Retourne le contenu de la vue sans le layout
+//     return response()->json([
+//             'html' => $viewContent,
+//             'object' => $object,
+//             'products' => $products,
+//             'devis_status' => $devis_status,
+//             'categories' => $categories,
+//             'clients' => $clients,
+//             'devisProducts' => $devisProducts,
+//         ]);
+//         // return view('devis.edit')->with(['object' => $object, 'products' => $products, 'devis_status' => $devis_status, 'categories' => $categories, 'clients' => $clients]);
+
+//     }
+
+//     $viewContent = (string) view('devis.edit')->with([
+//     'object' => $object,
+//     'products' => $products,
+//     'devis_status' => $devis_status,
+//     'categories' => $categories,
+//     'clients' => $clients
+// ]);
+    // return response()->json([
+        //     'object' => $object,
+        //     'products' => $products,
+        //     'devis_status' => $devis_status,
+        //     'categories' => $categories,
+        //     'clients' => $clients,
+        // ]);
     /**
      * Update the specified resource in storage.
      *
