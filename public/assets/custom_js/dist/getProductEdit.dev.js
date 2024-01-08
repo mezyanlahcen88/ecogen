@@ -499,3 +499,54 @@ $('.getProduct').on('click', function () {
     console.log('AJAX load did not work');
   }
 });
+$('.storeDevis').on('click', function (e) {
+  e.preventDefault();
+  var data = JSON.parse(localStorage.getItem('product_devisEdit'));
+  console.log(data);
+  var listeProd = data.devisProducts;
+  var devisId = data.object.id;
+  var products = [];
+  listeProd.forEach(function (product) {
+    products.push(product.pivot);
+  });
+  console.log(products);
+  var formData = new FormData($('#devis_form')[0]);
+  formData.append('_method', 'PUT');
+  data = {
+    client: $('select[name="client_id"]').val(),
+    category: $('select[name="category_id"]').val(),
+    scategory: $('select[name="scategory_id"]').val(),
+    status: $('select[name="status"]').val(),
+    status_date: $('input[name="status_date"]').val(),
+    comment: $('textarea[name="comment"]').val(),
+    num_devis: $('#num_devis').text(),
+    total_ttc: $('#total_ttc').text(),
+    total_ht: $('#total_ht').text(),
+    total_ttva: $('#total_ttva').text(),
+    products: products
+  };
+  $.ajaxSetup({
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+  });
+  $.ajax({
+    url: "/devis/" + devisId,
+    type: "PUT",
+    data: data,
+    dataType: "json",
+    success: function success(data) {
+      if (data.success) {
+        localStorage.removeItem("product_devisEdit"); // $('#productTableBody').empty();
+        // loadTableFromLocalStorage();
+
+        window.location.href = "/devis"; // location.reload();
+
+        console.log("delete storage");
+        Swal.fire('Super!', 'devis updated successfully', 'success'); // if (data.hasOwnProperty('redirectTo')) {
+        //     window.location.href = data.redirectTo;
+        // }
+      }
+    }
+  });
+});

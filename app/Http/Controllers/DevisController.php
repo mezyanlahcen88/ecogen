@@ -226,11 +226,87 @@ class DevisController extends Controller
      * @param  \App\Models\Devis  $devis
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreDevisRequest $request, string $id)
+    // public function update(StoreDevisRequest $request, string $id)
+    // {
+    //     // dd($request);
+    //     $validated = $request->validated();
+    //     $this->crudService->updateRecord(new Devis(), $validated, $id);
+    //     return redirect()->route('devis.index');
+    // }
+
+//     public function update(StoreDevisRequest $request, string $id)
+// {
+//     try {
+//         $validated = $request->validated();
+
+//         $this->crudService->updateRecord(new Devis(), $validated, $id);
+//         return response()->json(['success' => true]);
+//     } catch (\Exception $e) {
+//         return response()->json(['success' => false, 'error' => $e->getMessage()], 500);
+//     }
+// }
+
+
+public function update(StoreDevisRequest $request, string $id)
     {
-        $validated = $request->validated();
-        $this->crudService->updateRecord(new Devis(), $validated, $id);
-        return redirect()->route('devis.index');
+        // dd($request);
+        $devis = Devis::findOrFail($id);
+        $data = $request->all();
+
+        // $devis->devis_code = $data['num_devis'];
+        $devis->HT = $data['total_ht'];
+        $devis->TVA = $data['total_ttva'];
+        $devis->TTTC = $data['total_ttc'];
+        $devis->status = $data['status'];
+        $devis->status_date = $data['status_date'];
+        $devis->client_id = $data['client'];
+        $devis->created_by = Auth::id();
+        $devis->comment = $data['comment'];
+        $devis->save();
+        $updatedProductIds = [];
+        foreach ($data['products'] as $item) {
+            $productDevisData = [
+                'designation' => $item['designation'],
+                'quantity' => $item['quantity'],
+                'price' => $item['price'],
+                'remise' => 5,
+                'total_remise' => 5,
+                'TOTAL_HT' => $item['TOTAL_HT'],
+                'TVA' => $item['TVA'],
+                'TOTAL_TVA' => $item['TOTAL_TVA'],
+                'TOTAL_TTC' => $item['TOTAL_TTC'],
+                'unite' => $item['unite'],
+            ];
+
+            $existingProductDevis = DB::table('product_devis')
+                ->where('devis_id', $devis->id)
+                ->where('product_id', $item['product_id'])
+                ->first();
+
+            if ($existingProductDevis) {
+                // Le product_devis existe déjà, effectuez la mise à jour
+                DB::table('product_devis')
+                    ->where('devis_id', $devis->id)
+                    ->where('product_id', $item['product_id'])
+                    ->update($productDevisData);
+            } else {
+                // Le product_devis n'existe pas, créez un nouveau
+                DB::table('product_devis')->insert(
+                    array_merge(['id' => Str::uuid(), 'devis_id' => $devis->id, 'product_id' => $item['product_id']], $productDevisData)
+                );
+            }
+
+            $updatedProductIds[] = $item['product_id'];
+        }
+
+// Supprimer les product_devis qui ne sont pas dans la liste mise à jour
+DB::table('product_devis')
+    ->where('devis_id', $devis->id)
+    ->whereNotIn('product_id', $updatedProductIds)
+    ->delete();
+        // incDevisNumerotation();
+        return response()->json(['success'=>true]);
+        // ->with('redirectTo', route('devis.index'));
     }
 
     /**
