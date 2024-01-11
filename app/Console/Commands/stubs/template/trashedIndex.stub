@@ -1,0 +1,28 @@
+@extends('layouts.base_layout')
+@section('title')
+    {{ env('APP_NAME') }} | {{ trans('translation.{{lowerName}}_form_manage_{{plural}}') }} | {{ trans('translation.{{lowerName}}_action_edit') }}
+@stop
+@section('css')
+    @include('layouts.includes.datatable_css')
+
+@endsection
+@section('page-header')
+    @include('components.new_breadcrumb', [
+        'title' => trans('translation.{{lowerName}}_form_manage_deleted_{{plural}}'),
+        'subtitle' => trans('translation.{{lowerName}}_form_deleted_{{plural}}_list'),
+        'route' => route('{{plural}}.index'),
+        'text' => trans('translation.{{lowerName}}_form_{{plural}}_list'),
+        'permission' => '{{lowerName}}-list',
+        'icon' => 'lab la-stack-exchange',
+    ])
+@endsection
+
+@section('card_body')
+    @include('{{plural}}.trashedTable',[
+        'model'=>'{{lowerName}}',
+    ])
+@endsection
+
+@section('js')
+    @include('layouts.includes.datatable_js')
+@endsection

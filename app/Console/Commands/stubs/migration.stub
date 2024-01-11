@@ -1,0 +1,89 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('{name}', function (Blueprint $table) {
+            // choose uuid or id
+            $table->id();
+            $table->uuid('id')->unique();
+            $table->string('name');
+            $table->string('address');
+            $table->boolean('active')->default(1);
+            $table->foreignUuid('email_type_id')->constrained('email_types')->onDelete('cascade');
+            $table->foreignId('language_id')->constrained()->onDelete('cascade');
+            $table->timestamps();
+            $table->softDeletes();
+
+
+
+            $table->string('name');
+            $table->string('email')->unique();
+            $table->timestamp('email_verified_at')->nullable();
+            $table->string('password');
+            $table->rememberToken();
+            $table->tinyInteger('tiny_int')->nullable();
+            $table->smallInteger('small_int')->nullable();
+            $table->mediumInteger('medium_int')->nullable();
+            $table->integer('int')->nullable();
+            $table->bigInteger('big_int')->nullable();
+            $table->unsignedTinyInteger('unsigned_tiny_int')->nullable();
+            $table->unsignedSmallInteger('unsigned_small_int')->nullable();
+            $table->unsignedMediumInteger('unsigned_medium_int')->nullable();
+            $table->unsignedInteger('unsigned_int')->nullable();
+            $table->unsignedBigInteger('unsigned_big_int')->nullable();
+            $table->float('float', 8, 2)->nullable();
+            $table->double('double', 8, 2)->nullable();
+            $table->decimal('decimal', 8, 2)->nullable();
+            $table->boolean('bool')->nullable();
+            $table->enum('enum', ['value1', 'value2', 'value3'])->nullable();
+            $table->text('text')->nullable();
+            $table->mediumText('medium_text')->nullable();
+            $table->longText('long_text')->nullable();
+            $table->json('json')->nullable();
+            $table->jsonb('jsonb')->nullable();
+            $table->date('date')->nullable();
+            $table->dateTime('date_time')->nullable();
+            $table->dateTimeTz('date_time_tz')->nullable();
+            $table->time('time')->nullable();
+            $table->timeTz('time_tz')->nullable();
+            $table->year('year')->nullable();
+            $table->binary('binary')->nullable();
+            $table->uuid('uuid')->nullable();
+            $table->ipAddress('ip_address')->nullable();
+            $table->macAddress('mac_address')->nullable();
+            $table->unsignedBigInteger('category_id')->nullable();
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('set null');$table->unsignedBigInteger('created_by')->index();
+            $table->unsignedBigInteger('updated_by')->nullable();
+            $table->foreign('created_by')->references('id')->on('users');
+            $table->foreign('updated_by')->references('id')->on('users')->onDelete('set null');
+            $table->timestampsTz();
+        });
+
+        // Créer un index composé sur plusieurs colonnes
+        //Schema::table('{name}', function (Blueprint $table) {
+        //    $table->index(['status', 'visibility']);
+        //});
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('{name}');
+    }
+};
+
