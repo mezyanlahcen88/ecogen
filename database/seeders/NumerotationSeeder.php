@@ -58,17 +58,17 @@ class NumerotationSeeder extends Seeder
             'updated_at' => '2023-12-27 18:59:44',
             'deleted_at' => null,
          ]);
-        //  Numerotation::create([
-        //     'id' => 'b706edbc-e91e-4e71-adf0-225f8428e38a',
-        //     'doc_type' => 'Client',
-        //     'prefix' => 'Cl-',
-        //     'increment_num' => 0,
-        //     'comments' => '<p>Client</p>',
-        //     'active' => 1,
-        //     'created_at' => '2023-12-27 18:59:44',
-        //     'updated_at' => '2023-12-27 18:59:44',
-        //     'deleted_at' => null,
-        //  ]);
+         Numerotation::create([
+            'id' => 'b706edbc-e91e-4e71-adf0-225f8428e67a',
+            'doc_type' => 'Command',
+            'prefix' => 'CMD-',
+            'increment_num' => 0,
+            'comments' => '<p>Command numerotation</p>',
+            'active' => 1,
+            'created_at' => '2023-12-27 18:59:44',
+            'updated_at' => '2023-12-27 18:59:44',
+            'deleted_at' => null,
+         ]);
         //  Numerotation::create();
 
     }

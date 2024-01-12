@@ -43,7 +43,7 @@ class Command extends Model
 
     public function products()
     {
-        return $this->belongsToMany(Product::class, 'product_devis')
+        return $this->belongsToMany(Product::class, 'product_command')
             ->withPivot(['designation', 'quantity', 'price', 'remise', 'total_remise', 'TOTAL_HT', 'TVA', 'TOTAL_TVA', 'TOTAL_TTC', 'unite']);
     }
 

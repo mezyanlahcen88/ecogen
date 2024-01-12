@@ -18,10 +18,8 @@ use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
 use App\Http\Requests\StoreCommandRequest;
 
-
 class CommandController extends Controller
 {
-
     public $staticOptions;
     public $crudService;
     public function __construct(CrudService $crudService, StaticOptions $staticOptions)
@@ -45,10 +43,9 @@ class CommandController extends Controller
      */
     public function index()
     {
-
-           $tableRows =(new Command())->getRowsTable();
+        $tableRows = (new Command())->getRowsTable();
         $objects = Command::get();
-        return view('commands.index',compact('tableRows','objects'));
+        return view('commands.index', compact('tableRows', 'objects'));
     }
     /**
      * Display a list of soft-deleted records.
@@ -58,8 +55,8 @@ class CommandController extends Controller
     public function trashed(Request $request)
     {
         $objects = Command::onlyTrashed()->get();
-        $tableRows =(new Command())->getRowsTableTrashed();
-        return view('commands.trashedIndex', compact('tableRows','objects'));
+        $tableRows = (new Command())->getRowsTableTrashed();
+        return view('commands.trashedIndex', compact('tableRows', 'objects'));
     }
 
     /**
@@ -69,17 +66,14 @@ class CommandController extends Controller
      */
     public function create()
     {
-
         $object = new Command();
         $products = Product::pluck('name_fr', 'id');
         $categories = Category::where('parent_id', null)->pluck('name', 'id');
         $clients = Client::pluck('name_fr', 'id');
-        // $clients = Client::select('id','name_fr','name_ar')->get();
         $command_status = $this->staticOptions::COMMAND_STATUS;
         $reglements = $this->staticOptions::GARANTIES_TYPES;
 
-        return view('commands.create', compact('products', 'command_status', 'categories', 'clients','reglements'));
-
+        return view('commands.create', compact('products', 'command_status', 'categories', 'clients', 'reglements'));
     }
 
     /**
@@ -89,7 +83,7 @@ class CommandController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
- {
+    {
         // $validated = $request->validated();
         $data = $request->all();
 
@@ -108,7 +102,7 @@ class CommandController extends Controller
         foreach ($data['products'] as $item) {
             DB::table('product_commands')->insert([
                 'id' => Str::uuid(),
-                'devis_id' => $command->id,
+                'command_id' => $command->id,
                 'product_id' => $item['id'],
                 'designation' => $item['designation'],
                 'quantity' => $item['quantite'],
@@ -123,8 +117,8 @@ class CommandController extends Controller
             ]);
         }
         incCommandNumerotation();
-        return response()->json(['success'=>true]);
-        // ->with('redirectTo', route('devis.index'));
+        return response()->json(['success' => true]);
+        // ->with('redirectTo', route('Command.index'));
     }
 
     /**
@@ -153,7 +147,26 @@ class CommandController extends Controller
         $clients = Client::pluck('name_fr', 'id');
 
         $command_status = $this->staticOptions::DEVIS_STATUS;
-        return view('commands.edit', compact('object','products', 'command_status', 'categories', 'clients'));
+
+        $commandProducts = $object->products()->get();
+
+        // Pass data to the "Command.edit" view
+        $viewData = [
+            'object' => $object,
+            'products' => $products,
+            'command_status' => $command_status,
+            'categories' => $categories,
+            'clients' => $clients,
+            'commandProducts' => $commandProducts,
+        ];
+
+        // Check if the request expects JSON
+        if (request()->expectsJson()) {
+            return response()->json($viewData);
+        }
+
+        // If it's not an AJAX request, return the HTML view
+        return view('commands.edit', $viewData);
     }
 
     /**
@@ -163,11 +176,63 @@ class CommandController extends Controller
      * @param  \App\Models\Command  $command
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreCommandRequest $request,string $id)
+    public function update(StoreCommandRequest $request, string $id)
     {
-        $validated = $request->validated();
-        $this->crudService->updateRecord(new Command(),$validated,$id);
-        return redirect()->route('commands.index');
+        $data = $request->all();
+        $command = Command::findOrFail($id);
+
+        $command->HT = $data['total_ht'];
+        $command->TVA = $data['total_ttva'];
+        $command->TTTC = $data['total_ttc'];
+        $command->status = $data['status'];
+        $command->status_date = $data['status_date'];
+        $command->client_id = $data['client'];
+        $command->created_by = Auth::id();
+        $command->comment = $data['comment'];
+        $command->save();
+        $updatedProductIds = [];
+        foreach ($data['products'] as $item) {
+            $productDevisData = [
+                'designation' => $item['designation'],
+                'quantity' => $item['quantity'],
+                'price' => $item['price'],
+                'remise' => 5,
+                'total_remise' => 5,
+                'TOTAL_HT' => $item['TOTAL_HT'],
+                'TVA' => $item['TVA'],
+                'TOTAL_TVA' => $item['TOTAL_TVA'],
+                'TOTAL_TTC' => $item['TOTAL_TTC'],
+                'unite' => $item['unite'],
+            ];
+
+            $existingProductDevis = DB::table('product_command')
+                ->where('command_id', $command->id)
+                ->where('product_id', $item['product_id'])
+                ->first();
+
+            if ($existingProductDevis) {
+                // Le product_devis existe déjà, effectuez la mise à jour
+                DB::table('product_command')
+                    ->where('command_id', $command->id)
+                    ->where('product_id', $item['product_id'])
+                    ->update($productDevisData);
+            } else {
+                // Le product_command n'existe pas, créez un nouveau
+                DB::table('product_command')->insert(
+                    array_merge(['id' => Str::uuid(), 'command_id' => $command->id, 'product_id' => $item['product_id']], $productDevisData)
+                );
+            }
+
+            $updatedProductIds[] = $item['product_id'];
+        }
+
+// Supprimer les product_command qui ne sont pas dans la liste mise à jour
+DB::table('product_command')
+    ->where('command_id', $command->id)
+    ->whereNotIn('product_id', $updatedProductIds)
+    ->delete();
+        // incDevisNumerotation();
+        return response()->json(['success'=>true]);
     }
 
     /**
@@ -178,11 +243,10 @@ class CommandController extends Controller
      */
     public function destroy(Request $request)
     {
-      $object = Command::findOrFail($request->id)->delete();
-
+        $object = Command::findOrFail($request->id)->delete();
     }
 
-            /**
+    /**
      * Restore a soft-deleted user.
      *
      * @param \Illuminate\Http\Request $request The HTTP request object.
@@ -191,8 +255,9 @@ class CommandController extends Controller
      */
     public function restore(Request $request, $id)
     {
-
-        $object = Command::withTrashed()->findOrFail($id)->restore();
+        $object = Command::withTrashed()
+            ->findOrFail($id)
+            ->restore();
         // storeSidebar();
         return redirect()->route('commands.index');
     }
@@ -206,7 +271,6 @@ class CommandController extends Controller
      */
     public function forceDelete(Request $request, $id)
     {
-
         $object = Command::withTrashed()->findOrFail($id);
         // deletePicture($object,'commands','picture');
         $object->forceDelete();
@@ -231,10 +295,12 @@ class CommandController extends Controller
 
     public function generatePdf($id)
     {
-        $object = Command::with('products')->findOrfail($id)->toArray();
+        $object = Command::with('products')
+            ->findOrfail($id)
+            ->toArray();
 
-        $pdf = PDF::loadView('devis.devis_pdf', $object);
-        $filename = $object['devis_code'] . '_' . now()->format('YmdHis') . '.pdf';
+        $pdf = PDF::loadView('command.command_pdf', $object);
+        $filename = $object['command_code'] . '_' . now()->format('YmdHis') . '.pdf';
         return $pdf->download($filename);
     }
 }

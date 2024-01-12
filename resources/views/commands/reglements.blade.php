@@ -91,11 +91,12 @@
                                 <th>Mode de reglement</th>
                                 <th>Montant</th>
                                 <th>Echéance</th>
-
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody class="list form-check-all">
                             <tr class="text-center">
+                                <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>

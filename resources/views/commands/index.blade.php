@@ -32,6 +32,7 @@
 
 @section('js')
     @include('layouts.includes.datatable_js')
+    <script src="{{ asset('assets/custom_js/getCommandIndex.js') }}"></script>
     <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
 @endsection
 

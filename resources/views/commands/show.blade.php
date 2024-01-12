@@ -27,8 +27,8 @@
                         </div>
                         <div class="col-sm-auto">
                             <div class="d-flex gap-1 flex-wrap">
-                                <a href="{{route('commands.generatePdf',$object->id)}}" class="btn btn-primary">Imprimer commands TTC</a>
-                                <a href="{{route('commands.generatePdf',$object->id)}}" class="btn btn-success">Imprimer commands</a>
+                                <a href="{{route('commands.generatePdf',$object->id)}}" class="btn btn-primary">Imprimer commande TTC</a>
+                                <a href="{{route('commands.generatePdf',$object->id)}}" class="btn btn-success">Imprimer commande</a>
                                 <a href="#" class="btn btn-warning"> Transfer bon command</a>
                                 <button type="button" class="btn btn-info">
                                     {{ trans('translation.general_general_save') }}</button>
@@ -41,7 +41,7 @@
                         <div class="col-md-5">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <h3 for="">Le statut de ce commands est <span class="text-warning">
+                                    <h3 for="">Cette commande est <span class="text-warning">
                                             {{ $object->status }}</span></h3>
                                 </div>
                                 <div class="col-md-12 col-xl-12 col-xs-12 col-sm-12">
@@ -99,8 +99,8 @@
                         <div class="col-md-3">
                             <div
                                 class="bg-info text-light h-25 w-100 d-flex  justify-content-between align-items-center px-4 mb-1">
-                                <label for="" id="commands">DEVIS N° :</label>
-                                <label for="" id="num_commands" class="fs-3">{{ $object->commands_code }}</label>
+                                <label for="" id="commands">Commande N° :</label>
+                                <label for="" id="num_commands" class="fs-3">{{ $object->command_code }}</label>
                             </div>
                             <div
                                 class="bg-primary text-light h-25 w-100 d-flex  justify-content-between align-items-center px-4 mb-1">
@@ -125,7 +125,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header bg-primary">
-                    <h6 class="card-title mb-0 text-white">Détails de commands</h6>
+                    <h6 class="card-title mb-0 text-white">Détails de la commande</h6>
                 </div>
                 <div class="card-body">
                     @include('commands.show_table')

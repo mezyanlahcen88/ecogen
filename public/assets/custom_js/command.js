@@ -548,11 +548,11 @@ $(document).ready(function () {
     }
 
 
-    $('.storeDevis').on('click', function (e) {
+    $('.storeCommand').on('click', function (e) {
 
         e.preventDefault();
 
-        let formData = new FormData($('#formAddDevis')[0]);
+        let formData = new FormData($('#formAddCommand')[0]);
         data = {
             client: $('select[name="client_id"]').val(),
             category: $('select[name="category_id"]').val(),
@@ -560,7 +560,7 @@ $(document).ready(function () {
             status: $('select[name="status"]').val(),
             status_date: $('input[name="status_date"]').val(),
             comment: $('textarea[name="comment"]').val(),
-            num_devis: $('#num_devis').text(),
+            num_command: $('#num_command').text(),
             total_ttc: $('#total_ttc').text(),
             total_ht: $('#total_ht').text(),
             total_ttva: $('#total_ttva').text(),
@@ -572,7 +572,7 @@ $(document).ready(function () {
             }
         });
         $.ajax({
-            url: "/devis",
+            url: "/commands",
             type: "POST",
             data: data,
             dataType: "json",
@@ -586,7 +586,7 @@ $(document).ready(function () {
 
                     Swal.fire(
                         'Super!',
-                        'devis added successfully',
+                        'Commande a été créée avec succès',
                         'success'
                     )
                     // if (data.hasOwnProperty('redirectTo')) {

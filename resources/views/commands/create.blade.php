@@ -138,7 +138,7 @@
                             <div class="col-md-3">
                                 <div
                                     class="bg-info text-light h-25 w-100 d-flex  justify-content-between align-items-center px-4 mb-1">
-                                    <label for="" id="commands">DEVIS N° :</label>
+                                    <label for="" id="commands">Commande N° :</label>
                                     <label for="" id="num_command"
                                         class="fs-3">{{ getCommandNumerotation() . '/' . getExercice() }}</label>
                                 </div>
@@ -175,7 +175,7 @@
             </div>
             <div class="col-lg-12">
                 <div class="text-start">
-                    <button type="submit" class="btn btn-primary storeDevis">{{ trans('translation.general_general_save') }}</button>
+                    <button type="submit" class="btn btn-primary storeCommand">{{ trans('translation.general_general_save') }}</button>
                 </div>
             </div>
         </div>
@@ -188,5 +188,5 @@
     <script src="{{ asset('assets/custom_js/categories_scategories.js') }}"></script>
     <script src="{{ asset('assets/custom_js/get_last_price.js') }}"></script>
     <script src="{{ asset('assets/custom_js/command.js') }}"></script>
-    {!! JsValidator::formRequest('App\Http\Requests\StoreDevisRequest') !!}
+    {!! JsValidator::formRequest('App\Http\Requests\StoreCommandRequest') !!}
 @endsection

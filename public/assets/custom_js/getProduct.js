@@ -538,7 +538,7 @@ $(document).ready(function () {
 
                     Swal.fire(
                         'Super!',
-                        'devis added successfully',
+                        'Devis a été créé avec succès',
                         'success'
                     )
                     // if (data.hasOwnProperty('redirectTo')) {

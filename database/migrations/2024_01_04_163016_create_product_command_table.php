@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('product_commands', function (Blueprint $table) {
+        Schema::create('product_command', function (Blueprint $table) {
             $table->uuid('id')->unique();
             $table->foreignUuid('command_id')->constrained('commands')->onDelete('cascade');
             $table->foreignUuid('product_id')->constrained('products')->onDelete('cascade');

@@ -16,7 +16,7 @@
     ])
 @endsection
 @section('content')
-    <form action="{{ route('commands.update',$object->id) }}" method="post" id="commands_form" enctype="multipart/form-data">
+    <form action="{{ route('commands.update','commandeid') }}" method="post" id="commands_form" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <div class="row">
@@ -114,7 +114,7 @@
                                         'label' => 'commands_form_status',
                                         'optional' => 'text-danger',
                                         'divID' => 'statusDiv',
-                                        'options' => $commands_status,
+                                        'options' => $command_status,
                                         'object' => $object,
                                     ])
                                     <div class="col-md-6">
@@ -138,9 +138,9 @@
                             <div class="col-md-3">
                                 <div
                                     class="bg-info text-light h-25 w-100 d-flex  justify-content-between align-items-center px-4 mb-1">
-                                    <label for="" id="commands">DEVIS N° :</label>
+                                    <label for="" id="commands">Commande N° :</label>
                                     <label for="" id="num_commands"
-                                        class="fs-3">{{ $object->commands_code }}</label>
+                                        class="fs-3">{{ $object->command_code }}</label>
                                 </div>
                                 <div
                                     class="bg-primary text-light h-25 w-100 d-flex  justify-content-between align-items-center px-4 mb-1">
@@ -175,7 +175,7 @@
             </div>
             <div class="col-lg-12">
                 <div class="text-start">
-                    <button type="submit" class="btn btn-primary storeDevis">{{ trans('translation.general_general_save') }}</button>
+                    <button type="submit" class="btn btn-primary storeCommand">{{ trans('translation.general_general_save') }}</button>
                 </div>
             </div>
         </div>
@@ -186,6 +186,6 @@
     <script src="{{ asset('assets/custom_js/validate_number.js') }}"></script>
     <script src="{{ asset('assets/custom_js/categories_scategories.js') }}"></script>
     <script src="{{ asset('assets/custom_js/get_last_price.js') }}"></script>
-    {{-- <script src="{{ asset('assets/custom_js/getProduct.js') }}"></script> --}}
-    {!! JsValidator::formRequest('App\Http\Requests\StoreDevisRequest') !!}
+    <script src="{{ asset('assets/custom_js/CommandEdit.js') }}"></script>
+    {!! JsValidator::formRequest('App\Http\Requests\StoreCommandRequest') !!}
 @endsection

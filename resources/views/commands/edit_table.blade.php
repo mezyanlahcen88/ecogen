@@ -13,23 +13,6 @@
         </tr>
     </thead>
     <tbody class="list form-check-all" id="productTableBody">
-@foreach ($object->products as $product)
-<tr class="text-center">
-    <td>{{$product->product_code}}</td>
-    <td>{{$product->pivot->designation}}</td>
-    <td>{{$product->unite}}</td>
-    <td><div class="input-step">
-        <button type="button" class="minus">–</button>
-        <input type="number" class="product-quantity" id="product-qty-1" value="{{$product->pivot->quantity}}" readonly="">
-        <button type="button" class="plus">+</button>
-    </div>
-  </td>
-  <td>{{$product->pivot->price}}</td>
-  <td>{{$product->pivot->TOTAL_HT}}</td>
-  <td>{{$product->pivot->TVA}}</td>
-  <td>{{$product->pivot->TOTAL_TVA}}</td>
-  <td>{{$product->pivot->TOTAL_TTC}}</td>
-</tr>
-@endforeach
+
     </tbody>
 </table>
