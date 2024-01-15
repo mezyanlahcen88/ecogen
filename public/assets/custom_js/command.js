@@ -137,51 +137,41 @@ $(document).ready(function () {
                 // Create minus button
                 const minusButton = $('<button>')
                     .addClass('minus')
+                    .prop("type", "button")
                     .text('–')
                     .on('click', () => decrease(product.id, 'quantite'));
 
                 // Create quantity input
-                const tvaInput = document.createElement('input');
-                tvaInput.type = 'number';
-                tvaInput.classList.add('product-quantity');
-                tvaInput.id = `product-qty-${product.id}`;
-                tvaInput.value = product.quantite;
-                tvaInput.addEventListener('blur', function () {
+                const qteInput = document.createElement('input');
+                qteInput.type = 'number';
+                qteInput.classList.add('product-quantity');
+                qteInput.id = `product-qty-${product.id}`;
+                qteInput.value = product.quantite;
+                qteInput.addEventListener('blur', function () {
                     // Récupère l'élément input actuel
                     const input = $(this);
                     // Récupère l'id de l'élément input
                     const id = input.attr("id");
                     // Appelez la fonction increase en passant l'ID du produit
-                    // updateQuantite(tvaInput.value, id);
+                    // updateQuantite(qteInput.value, id);
                     const idProd = id.slice(12);
-
-                    updateLocalStorageQuantityPrixTva(idProd, tvaInput.value, 'quantite');
-                    updateLocalStorageHTTTTVA(idProd, tvaInput.value, $(`#product-prix-${product.id}`).val(), 20);
+                    if (qteInput.value < 1) {
+                        qteInput.value = 1;
+                    }
+                    updateLocalStorageQuantityPrixTva(idProd, qteInput.value, 'quantite');
+                    updateLocalStorageHTTTTVA(idProd, qteInput.value, $(`#product-prix-${product.id}`).val(), 20);
                     tableProducts();
                 });
-
-                // const tvaInput = $('<input>')
-                //     .attr('type', 'number')
-                //     .addClass('product-quantity')
-                //     .attr('id', `product-qty-${product.id}`)
-                //     .val(product.quantite)
-                //     .on('blur', () => {
-                //         const id = $(this).attr('id');
-                //         const idProd = id.slice(12);
-                //         console.log("idProd qte :" + idProd);
-                //         updateLocalStorageQuantityPrixTva(idProd, $(this).val(), 'quantite');
-                //         updateLocalStorageHTTTTVA(idProd, $(this).val(), $(`#product-prix-${product.id}`).val(), 20);
-                //         tableProducts();
-                //     });
 
                 // Create plus button
                 const plusButton = $('<button>')
                     .addClass('plus')
+                    .prop("type", "button")
                     .text('+')
                     .on('click', () => increase(product.id, 'quantite'));
 
                 // Append buttons and input to the div
-                quantityDiv.append(minusButton, tvaInput, plusButton);
+                quantityDiv.append(minusButton, qteInput, plusButton);
 
                 // Append the div to the td element
                 td.append(quantityDiv);
@@ -192,6 +182,7 @@ $(document).ready(function () {
                 // Create minus button
                 const minusButtonPrix = $('<button>')
                     .addClass('minus')
+                    .prop("type", "button")
                     .text('–')
                     .on('click', () => decrease(product.id, 'prix'));
 
@@ -217,24 +208,10 @@ $(document).ready(function () {
                 });
 
 
-                // const prixInput = $('<input>')
-                //     .attr('type', 'number')
-                //     .addClass('product-prix')
-                //     .attr('id', `product-prix-${product.id}`)
-                //     .val(product.prix)
-                //     .on('blur', () => {
-                //         const id = $(this).attr('id');
-                //         const idProd = id.slice(13);
-                //         console.log("idProd prix :" + idProd);
-
-                //         updateLocalStorageQuantityPrixTva(idProd, $(this).val(), 'prix');
-                //         updateLocalStorageHTTTTVA(idProd, $(`#product-qty-${product.id}`).val(), $(this).val(), 20);
-                //         tableProducts();
-                //     });
-
                 // Create plus button
                 const plusButtonPrix = $('<button>')
                     .addClass('plus')
+                    .prop("type", "button")
                     .text('+')
                     .on('click', () => increase(product.id, 'prix'));
 
@@ -249,6 +226,7 @@ $(document).ready(function () {
                 // Create minus button
                 const minusButtonTva = $('<button>')
                     .addClass('minus')
+                    .prop("type", "button")
                     .text('–')
                     .on('click', () => decrease(product.id, 'tva'));
 
@@ -272,24 +250,10 @@ $(document).ready(function () {
                     tableProducts();
                 });
 
-                // const tvaInput = $('<input>')
-                //     .attr('type', 'number')
-                //     .addClass('product-tva')
-                //     .attr('id', `product-tva-${product.id}`)
-                //     .val(product.tva)
-                //     .on('blur', () => {
-                //         const id = $(this).attr('id');
-                //         const idProd = id.slice(12);
-                //         console.log("idProd tva :" + idProd);
-
-                //         updateLocalStorageQuantityPrixTva(idProd, $(this).val(), 'tva');
-                //         updateLocalStorageHTTTTVA(idProd, $(`#product-qty-${product.id}`).val(), $(`#product-prix-${product.id}`).val(), $(this).val());
-                //         tableProducts();
-                //     });
-
                 // Create plus button
                 const plusButtonTva = $('<button>')
                     .addClass('plus')
+                    .prop("type", "button")
                     .text('+')
                     .on('click', () => increase(product.id, 'tva'));
 
@@ -307,6 +271,7 @@ $(document).ready(function () {
         // Create remove button
         const removeButton = $('<button>')
             .addClass('btn')
+            .prop("type", "button")
             .html('<i class="las la-times text-danger fs-1"></i>')
             .on('click', () => deleteProduct(product.id));
 
@@ -373,8 +338,8 @@ $(document).ready(function () {
     }
 
     function decrease(id, type) {
-        var tvaInput = document.getElementById(`product-qty-${id}`);
-        var qte = parseFloat(tvaInput.value);
+        var qteInput = document.getElementById(`product-qty-${id}`);
+        var qte = parseFloat(qteInput.value);
         var prixInput = $(`#product-prix-${id}`);
         var prix = parseFloat(prixInput.val());
         var tvaInput = $(`#product-tva-${id}`);
@@ -384,13 +349,13 @@ $(document).ready(function () {
                 qte -= 1;
 
                 // Update the quantity in the input field
-                tvaInput.value = qte;
+                qteInput.value = qte;
 
                 // Update the localStorage with the new quantity
                 updateLocalStorageQuantityPrixTva(id, qte, 'quantite');
 
                 // Calculate and update ht and tttva in the localStorage
-                updateLocalStorageHTTTTVA(id, qte, prix, 20);
+                updateLocalStorageHTTTTVA(id, qte, prix, tva);
                 tableProducts();
 
             } else {
@@ -407,14 +372,14 @@ $(document).ready(function () {
                 updateLocalStorageQuantityPrixTva(id, prix, 'prix');
 
                 // Calculate and update ht and tttva in the localStorage
-                updateLocalStorageHTTTTVA(id, qte, prix, 20);
+                updateLocalStorageHTTTTVA(id, qte, prix, tva);
                 tableProducts();
 
             } else {
                 console.error("Invalid price or price cannot be decreased further.");
             }
         } else if (type === 'tva') {
-            if (!isNaN(tva) && tva > 1) {
+            if (!isNaN(tva) && tva > 0) {
                 tva -= 1;
 
                 // Update the tva in the input field
@@ -600,128 +565,3 @@ $(document).ready(function () {
 
 });
 
-
-//  function generateProductHTML(product) {
-//      const tr = document.createElement('tr');
-//      counter++;
-//      tr.classList.add('text-center');
-//      console.log(tableBody);
-//      // Propriétés à inclure dans les cellules td
-//      const propertiesToInclude = ['ref', 'designation', 'unite', 'quantite', 'prix', 'ht', 'tva', 'ttva', 'ttc'];
-
-//      // Itérez sur les propriétés à inclure et créez les éléments td
-//      propertiesToInclude.forEach((key) => {
-//          const td = document.createElement('td');
-//          if (key === 'quantite') {
-//              // Création de l'élément div avec les boutons pour la quantité
-//              const quantityDiv = document.createElement('div');
-//              quantityDiv.classList.add('input-step');
-
-//              const minusButton = document.createElement('button');
-//              minusButton.type = 'button';
-//              minusButton.classList.add('minus');
-//              minusButton.textContent = '–';
-
-//              minusButton.addEventListener('click', function () {
-//                  // Appelez la fonction increase en passant l'ID du produit
-//                  decrease(product.id);
-//              });
-
-//              const tvaInput = document.createElement('input');
-//              tvaInput.type = 'number';
-//              tvaInput.classList.add('product-quantity');
-//              tvaInput.id = `product-qty-${product.id}`;
-//              tvaInput.value = product.quantite;
-//              tvaInput.addEventListener('blur', function () {
-//                  // Récupère l'élément input actuel
-//                  const input = $(this);
-
-//                  // Récupère l'id de l'élément input
-//                  const id = input.attr("id");
-//                  // Appelez la fonction increase en passant l'ID du produit
-//                  // updateQuantite(tvaInput.value, id);
-//                  const idProd = id.slice(12);
-//                  updateLocalStorageQuantityPrixTva(idProd, tvaInput.value, 'quantite');
-//                  updateLocalStorageHTTTTVA(idProd, tvaInput.value, $(`product-prix-${product.id}`).val(), 20);
-//                  tableProducts();
-//              });
-
-//              const plusButton = document.createElement('button');
-//              plusButton.type = 'button';
-//              plusButton.classList.add('plus');
-//              plusButton.textContent = '+';
-
-//              plusButton.addEventListener('click', function () {
-//                  // Appelez la fonction increase en passant l'ID du produit
-//                  increase(product.id);
-//              });
-//              // Ajoutez les boutons et l'input à la div
-//              quantityDiv.appendChild(minusButton);
-//              quantityDiv.appendChild(tvaInput);
-//              quantityDiv.appendChild(plusButton);
-
-//              // Ajoutez la div à la cellule td
-//              td.appendChild(quantityDiv);
-//          }
-//          if (key === 'prix') {
-//              // Create the quantity div with buttons
-//              const prixDiv = $('<div>')
-//                  .addClass('input-step');
-
-//              // Create the minus button and attach a click listener
-//              const minusButton = $('<button>')
-//                  .addClass('minus')
-//                  .text('–')
-//                  .on('click', function () {
-//                      decrease(product.id, 'prix');
-//                  });
-
-//              // Create the quantity input and attach a blur listener
-//              const prixInput = $('<input>')
-//                  .attr('type', 'number')
-//                  .addClass('product-prix')
-//                  .attr('id', `product-prix-${product.id}`)
-//                  .val(product.prix)
-//                  .on('blur', function () {
-//                      const id = $(this).attr('id');
-//                      const idProd = id.slice(12);
-//                      updateLocalStorageQuantityPrixTva(idProd, $(this).val(), 'prix');
-//                      updateLocalStorageHTTTTVA(idProd, $(`product-qty-${product.id}`).val(), $(this).val(), 20);
-//                      tableProducts();
-//                  });
-
-//              // Create the plus button and attach a click listener
-//              const plusButton = $('<button>')
-//                  .addClass('plus')
-//                  .text('+')
-//                  .on('click', function () {
-//                      increase(product.id, 'prix');
-//                  });
-
-//              // Append buttons and input to the div
-//              prixDiv.append(minusButton, prixInput, plusButton);
-
-//              // Append the div to the td element
-//              $(td).append(prixDiv);
-//          } else {
-//              td.textContent = product[key];
-//          }
-//          tr.appendChild(td);
-//      });
-
-//      // Créez un bouton pour supprimer le produit
-//      const removeButton = document.createElement('button');
-//      removeButton.type = 'button';
-//      removeButton.classList.add('btn');
-//      // removeButton.classList.add('btn', 'remove');
-//      removeButton.innerHTML = '<i class="las la-times text-danger fs-1"></i>';
-//      const tdRemove = document.createElement('td');
-//      removeButton.addEventListener('click', function () {
-//          // Appelez la fonction deleteProduct en passant l'ID du produit
-//          deleteProduct(product.id);
-//      });
-//      tdRemove.appendChild(removeButton);
-//      tr.appendChild(tdRemove);
-
-//      return tr;
-//  }
