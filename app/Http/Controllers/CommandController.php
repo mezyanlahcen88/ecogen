@@ -147,6 +147,7 @@ class CommandController extends Controller
         $clients = Client::pluck('name_fr', 'id');
 
         $command_status = $this->staticOptions::DEVIS_STATUS;
+        $reglements = $this->staticOptions::GARANTIES_TYPES;
 
         $commandProducts = $object->products()->get();
 
@@ -158,6 +159,7 @@ class CommandController extends Controller
             'categories' => $categories,
             'clients' => $clients,
             'commandProducts' => $commandProducts,
+            'reglements' => $reglements,
         ];
 
         // Check if the request expects JSON
