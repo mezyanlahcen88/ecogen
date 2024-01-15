@@ -241,6 +241,9 @@ function appendTableRow(product) {
     $('#product-qty-' + product.pivot.product_id).on('blur', () => {
         id = product.pivot.product_id;
         var qte = $('#product-qty-' + product.pivot.product_id).val();
+         if (qte < 1) {
+             qte = 1;
+         }
         var prix = $('#product-prix-' + product.pivot.product_id).val();
         var tva = $('#product-tva-' + product.pivot.product_id).val();
         updateLocalStorageQuantityPrixTva(product.pivot.product_id, qte, 'quantite');
@@ -335,8 +338,8 @@ function increase(id, type) {
 }
 
 function decrease(id, type) {
-    var tvaInput = document.getElementById(`product-qty-${id}`);
-    var qte = parseFloat(tvaInput.value);
+    var qteInput = document.getElementById(`product-qty-${id}`);
+    var qte = parseFloat(qteInput.value);
     var prixInput = $(`#product-prix-${id}`);
     var prix = parseFloat(prixInput.val());
     var tvaInput = $(`#product-tva-${id}`);
@@ -346,13 +349,13 @@ function decrease(id, type) {
             qte -= 1;
 
             // Update the quantity in the input field
-            tvaInput.value = qte;
+            qteInput.value = qte;
 
             // Update the localStorage with the new quantity
             updateLocalStorageQuantityPrixTva(id, qte, 'quantite');
 
             // Calculate and update ht and tttva in the localStorage
-            updateLocalStorageHTTTTVA(id, qte, prix, 20);
+            updateLocalStorageHTTTTVA(id, qte, prix, tva);
             tableProducts();
 
         } else {
@@ -369,14 +372,14 @@ function decrease(id, type) {
             updateLocalStorageQuantityPrixTva(id, prix, 'prix');
 
             // Calculate and update ht and tttva in the localStorage
-            updateLocalStorageHTTTTVA(id, qte, prix, 20);
+            updateLocalStorageHTTTTVA(id, qte, prix, tva);
             tableProducts();
 
         } else {
             console.error("Invalid price or price cannot be decreased further.");
         }
     } else if (type === 'tva') {
-        if (!isNaN(tva) && tva > 1) {
+        if (!isNaN(tva) && tva > 0) {
             tva -= 1;
 
             // Update the tva in the input field
@@ -563,7 +566,7 @@ $('.storeCommand').on('click', function (e) {
                 localStorage.removeItem("product_commandEdit");
                 // $('#productTableBody').empty();
                 // loadTableFromLocalStorage();
-                window.location.href = "/command";
+                window.location.href = "/commands";
                 // location.reload();
                 console.log("delete storage");
 
