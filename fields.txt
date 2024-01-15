@@ -1,0 +1,16 @@
+//_______user Fields _________//
+firstname required
+lastname required
+username required unique
+email required unique
+password required 
+isactive required  ?
+profession
+country
+state
+city
+phone required unique
+picture
+roles_name required ?
+adresse
+codepostale

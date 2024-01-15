@@ -1,0 +1,21 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\{{model}}Controller;
+
+
+
+//chaneg the status
+Route::post('/{{plural}}/changestatus', [{{model}}Controller::class, 'changeStatus'])->name('{{plural}}.changestatus');
+//to permanently delete
+Route::delete('/{{plural}}/{id}/force_delete', [{{model}}Controller::class, 'forceDelete'])->name('{{plural}}.forceDelete');
+// to restore
+Route::put('/{{plural}}/{id}/restore', [{{model}}Controller::class, 'restore'])->name('{{plural}}.restore');
+//liste all deleted
+Route::get('/{{plural}}/trashed', [{{model}}Controller::class, 'trashed'])->name('{{plural}}.trashed');
+Route::resource('{{plural}}', {{model}}Controller::class);
+
+
+//copy this two lines in web.php
+############################### {{model}} ###############################
+require __DIR__ . '/base/{{lowerName}}Route.php';

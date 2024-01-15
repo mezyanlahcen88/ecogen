@@ -1,0 +1,102 @@
+/* -- HEADER & NAVIGATION ---*/
+.horizontal-logo .logo img {
+    width: 50% !important ;
+}
+
+.navbar-menu .navbar-nav .nav-link {
+    font-size: 0.8rem !important;
+}
+
+[data-layout=horizontal] .page-title-box {
+    padding: 0.5rem 0.5rem;
+    background-color: white !important;
+    margin-bottom: 0.5rem;
+
+}
+.nav-primary .nav-link.active {
+    color:var(--vz-gray-700);
+
+}
+/*-- CARDS ---*/
+.card {
+    border-radius: 0px  !important;
+}
+
+.card-header:first-child {
+    border-radius: 0 !important;
+}
+
+
+/*-- FORMS --*/
+.form-group {
+    margin-bottom: 5px !important;
+}
+
+.form-group label {
+    margin-bottom: 0.2rem !important;
+}
+
+.file-icon > p{
+    font-size: 12px !important;
+
+}
+.error-help-block{
+    color: red;
+    font-size: 13px;
+}
+
+
+
+/*--- HEIGHT --- */
+.m-height-400 {
+    min-height: 400px;
+}
+
+
+/*--- d-flex justify-content-between align-items-center --- */
+.between-center{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* .between-center{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+} */
+/* row custom */
+.row-custom {
+        padding-right: 5px !important;
+        padding-left: 5px !important;
+}
+
+/* width */
+.min-witdth-65{
+    min-width: 65px !important;
+}
+
+.custom-avatar{
+    height:40px;
+    width: 100%;
+    display:flex;
+    align-items: center;
+    padding-left: 15px;
+}
+
+.icon-xxxlg{
+    font-size: xxx-large;
+}
+
+/* check box style */
+.checkboxstyle {
+    margin-top: 32px;
+    margin-left: -2px;
+}
+
+
+/* direction */
+
+.rtl{
+    direction: rtl;
+}
