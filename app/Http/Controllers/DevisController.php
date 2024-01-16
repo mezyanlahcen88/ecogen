@@ -8,7 +8,7 @@ use App\Models\Client;
 use App\Models\Product;
 use App\Forms\DevisForm;
 use App\Models\Category;
-// use Barryvdh\DomPDF\PDF;
+use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Support\Str;
 use App\Enums\StaticOptions;
 use Illuminate\Http\Request;
@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreDevisRequest;
 use RealRashid\SweetAlert\Facades\Alert;
-use PDF;
+
 class DevisController extends Controller
 {
     public $staticOptions;
@@ -367,11 +367,16 @@ DB::table('product_devis')
         return response()->json(['code' => 200, 'active' => $object->active, 'message' => $message]);
     }
 
-    public function generatePdf($id)
+    public function viewDevisInvoice($id)
+    {
+        $object = Devis::with('products')->findOrfail($id);
+        return view('devis.devis_pdf', compact('object'));
+    }
+
+    public function printDevisInvoice($id)
 {
     $object = Devis::with('products')->findOrfail($id)->toArray();
-
-    $pdf = PDF::loadView('devis.devis_pdf', $object);
+    $pdf = PDF::loadView('devis.devis_pdf', compact($object));
     $filename = $object['devis_code'] . '_' . now()->format('YmdHis') . '.pdf';
     return $pdf->download($filename);
 }

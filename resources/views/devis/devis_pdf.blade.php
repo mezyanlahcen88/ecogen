@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>How To Generate Invoice PDF In Laravel 9 - Techsolutionstuff</title>
+
 </head>
 <style type="text/css">
     body{
@@ -85,7 +87,8 @@
         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTW0qFGxyFTY4eI1cmFrFWi5YUT_jkreXwE6Q&usqp=CAU" alt="Logo">
     </div>
     <div class="w-50 float-left mt-10">
-        <p class="m-0 pt-5 text-bold w-100">Devis N°- <span class="gray-color">#DV-1/2023</span></p>
+        {{-- <p class="m-0 pt-5 text-bold w-100">Devis N°- <span class="gray-color">#DV-1/2023</span></p> --}}
+        <p class="m-0 pt-5 text-bold w-100">Devis N°- <span class="gray-color">#{{$object->devis_code}}</span></p>
         <p class="m-0 pt-5 text-bold w-100">Order Id - <span class="gray-color">
             {{-- {{object->devis_code}} --}}
         </span></p>
@@ -185,4 +188,6 @@
         </tr>
     </table>
 </div>
+<a href="{{route('devis.printDevisInvoice',$object->id)}}" class="btn btn-success">Imprimer devis</a>
+
 </html>
