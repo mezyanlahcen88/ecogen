@@ -49,7 +49,7 @@ $(document).ready(function () {
 });
 
 function loadTableFromLocalStorage() {
-   //Loading table from localStorage"
+    //Loading table from localStorage"
     var data = JSON.parse(localStorage.getItem('product_commandEdit')) || [];
     var listeProd = data.commandProducts;
     tableBody.empty(); // Clear the existing content in the table
@@ -107,6 +107,7 @@ $('.getcommand').on('click', function (e) {
         }
     });
 });
+
 
 function generateOptions(data, objectType) {
     var options = '<option value="">Sélectionnez un ' + objectType + '</option>';
@@ -241,9 +242,9 @@ function appendTableRow(product) {
     $('#product-qty-' + product.pivot.product_id).on('blur', () => {
         id = product.pivot.product_id;
         var qte = $('#product-qty-' + product.pivot.product_id).val();
-         if (qte < 1) {
-             qte = 1;
-         }
+        if (qte < 1) {
+            qte = 1;
+        }
         var prix = $('#product-prix-' + product.pivot.product_id).val();
         var tva = $('#product-tva-' + product.pivot.product_id).val();
         updateLocalStorageQuantityPrixTva(product.pivot.product_id, qte, 'quantite');
@@ -532,9 +533,9 @@ $('.storeCommand').on('click', function (e) {
     var listeProd = data.commandProducts;
     var commandId = data.object.id;
     var products = [];
-     listeProd.forEach(function (product) {
-         products.push(product.pivot);
-     });
+    listeProd.forEach(function (product) {
+        products.push(product.pivot);
+    });
     console.log(products);
     let formData = new FormData($('#command_form')[0]);
     formData.append('_method', 'PUT');
@@ -583,3 +584,94 @@ $('.storeCommand').on('click', function (e) {
     });
 
 });
+var reglements = [];
+var newReglement = {
+    modePaiment: '',
+    num_order: '',
+    comment: '',
+    montantPayer: '',
+    dateEcheance: '',
+}
+$('#btnValider').on('click', function (e) {
+    e.preventDefault();
+    var montantTotalPayer = 0;
+    data = JSON.parse(localStorage.getItem('reglements')) || [];
+    if (data && data.length > 0) {
+        // Calcule le prix hors taxe
+        montantTotalPayer = data.reduce((acc, reg) => acc + reg.montantPayer, 0);
+    }
+    var reg = Object.assign({}, newReglement);
+    var total_ttc = parseFloat($('#total_ttc').text());
+    var total_ht = parseFloat($('#total_ht').text());
+    var total_ttva = parseFloat($('#total_ttva').text());
+    var modePaiment = $('select[name="reglement"]').val();
+    var num_order = $('#check_ref').val();
+    var comment = $('#commentReg').val();
+    var montantPayer = parseFloat($('#montantPayer').val());
+    console.log('total_ttc : ' + total_ttc);
+    console.log('total_ht : ' + total_ht);
+    console.log('total_ttva : ' + total_ttva);
+    console.log('montantPayer : ' + montantPayer);
+    reg.modePaiment = modePaiment;
+    reg.num_order = num_order;
+    reg.comment = comment;
+    reg.montantPayer = montantPayer;
+    reg.dateEcheance = new Date();
+    if (montantPayer + montantTotalPayer <= total_ttc) {
+    var rest_payer = total_ttc - (montantPayer + montantTotalPayer);
+      $('#rest_payer').text(rest_payer.toFixed(2));
+      reglements.push(reg);
+      localStorage.setItem('reglements', JSON.stringify(reglements));
+      console.log(rest_payer);
+      tableReglements();
+    } else {
+        console.log("le montant entrer et plus grand que le reste à payer !");
+    }
+
+    // var commandId = $(this).data('command-id');
+    // $.ajax({
+    //     url: "/commands/" + commandId + "/edit",
+    //     type: 'GET',
+    //     dataType: 'json', // Changez ceci en 'html'
+    //     success: function (data) {
+    //         // $('#contenuDynamique').html(data.html);
+    //         localStorage.setItem('product_commandEdit', JSON.stringify(data));
+    //         loadTableFromLocalStorage();
+    //         window.location.href = "/commands/" + commandId + "/edit";
+
+    //         recupereTotalTTCHTTVA(data.object);
+    //     },
+    //     error: function (error) {
+    //         console.log(error);
+    //     }
+    // });
+});
+
+function tableReglements() {
+    var data = JSON.parse(localStorage.getItem('reglements')) || [];
+    var listeReg = data;
+    // tableBody.empty();
+    $('#RegTableBody').empty();
+    listeReg.forEach((reg) => {
+        appendTableRegRow(reg);
+    });
+    // calculeTotals();
+}
+// Fonction pour générer le HTML pour chaque produit
+function appendTableRegRow(reg) {
+    var row = '<tr class="text-center">' +
+        '<td>' + reg.modePaiment + '</td>' +
+        '<td>' + reg.montantPayer + '</td>' +
+        '<td>' + reg.dateEcheance + '</td>' +
+        '<td>' +
+        // '<td>' +
+        // '    <button type="button" class="btn" id="deleteProduct-' + product.pivot.product_id + '"><i class="las la-times text-danger fs-1"></i></button>' +
+        // '</td>' +
+        '</tr>';
+
+    $('#RegTableBody').append(row);
+
+    // $('#deleteProduct-' + product.pivot.product_id).on('click', () => deleteProduct(product.pivot.product_id));
+
+
+}

@@ -12,37 +12,32 @@
                         <div
                             class="bg-info text-light h-25 w-100 d-flex  justify-content-between align-items-center px-4 mb-1">
                             <label for="" id="commands">Reste à payer</label>
-                            <label for="" id="num_command" class="fs-3">960 DH</label>
+                            <label for="" id="rest_payer" class="fs-3">{{ $object->TTTC }}</label>
                         </div>
                         <div
                             class="bg-success text-light h-25 w-100 d-flex  justify-content-between align-items-center px-4 mb-1">
                             <label for="">Montant :</label>
-                            <label for="" id="total_ht" class="fs-3">0.00</label>
+                            <label for="" id="total_ht" class="fs-3">{{ $object->HT }}</label>
                         </div>
                         <div
                             class="bg-primary text-light h-25 w-100 d-flex  justify-content-between align-items-center px-4 mb-1">
                             <label for="">Total TTC :</label>
-                            <label for="" id="total_ttc" class="fs-3">0.00</label>
+                            <label for="" id="total_ttc" class="fs-3">{{ $object->TTTC }}</label>
                         </div>
 
                         <div
                             class="bg-warning text-light h-25 w-100 d-flex  justify-content-between align-items-center px-4 mb-1">
                             <label for="">Dont TVA :</label>
-                            <label for="" id="total_ttva" class="fs-3">0.00</label>
+                            <label for="" id="total_ttva" class="fs-3">{{ $object->TVA }}</label>
                         </div>
 
                     </div>
                     <div class="col-md-6">
                         <div class="bg-soft-success text-white w-100 d-flex  justify-content-center align-items-center "
                             style="height: 184px">
-                            <input
-                                    type="number"
-                                    class="form-control w-50  bg-soft-success text-white border-0 fs-1 text-center"
-                                    name=""
-                                    id=""
-                                    aria-describedby="helpId"
-                                    value="0"
-                                />
+                            <input type="number"
+                                class="form-control w-50  bg-soft-success text-white border-0 fs-1 text-center"
+                                name="" id="montantPayer" aria-describedby="helpId" value="0" />
 
 
                         </div>
@@ -71,15 +66,15 @@
                         'column_value' => old('check_ref'),
                         'readonly' => 'false',
                     ])
-                                                        <div class="col-md-2 mt-4">
-                                                            <a href="#" id="" class="btn btn-primary text-light  w-100"><i
-                                                                    class="las la-check"></i></a>
-                                                        </div>
+                    <div class="col-md-2 mt-4">
+                        <a href="#" id="btnValider" class="btn btn-primary text-light  w-100"><i
+                                class="las la-check"></i></a>
+                    </div>
                     <div class="col-md-12 col-xl-12 col-xs-12 col-sm-12">
                         <div class="form-group">
                             <label for="content">{{ trans('translation.commands_form_comment') }} &nbsp;
                                 <span class="text-secondary">*</span></label>
-                            <textarea class="form-control" name="comment" id="comment" rows="5">{{ old('comment') }}</textarea>
+                            <textarea class="form-control" name="comment" id="commentReg" rows="5">{{ old('comment') }}</textarea>
                         </div>
                     </div>
                 </div>
@@ -94,7 +89,7 @@
                                 <th>Action</th>
                             </tr>
                         </thead>
-                        <tbody class="list form-check-all">
+                        <tbody class="list form-check-all" id=RegTableBody>
                             <tr class="text-center">
                                 <td></td>
                                 <td></td>
