@@ -1,12 +1,12 @@
-const tableBody = $('#productTableBody');
+const tableBody = $("#productTableBody");
 const inputDateId = "#status_date";
 const newProduit = {
-    id: '',
-    product_code: '',
-    name_fr: '',
-    name_ar: '',
-    category_id: '',
-    scategory_id: '',
+    id: "",
+    product_code: "",
+    name_fr: "",
+    name_ar: "",
+    category_id: "",
+    scategory_id: "",
     buy_price: 0,
     price_unit: 0,
     price_gros: 0,
@@ -15,32 +15,32 @@ const newProduit = {
     remise: 0,
     tva: 0,
     min_stock: 0,
-    unite: '',
-    bar_code: '',
+    unite: "",
+    bar_code: "",
     stockable: 0,
-    created_by: '',
-    stock_methode: '',
-    archive: '',
-    brand_id: '',
-    picture: '',
-    warehouse_id: '',
+    created_by: "",
+    stock_methode: "",
+    archive: "",
+    brand_id: "",
+    picture: "",
+    warehouse_id: "",
     active: 0,
-    created_at: '',
-    updated_at: '',
+    created_at: "",
+    updated_at: "",
     deleted_at: null,
     pivot: {
-        product_id: ',',
-        product_code: '',
-        command_id: '',
-        designation: '',
-        unite: '',
+        product_id: ",",
+        product_code: "",
+        command_id: "",
+        designation: "",
+        unite: "",
         quantity: 0,
         price: 0,
         TVA: 0,
         TOTAL_HT: 0,
         TOTAL_TVA: 0,
         TOTAL_TTC: 0,
-    }
+    },
 };
 
 $(document).ready(function () {
@@ -50,7 +50,7 @@ $(document).ready(function () {
 
 function loadTableFromLocalStorage() {
     //Loading table from localStorage"
-    var data = JSON.parse(localStorage.getItem('product_commandEdit')) || [];
+    var data = JSON.parse(localStorage.getItem("product_commandEdit")) || [];
     var listeProd = data.commandProducts;
     tableBody.empty(); // Clear the existing content in the table
 
@@ -61,22 +61,28 @@ function loadTableFromLocalStorage() {
     // recupere numéro command et le mettre dans label
     $("#num_command").text(data.object.command_code);
     // remplir select client
-    $('select[name="client_id"]').html(generateOptions(data.clients, 'client'));
+    $('select[name="client_id"]').html(generateOptions(data.clients, "client"));
     $('select[name="client_id"]').select2();
     selectedClientId = data.object.client_id;
-    $('select[name="client_id"]').val(selectedClientId).trigger('change');
+    $('select[name="client_id"]').val(selectedClientId).trigger("change");
     // remplir select categrie
-    $('select[name="category_id"]').html(generateOptions(data.categories, 'catégorie'));
+    $('select[name="category_id"]').html(
+        generateOptions(data.categories, "catégorie")
+    );
     $('select[name="category_id"]').select2();
     //remplir select procudt
-    $('select[name="product_id"]').html(generateOptions(data.products, 'produit'));
+    $('select[name="product_id"]').html(
+        generateOptions(data.products, "produit")
+    );
     $('select[name="product_id"]').select2();
     // remplir select status
-    $('select[name="status"]').html(generateOptions(data.command_status, 'status'));
+    $('select[name="status"]').html(
+        generateOptions(data.command_status, "status")
+    );
     $('select[name="status"]').select2();
     selectedStatus = data.object.status;
-    $('select[name="status"]').val(selectedStatus).trigger('change');
-    $('#comment').val(selectedStatus).val(data.object.comment);
+    $('select[name="status"]').val(selectedStatus).trigger("change");
+    $("#comment").val(selectedStatus).val(data.object.comment);
     initializeDatePicker(data);
 }
 
@@ -84,19 +90,19 @@ function initializeDatePicker(data) {
     flatpickr(inputDateId, {
         enableTime: true,
         dateFormat: "Y-m-d H:i",
-        defaultDate: data.object.status_date
+        defaultDate: data.object.status_date,
     });
 }
-$('.getcommand').on('click', function (e) {
+$(".getcommand").on("click", function (e) {
     e.preventDefault();
-    var commandId = $(this).data('command-id');
+    var commandId = $(this).data("command-id");
     $.ajax({
         url: "/commands/" + commandId + "/edit",
-        type: 'GET',
-        dataType: 'json', // Changez ceci en 'html'
+        type: "GET",
+        dataType: "json", // Changez ceci en 'html'
         success: function (data) {
             // $('#contenuDynamique').html(data.html);
-            localStorage.setItem('product_commandEdit', JSON.stringify(data));
+            localStorage.setItem("product_commandEdit", JSON.stringify(data));
             loadTableFromLocalStorage();
             window.location.href = "/commands/" + commandId + "/edit";
 
@@ -104,16 +110,16 @@ $('.getcommand').on('click', function (e) {
         },
         error: function (error) {
             console.log(error);
-        }
+        },
     });
 });
 
-
 function generateOptions(data, objectType) {
-    var options = '<option value="">Sélectionnez un ' + objectType + '</option>';
+    var options =
+        '<option value="">Sélectionnez un ' + objectType + "</option>";
     for (var key in data) {
         if (data.hasOwnProperty(key)) {
-            options += '<option value="' + key + '">' + data[key] + '</option>';
+            options += '<option value="' + key + '">' + data[key] + "</option>";
         }
     }
     return options;
@@ -152,20 +158,20 @@ function objectProd(data) {
         product_code: data.product_code,
         product_id: data.id,
         command_id: data.id,
-        designation: data.name_fr + ' | ' + data.name_ar,
+        designation: data.name_fr + " | " + data.name_ar,
         unite: data.unite,
         quantity: 1,
         price: data.price_unit,
         TVA: data.tva,
-        TOTAL_HT: Math.round((data.price_unit * 1)),
-        TOTAL_TVA: Math.round((data.price_unit * 1) * (data.tva / 100)),
-        TOTAL_TTC: Math.round((data.price_unit * 1) * (1 + (data.tva / 100))),
-    }
+        TOTAL_HT: Math.round(data.price_unit * 1),
+        TOTAL_TVA: Math.round(data.price_unit * 1 * (data.tva / 100)),
+        TOTAL_TTC: Math.round(data.price_unit * 1 * (1 + data.tva / 100)),
+    };
     return p;
 }
 
 function pushProdToListe(prod) {
-    var data = JSON.parse(localStorage.getItem('product_commandEdit')) || [];
+    var data = JSON.parse(localStorage.getItem("product_commandEdit")) || [];
     var listeProd = data.commandProducts;
     // Check if the product already exists in the list
     var existingProduct = listeProd.find((product) => product.id === prod.id);
@@ -173,22 +179,28 @@ function pushProdToListe(prod) {
     if (existingProduct) {
         // If it exists, update the quantity
         existingProduct.pivot.quantity += 1;
-        existingProduct.pivot.TOTAL_HT = Math.round((existingProduct.pivot.price * existingProduct.pivot.quantity));
-        existingProduct.pivot.TOTAL_TVA = Math.round((((existingProduct.pivot.TVA / 100) * existingProduct.pivot.TOTAL_HT)));
-        existingProduct.pivot.TOTAL_TTC = Math.round((((existingProduct.pivot.TOTAL_HT) * (1 + (existingProduct.pivot.TVA / 100)))));
+        existingProduct.pivot.TOTAL_HT = Math.round(
+            existingProduct.pivot.price * existingProduct.pivot.quantity
+        );
+        existingProduct.pivot.TOTAL_TVA = Math.round(
+            (existingProduct.pivot.TVA / 100) * existingProduct.pivot.TOTAL_HT
+        );
+        existingProduct.pivot.TOTAL_TTC = Math.round(
+            existingProduct.pivot.TOTAL_HT *
+            (1 + existingProduct.pivot.TVA / 100)
+        );
     } else {
         // If it doesn't exist, add it to the list
         listeProd.push(prod);
     }
-    localStorage.setItem('product_commandEdit', JSON.stringify(data));
-
+    localStorage.setItem("product_commandEdit", JSON.stringify(data));
 }
 
 function tableProducts() {
-    var data = JSON.parse(localStorage.getItem('product_commandEdit')) || [];
+    var data = JSON.parse(localStorage.getItem("product_commandEdit")) || [];
     var listeProd = data.commandProducts;
     // tableBody.empty();
-    $('#productTableBody').empty();
+    $("#productTableBody").empty();
     listeProd.forEach((product) => {
         appendTableRow(product);
     });
@@ -203,84 +215,142 @@ function recupereTotalTTCHTTVA(command) {
 // Sélectionnez le conteneur où vous souhaitez ajouter les lignes (par exemple, un tbody avec l'id "productTableBody").
 // Fonction pour générer le HTML pour chaque produit
 function appendTableRow(product) {
-    var row = '<tr class="text-center">' +
-        '<td>' + product.product_code + '</td>' +
-        '<td>' + product.pivot.designation + '</td>' +
-        '<td>' + product.pivot.unite + '</td>' +
-        '<td>' +
+    var row =
+        '<tr class="text-center">' +
+        "<td>" +
+        product.product_code +
+        "</td>" +
+        "<td>" +
+        product.pivot.designation +
+        "</td>" +
+        "<td>" +
+        product.pivot.unite +
+        "</td>" +
+        "<td>" +
         '    <div class="input-step">' +
-        '        <button type="button" class="minus" id="decreaseQte-' + product.pivot.product_id + '">–</button>' +
-        '        <input type="number" class="product-quantity" id="product-qty-' + product.pivot.product_id + '" value="' + product.pivot.quantity + '">' +
-        '        <button type="button" class="plus" id="increaseQte-' + product.pivot.product_id + '">+</button>' +
-        '    </div>' +
-        '</td>' +
-        '<td>' +
+        '        <button type="button" class="minus" id="decreaseQte-' +
+        product.pivot.product_id +
+        '">–</button>' +
+        '        <input type="number" class="product-quantity" id="product-qty-' +
+        product.pivot.product_id +
+        '" value="' +
+        product.pivot.quantity +
+        '">' +
+        '        <button type="button" class="plus" id="increaseQte-' +
+        product.pivot.product_id +
+        '">+</button>' +
+        "    </div>" +
+        "</td>" +
+        "<td>" +
         '    <div class="input-step">' +
-        '        <button type="button" class="minus" id="decreasePrix-' + product.pivot.product_id + '">–</button>' +
-        '        <input type="number" class="product-quantity" id="product-prix-' + product.pivot.product_id + '" value="' + product.pivot.price + '">' +
-        '        <button type="button" class="plus" id="increasePrix-' + product.pivot.product_id + '">+</button>' +
-        '    </div>' +
-        '</td>' +
-        '<td>' + product.pivot.TOTAL_HT + '</td>' +
-        '<td>' +
+        '        <button type="button" class="minus" id="decreasePrix-' +
+        product.pivot.product_id +
+        '">–</button>' +
+        '        <input type="number" class="product-quantity" id="product-prix-' +
+        product.pivot.product_id +
+        '" value="' +
+        product.pivot.price +
+        '">' +
+        '        <button type="button" class="plus" id="increasePrix-' +
+        product.pivot.product_id +
+        '">+</button>' +
+        "    </div>" +
+        "</td>" +
+        "<td>" +
+        product.pivot.TOTAL_HT +
+        "</td>" +
+        "<td>" +
         '    <div class="input-step">' +
-        '        <button type="button" class="minus" id="decreaseTva-' + product.pivot.product_id + '">–</button>' +
-        '        <input type="number" class="product-quantity" id="product-tva-' + product.pivot.product_id + '" value="' + product.pivot.TVA + '">' +
-        '        <button type="button" class="plus" id="increaseTva-' + product.pivot.product_id + '">+</button>' +
-        '    </div>' +
-        '</td>' +
-        '<td>' + product.pivot.TOTAL_TVA + '</td>' +
-        '<td>' + product.pivot.TOTAL_TTC + '</td>' +
-        '<td>' +
-        '    <button type="button" class="btn" id="deleteProduct-' + product.pivot.product_id + '"><i class="las la-times text-danger fs-1"></i></button>' +
-        '</td>' +
-        '</tr>';
+        '        <button type="button" class="minus" id="decreaseTva-' +
+        product.pivot.product_id +
+        '">–</button>' +
+        '        <input type="number" class="product-quantity" id="product-tva-' +
+        product.pivot.product_id +
+        '" value="' +
+        product.pivot.TVA +
+        '">' +
+        '        <button type="button" class="plus" id="increaseTva-' +
+        product.pivot.product_id +
+        '">+</button>' +
+        "    </div>" +
+        "</td>" +
+        "<td>" +
+        product.pivot.TOTAL_TVA +
+        "</td>" +
+        "<td>" +
+        product.pivot.TOTAL_TTC +
+        "</td>" +
+        "<td>" +
+        '    <button type="button" class="btn" id="deleteProduct-' +
+        product.pivot.product_id +
+        '"><i class="las la-times text-danger fs-1"></i></button>' +
+        "</td>" +
+        "</tr>";
 
-    $('#productTableBody').append(row);
-    $('#increaseQte-' + product.pivot.product_id).on('click', () => increase(product.pivot.product_id, 'quantite'));
-    $('#decreaseQte-' + product.pivot.product_id).on('click', () => decrease(product.pivot.product_id, 'quantite'));
-    $('#product-qty-' + product.pivot.product_id).on('blur', () => {
+    $("#productTableBody").append(row);
+    $("#increaseQte-" + product.pivot.product_id).on("click", () =>
+        increase(product.pivot.product_id, "quantite")
+    );
+    $("#decreaseQte-" + product.pivot.product_id).on("click", () =>
+        decrease(product.pivot.product_id, "quantite")
+    );
+    $("#product-qty-" + product.pivot.product_id).on("blur", () => {
         id = product.pivot.product_id;
-        var qte = $('#product-qty-' + product.pivot.product_id).val();
+        var qte = $("#product-qty-" + product.pivot.product_id).val();
         if (qte < 1) {
             qte = 1;
         }
-        var prix = $('#product-prix-' + product.pivot.product_id).val();
-        var tva = $('#product-tva-' + product.pivot.product_id).val();
-        updateLocalStorageQuantityPrixTva(product.pivot.product_id, qte, 'quantite');
+        var prix = $("#product-prix-" + product.pivot.product_id).val();
+        var tva = $("#product-tva-" + product.pivot.product_id).val();
+        updateLocalStorageQuantityPrixTva(
+            product.pivot.product_id,
+            qte,
+            "quantite"
+        );
         // Calculate and update ht and tttva in the localStorage
         updateLocalStorageHTTTTVA(id, qte, prix, tva);
         tableProducts();
     });
-    $('#increasePrix-' + product.pivot.product_id).on('click', () => increase(product.pivot.product_id, 'prix'));
-    $('#decreasePrix-' + product.pivot.product_id).on('click', () => decrease(product.pivot.product_id, 'prix'));
-    $('#product-prix-' + product.pivot.product_id).on('blur', () => {
+    $("#increasePrix-" + product.pivot.product_id).on("click", () =>
+        increase(product.pivot.product_id, "prix")
+    );
+    $("#decreasePrix-" + product.pivot.product_id).on("click", () =>
+        decrease(product.pivot.product_id, "prix")
+    );
+    $("#product-prix-" + product.pivot.product_id).on("blur", () => {
         id = product.pivot.product_id;
-        var qte = $('#product-qty-' + product.pivot.product_id).val();
-        var prix = $('#product-prix-' + product.pivot.product_id).val();
-        var tva = $('#product-tva-' + product.pivot.product_id).val();
-        updateLocalStorageQuantityPrixTva(product.pivot.product_id, prix, 'prix');
+        var qte = $("#product-qty-" + product.pivot.product_id).val();
+        var prix = $("#product-prix-" + product.pivot.product_id).val();
+        var tva = $("#product-tva-" + product.pivot.product_id).val();
+        updateLocalStorageQuantityPrixTva(
+            product.pivot.product_id,
+            prix,
+            "prix"
+        );
         // Calculate and update ht and tttva in the localStorage
         updateLocalStorageHTTTTVA(id, qte, prix, tva);
         tableProducts();
     });
-    $('#increaseTva-' + product.pivot.product_id).on('click', () => increase(product.pivot.product_id, 'tva'));
-    $('#decreaseTva-' + product.pivot.product_id).on('click', () => decrease(product.pivot.product_id, 'tva'));
-    $('#product-tva-' + product.pivot.product_id).on('blur', () => {
+    $("#increaseTva-" + product.pivot.product_id).on("click", () =>
+        increase(product.pivot.product_id, "tva")
+    );
+    $("#decreaseTva-" + product.pivot.product_id).on("click", () =>
+        decrease(product.pivot.product_id, "tva")
+    );
+    $("#product-tva-" + product.pivot.product_id).on("blur", () => {
         id = product.pivot.product_id;
-        var qte = $('#product-qty-' + product.pivot.product_id).val();
-        var prix = $('#product-prix-' + product.pivot.product_id).val();
-        var tva = $('#product-tva-' + product.pivot.product_id).val();
-        updateLocalStorageQuantityPrixTva(product.pivot.product_id, tva, 'tva');
+        var qte = $("#product-qty-" + product.pivot.product_id).val();
+        var prix = $("#product-prix-" + product.pivot.product_id).val();
+        var tva = $("#product-tva-" + product.pivot.product_id).val();
+        updateLocalStorageQuantityPrixTva(product.pivot.product_id, tva, "tva");
         // Calculate and update ht and tttva in the localStorage
         updateLocalStorageHTTTTVA(id, qte, prix, tva);
         tableProducts();
     });
-    $('#deleteProduct-' + product.pivot.product_id).on('click', () => deleteProduct(product.pivot.product_id));
-
-
+    $("#deleteProduct-" + product.pivot.product_id).on("click", () =>
+        deleteProduct(product.pivot.product_id)
+    );
 }
-
 
 function increase(id, type) {
     var qteInput = $(`#product-qty-${id}`);
@@ -289,14 +359,14 @@ function increase(id, type) {
     var prix = parseFloat(prixInput.val());
     var tvaInput = $(`#product-tva-${id}`);
     var tva = parseFloat(tvaInput.val());
-    if (type === 'quantite') {
+    if (type === "quantite") {
         if (!isNaN(qte)) {
             // Update the quantity in the input
             qte += 1;
             qteInput.val(qte);
 
             // Update the localStorage with the new quantity
-            updateLocalStorageQuantityPrixTva(id, qte, 'quantite');
+            updateLocalStorageQuantityPrixTva(id, qte, "quantite");
 
             // Calculate and update ht and tttva in the localStorage
             updateLocalStorageHTTTTVA(id, qte, prix, tva);
@@ -304,14 +374,14 @@ function increase(id, type) {
         } else {
             console.error(`La quantité n'est pas un nombre valide.`);
         }
-    } else if (type === 'prix') {
+    } else if (type === "prix") {
         if (!isNaN(prix)) {
             // Update the prix in the input
             prix += 1;
             prixInput.val(prix);
 
             // Update the localStorage with the new prix
-            updateLocalStorageQuantityPrixTva(id, prix, 'prix');
+            updateLocalStorageQuantityPrixTva(id, prix, "prix");
 
             // Calculate and update ht and tttva in the localStorage
             updateLocalStorageHTTTTVA(id, qte, prix, tva);
@@ -319,14 +389,14 @@ function increase(id, type) {
         } else {
             console.error(`Le prix n'est pas un nombre valide.`);
         }
-    } else if (type === 'tva') {
+    } else if (type === "tva") {
         if (!isNaN(tva)) {
             // Update the tva in the input
             tva += 1;
             tvaInput.val(tva);
 
             // Update the localStorage with the new tva
-            updateLocalStorageQuantityPrixTva(id, tva, 'tva');
+            updateLocalStorageQuantityPrixTva(id, tva, "tva");
 
             // Calculate and update ht and tttva in the localStorage
             updateLocalStorageHTTTTVA(id, qte, prix, tva);
@@ -335,7 +405,6 @@ function increase(id, type) {
             console.error(`Le tva n'est pas un nombre valide.`);
         }
     }
-
 }
 
 function decrease(id, type) {
@@ -345,7 +414,7 @@ function decrease(id, type) {
     var prix = parseFloat(prixInput.val());
     var tvaInput = $(`#product-tva-${id}`);
     var tva = parseFloat(tvaInput.val());
-    if (type === 'quantite') {
+    if (type === "quantite") {
         if (!isNaN(qte) && qte > 1) {
             qte -= 1;
 
@@ -353,16 +422,17 @@ function decrease(id, type) {
             qteInput.value = qte;
 
             // Update the localStorage with the new quantity
-            updateLocalStorageQuantityPrixTva(id, qte, 'quantite');
+            updateLocalStorageQuantityPrixTva(id, qte, "quantite");
 
             // Calculate and update ht and tttva in the localStorage
             updateLocalStorageHTTTTVA(id, qte, prix, tva);
             tableProducts();
-
         } else {
-            console.error("Invalid quantity or quantity cannot be decreased further.");
+            console.error(
+                "Invalid quantity or quantity cannot be decreased further."
+            );
         }
-    } else if (type === 'prix') {
+    } else if (type === "prix") {
         if (!isNaN(prix) && prix > 1) {
             prix -= 1;
 
@@ -370,16 +440,17 @@ function decrease(id, type) {
             prixInput.value = prix;
 
             // Update the localStorage with the new prix
-            updateLocalStorageQuantityPrixTva(id, prix, 'prix');
+            updateLocalStorageQuantityPrixTva(id, prix, "prix");
 
             // Calculate and update ht and tttva in the localStorage
             updateLocalStorageHTTTTVA(id, qte, prix, tva);
             tableProducts();
-
         } else {
-            console.error("Invalid price or price cannot be decreased further.");
+            console.error(
+                "Invalid price or price cannot be decreased further."
+            );
         }
-    } else if (type === 'tva') {
+    } else if (type === "tva") {
         if (!isNaN(tva) && tva > 0) {
             tva -= 1;
 
@@ -387,96 +458,109 @@ function decrease(id, type) {
             tvaInput.value = tva;
 
             // Update the localStorage with the new tva
-            updateLocalStorageQuantityPrixTva(id, tva, 'tva');
+            updateLocalStorageQuantityPrixTva(id, tva, "tva");
 
             // Calculate and update ht and tttva in the localStorage
             updateLocalStorageHTTTTVA(id, qte, prix, tva);
             tableProducts();
-
         } else {
             console.error("Invalid tva or tva cannot be decreased further.");
         }
     }
 }
 
-
 function updateLocalStorageQuantityPrixTva(id, newValue, type) {
-    if (type === 'quantite') {
-        var data = JSON.parse(localStorage.getItem('product_commandEdit')) || [];
+    if (type === "quantite") {
+        var data =
+            JSON.parse(localStorage.getItem("product_commandEdit")) || [];
         var listeProd = data.commandProducts;
         var existingProduct = listeProd.find((product) => product.id === id);
 
         if (existingProduct) {
             existingProduct.pivot.quantity = newValue;
-            localStorage.setItem('product_commandEdit', JSON.stringify(data));
+            localStorage.setItem("product_commandEdit", JSON.stringify(data));
         }
-    } else if (type === 'prix') {
-        var data = JSON.parse(localStorage.getItem('product_commandEdit')) || [];
+    } else if (type === "prix") {
+        var data =
+            JSON.parse(localStorage.getItem("product_commandEdit")) || [];
         var listeProd = data.commandProducts;
         var existingProduct = listeProd.find((product) => product.id === id);
 
         if (existingProduct) {
             existingProduct.pivot.price = newValue;
-            localStorage.setItem('product_commandEdit', JSON.stringify(data));
+            localStorage.setItem("product_commandEdit", JSON.stringify(data));
         }
-    } else if (type === 'tva') {
-        var data = JSON.parse(localStorage.getItem('product_commandEdit')) || [];
+    } else if (type === "tva") {
+        var data =
+            JSON.parse(localStorage.getItem("product_commandEdit")) || [];
         var listeProd = data.commandProducts;
         var existingProduct = listeProd.find((product) => product.id === id);
 
         if (existingProduct) {
             existingProduct.pivot.TVA = newValue;
-            localStorage.setItem('product_commandEdit', JSON.stringify(data));
+            localStorage.setItem("product_commandEdit", JSON.stringify(data));
         }
     }
 }
 
 function updateLocalStorageHTTTTVA(id, newQuantity, newPrix, newTva) {
-    var data = JSON.parse(localStorage.getItem('product_commandEdit')) || [];
+    var data = JSON.parse(localStorage.getItem("product_commandEdit")) || [];
     var listeProd = data.commandProducts;
     var existingProduct = listeProd.find((product) => product.id === id);
     if (existingProduct) {
         // Update ht based on the new quantity
-        existingProduct.pivot.TOTAL_HT = Math.round((parseFloat(newPrix) * parseFloat(newQuantity)));
+        existingProduct.pivot.TOTAL_HT = Math.round(
+            parseFloat(newPrix) * parseFloat(newQuantity)
+        );
 
         // Update tttva based on the updated ht and tva
-        existingProduct.pivot.TOTAL_TVA = Math.round((parseFloat(newPrix) * parseFloat(newQuantity) * (newTva /
-            100)));
-        existingProduct.pivot.TOTAL_TTC = Math.round((((existingProduct.pivot.TOTAL_HT) * (1 + (newTva / 100)))));
+        existingProduct.pivot.TOTAL_TVA = Math.round(
+            parseFloat(newPrix) * parseFloat(newQuantity) * (newTva / 100)
+        );
+        existingProduct.pivot.TOTAL_TTC = Math.round(
+            existingProduct.pivot.TOTAL_HT * (1 + newTva / 100)
+        );
 
-        localStorage.setItem('product_commandEdit', JSON.stringify(data));
+        localStorage.setItem("product_commandEdit", JSON.stringify(data));
     }
 }
 
 function calculeTotals() {
-    var data = JSON.parse(localStorage.getItem('product_commandEdit')) || [];
+    var data = JSON.parse(localStorage.getItem("product_commandEdit")) || [];
     var listeProd = data.commandProducts;
     var prixHT = 0;
     var tva = 0;
     var prixTTC = 0;
     if (listeProd && listeProd.length > 0) {
         // Calcule le prix hors taxe
-        prixHT = listeProd.reduce((acc, product) => acc + product.pivot.TOTAL_HT, 0);
+        prixHT = listeProd.reduce(
+            (acc, product) => acc + product.pivot.TOTAL_HT,
+            0
+        );
         // Calcule la TVA
-        tva = listeProd.reduce((acc, product) => acc + product.pivot.TOTAL_TVA, 0);
+        tva = listeProd.reduce(
+            (acc, product) => acc + product.pivot.TOTAL_TVA,
+            0
+        );
         // Calcule le prix toutes taxes comprises
-        prixTTC = listeProd.reduce((acc, product) => acc + product.pivot.TOTAL_TTC, 0);
+        prixTTC = listeProd.reduce(
+            (acc, product) => acc + product.pivot.TOTAL_TTC,
+            0
+        );
     }
     $("#total_ht").text(prixHT.toFixed(2));
     $("#total_ttva").text(tva.toFixed(2));
     $("#total_ttc").text(prixTTC.toFixed(2));
 }
 
-
 function deleteProduct(productId) {
     // e.preventDefault();
     // Récupérer les produits actuels depuis le localStorage
-    var data = JSON.parse(localStorage.getItem('product_commandEdit')) || [];
+    var data = JSON.parse(localStorage.getItem("product_commandEdit")) || [];
     var listeProd = data.commandProducts;
 
     // Vérifier s'il y a des produits dans le localStorage
     if (listeProd) {
-
         // Trouver l'index du produit avec l'ID donné
         var productIndex = listeProd.findIndex(function (product) {
             return product.id === productId;
@@ -488,24 +572,24 @@ function deleteProduct(productId) {
             listeProd.splice(productIndex, 1);
 
             // Mettre à jour le localStorage avec la nouvelle liste de produits
-            localStorage.setItem('product_commandEdit', JSON.stringify(data));
-            console.log('Produit supprimé avec succès.');
+            localStorage.setItem("product_commandEdit", JSON.stringify(data));
+            console.log("Produit supprimé avec succès.");
         } else {
-            console.log('Produit non trouvé.');
+            console.log("Produit non trouvé.");
         }
     } else {
-        console.log('Aucun produit trouvé dans le localStorage.');
+        console.log("Aucun produit trouvé dans le localStorage.");
     }
     tableProducts();
 }
 
-$('.getProduct').on('click', function () {
+$(".getProduct").on("click", function () {
     var product_id = $('select[name="product_id"]').val();
     if (product_id) {
         $.ajaxSetup({
             headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
         });
         $.ajax({
             url: window.location.origin + "/products/get-product",
@@ -521,14 +605,13 @@ $('.getProduct').on('click', function () {
             },
         });
     } else {
-        console.log('AJAX load did not work');
+        console.log("AJAX load did not work");
     }
 });
 
-$('.storeCommand').on('click', function (e) {
-
+$(".storeCommand").on("click", function (e) {
     e.preventDefault();
-    var data = JSON.parse(localStorage.getItem('product_commandEdit'));
+    var data = JSON.parse(localStorage.getItem("product_commandEdit"));
     console.log(data);
     var listeProd = data.commandProducts;
     var commandId = data.object.id;
@@ -537,8 +620,8 @@ $('.storeCommand').on('click', function (e) {
         products.push(product.pivot);
     });
     console.log(products);
-    let formData = new FormData($('#command_form')[0]);
-    formData.append('_method', 'PUT');
+    let formData = new FormData($("#command_form")[0]);
+    formData.append("_method", "PUT");
     data = {
         client: $('select[name="client_id"]').val(),
         category: $('select[name="category_id"]').val(),
@@ -546,16 +629,16 @@ $('.storeCommand').on('click', function (e) {
         status: $('select[name="status"]').val(),
         status_date: $('input[name="status_date"]').val(),
         comment: $('textarea[name="comment"]').val(),
-        num_command: $('#num_command').text(),
-        total_ttc: $('#total_ttc').text(),
-        total_ht: $('#total_ht').text(),
-        total_ttva: $('#total_ttva').text(),
+        num_command: $("#num_command").text(),
+        total_ttc: $("#total_ttc").text(),
+        total_ht: $("#total_ht").text(),
+        total_ttva: $("#total_ttva").text(),
         products: products,
-    }
+    };
     $.ajaxSetup({
         headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
     });
     $.ajax({
         url: "/commands/" + commandId,
@@ -571,87 +654,81 @@ $('.storeCommand').on('click', function (e) {
                 // location.reload();
                 console.log("delete storage");
 
-                Swal.fire(
-                    'Super!',
-                    'command updated successfully',
-                    'success'
-                )
+                Swal.fire("Super!", "command updated successfully", "success");
                 // if (data.hasOwnProperty('redirectTo')) {
                 //     window.location.href = data.redirectTo;
                 // }
             }
         },
     });
-
 });
+
 var reglements = [];
 var newReglement = {
-    modePaiment: '',
-    num_order: '',
-    comment: '',
-    montantPayer: '',
-    dateEcheance: '',
-}
-$('#btnValider').on('click', function (e) {
+    command_id: "",
+    ref_reg: "",
+    nature_reg: "",
+    parent_type: "",
+    parent_id: "",
+    modePaiment: "",
+    num_order: "",
+    comment: "",
+    montantPayer: "",
+    dateEcheance: "",
+};
+$("#btnValider").on("click", function (e) {
     e.preventDefault();
     var montantTotalPayer = 0;
-    data = JSON.parse(localStorage.getItem('reglements')) || [];
+    var data = JSON.parse(localStorage.getItem("reglements")) || [];
+    var commande = JSON.parse(localStorage.getItem("product_commandEdit"));
     if (data && data.length > 0) {
         // Calcule le prix hors taxe
-        montantTotalPayer = data.reduce((acc, reg) => acc + reg.montantPayer, 0);
+        montantTotalPayer = data.reduce(
+            (acc, reg) => acc + reg.montantPayer,
+            0
+        );
     }
     var reg = Object.assign({}, newReglement);
-    var total_ttc = parseFloat($('#total_ttc').text());
-    var total_ht = parseFloat($('#total_ht').text());
-    var total_ttva = parseFloat($('#total_ttva').text());
+    var command_id = commande.object.id;
+    var parent_id = commande.object.client_id;
+    console.log(command_id);
+    var total_ttc = parseFloat($("#total_ttc").text());
+    var total_ht = parseFloat($("#total_ht").text());
+    var total_ttva = parseFloat($("#total_ttva").text());
     var modePaiment = $('select[name="reglement"]').val();
-    var num_order = $('#check_ref').val();
-    var comment = $('#commentReg').val();
-    var montantPayer = parseFloat($('#montantPayer').val());
-    console.log('total_ttc : ' + total_ttc);
-    console.log('total_ht : ' + total_ht);
-    console.log('total_ttva : ' + total_ttva);
-    console.log('montantPayer : ' + montantPayer);
+    var num_order = $("#check_ref").val();
+    var comment = $("#commentReg").val();
+    var montantPayer = parseFloat($("#montantPayer").val());
+    console.log("total_ttc : " + total_ttc);
+    console.log("total_ht : " + total_ht);
+    console.log("total_ttva : " + total_ttva);
+    console.log("montantPayer : " + montantPayer);
+    reg.command_id = command_id;
+    reg.parent_id = parent_id;
     reg.modePaiment = modePaiment;
     reg.num_order = num_order;
     reg.comment = comment;
     reg.montantPayer = montantPayer;
-    reg.dateEcheance = new Date();
+    var dateObj = new Date();
+    // Formate la date selon le format YYYY-MM-DD HH:MM:SS
+    reg.dateEcheance = dateObj.toISOString().slice(0, 19).replace('T', ' ');
     if (montantPayer + montantTotalPayer <= total_ttc) {
-    var rest_payer = total_ttc - (montantPayer + montantTotalPayer);
-      $('#rest_payer').text(rest_payer.toFixed(2));
-      reglements.push(reg);
-      localStorage.setItem('reglements', JSON.stringify(reglements));
-      console.log(rest_payer);
-      tableReglements();
+        var rest_payer = total_ttc - (montantPayer + montantTotalPayer);
+        $("#rest_payer").text(rest_payer.toFixed(2));
+        reglements.push(reg);
+        localStorage.setItem("reglements", JSON.stringify(reglements));
+        console.log(rest_payer);
+        tableReglements();
     } else {
         console.log("le montant entrer et plus grand que le reste à payer !");
     }
-
-    // var commandId = $(this).data('command-id');
-    // $.ajax({
-    //     url: "/commands/" + commandId + "/edit",
-    //     type: 'GET',
-    //     dataType: 'json', // Changez ceci en 'html'
-    //     success: function (data) {
-    //         // $('#contenuDynamique').html(data.html);
-    //         localStorage.setItem('product_commandEdit', JSON.stringify(data));
-    //         loadTableFromLocalStorage();
-    //         window.location.href = "/commands/" + commandId + "/edit";
-
-    //         recupereTotalTTCHTTVA(data.object);
-    //     },
-    //     error: function (error) {
-    //         console.log(error);
-    //     }
-    // });
 });
 
 function tableReglements() {
-    var data = JSON.parse(localStorage.getItem('reglements')) || [];
+    var data = JSON.parse(localStorage.getItem("reglements")) || [];
     var listeReg = data;
     // tableBody.empty();
-    $('#RegTableBody').empty();
+    $("#RegTableBody").empty();
     listeReg.forEach((reg) => {
         appendTableRegRow(reg);
     });
@@ -659,19 +736,63 @@ function tableReglements() {
 }
 // Fonction pour générer le HTML pour chaque produit
 function appendTableRegRow(reg) {
-    var row = '<tr class="text-center">' +
-        '<td>' + reg.modePaiment + '</td>' +
-        '<td>' + reg.montantPayer + '</td>' +
-        '<td>' + reg.dateEcheance + '</td>' +
-        '<td>' +
+    var row =
+        '<tr class="text-center">' +
+        "<td>" +
+        reg.modePaiment +
+        "</td>" +
+        "<td>" +
+        reg.montantPayer +
+        "</td>" +
+        "<td>" +
+        reg.dateEcheance +
+        "</td>" +
+        "<td>" +
         // '<td>' +
         // '    <button type="button" class="btn" id="deleteProduct-' + product.pivot.product_id + '"><i class="las la-times text-danger fs-1"></i></button>' +
         // '</td>' +
-        '</tr>';
+        "</tr>";
 
-    $('#RegTableBody').append(row);
+    $("#RegTableBody").append(row);
 
     // $('#deleteProduct-' + product.pivot.product_id).on('click', () => deleteProduct(product.pivot.product_id));
-
-
 }
+
+$(".storeReglement").on("click", function (e) {
+    e.preventDefault();
+
+    // let formData = new FormData($("#commands_form")[0]);
+    var data = {
+        reglements: JSON.parse(localStorage.getItem("reglements")),
+    };
+    console.log(data);
+    $.ajaxSetup({
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+    });
+    $.ajax({
+        url: "/reglements",
+        type: "POST",
+        data: data,
+        dataType: "json",
+        success: function (data) {
+            if (data.success) {
+                localStorage.removeItem("reglements");
+                // $('#productTableBody').empty();
+                loadTableFromLocalStorage();
+                location.reload();
+                console.log("delete storage");
+
+                Swal.fire(
+                    "Super!",
+                    "Réglement a été créé avec succès",
+                    "success"
+                );
+                // if (data.hasOwnProperty('redirectTo')) {
+                //     window.location.href = data.redirectTo;
+                // }
+            }
+        },
+    });
+});

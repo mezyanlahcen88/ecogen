@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Dto\ReglementDto;
 use App\Models\Reglement;
-use App\Forms\ReglementForm;
+use Illuminate\Support\Str;
 use App\Enums\StaticOptions;
+use App\Forms\ReglementForm;
 use Illuminate\Http\Request;
 use App\Services\CrudService;
-use App\Http\Requests\StoreReglementRequest;
+use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
+use App\Http\Requests\StoreReglementRequest;
 
 
 class ReglementController extends Controller
@@ -75,31 +77,28 @@ class ReglementController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreReglementRequest $request)
+    public function store(Request $request)
     {
-        $validated = $request->validated();
-        // [
-        //     // {
-        //     //     "modePaiment": "Cheque",
-        //     //     "num_order": "",
-        //     //     "comment": "fff",
-        //     //     "montantPayer": 500,
-        //     //     "dateEcheance": "2024-01-17T16:44:55.093Z"
-        //     // }
-        // ]
-        // $object->ref_reg = $request->ref_reg;
-        // $object->date_reg = $request->dateEcheance;
-        // $object->amount_reg = $request->amount_reg;
-        // $object->mode_reg = $request->modePaiment;
-        // $object->nature_reg = $request->nature_reg;
-        // $object->parent_type = $request->parent_type;
-        // $object->parent_id = $request->parent_id;
-        // $object->comment = $request->comment;
-
-
-        return redirect()->route('reglements.index');
+        // $validated = $request->validated();
+        $data = $request->all();
+        foreach ($data['reglements'] as $item) {
+            DB::table('reglements')->insert([
+                'id' => Str::uuid(),
+                'command_id' => $item['command_id'],
+                'ref_reg' => 'test_ref',
+                'date_reg' => $item['dateEcheance'],
+                'amount_reg' => $item['montantPayer'],
+                'mode_reg' => $item['modePaiment'],
+                'nature_reg' => 'vente',
+                'parent_type' => 'client',
+                'parent_id' => $item['parent_id'],
+                'comment' => $item['comment'],
+            ]);
         }
-
+        // incDevisNumerotation();
+        return response()->json(['success'=>true]);
+        // ->with('redirectTo', route('devis.index'));
+    }
     /**
      * Display the specified resource.
      *
