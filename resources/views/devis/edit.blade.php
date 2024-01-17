@@ -137,22 +137,22 @@
                                     class="bg-info text-light h-25 w-100 d-flex  justify-content-between align-items-center px-4 mb-1">
                                     <label for="" id="devis">DEVIS N° :</label>
                                     <label for="" id="num_devis"
-                                        class="fs-3"></label>
+                                        ></label>
                                 </div>
                                 <div
                                     class="bg-primary text-light h-25 w-100 d-flex  justify-content-between align-items-center px-4 mb-1">
                                     <label for="">Total TTC :</label>
-                                    <label for="" id="total_ttc" class="fs-3"></label>
+                                    <label for="" id="total_ttc" ></label>
                                 </div>
                                 <div
                                     class="bg-success text-light h-25 w-100 d-flex  justify-content-between align-items-center px-4 mb-1">
                                     <label for="">Total HT :</label>
-                                    <label for="" id="total_ht" class="fs-3"></label>
+                                    <label for="" id="total_ht" ></label>
                                 </div>
                                 <div
                                     class="bg-warning text-light h-25 w-100 d-flex  justify-content-between align-items-center px-4 mb-1">
                                     <label for="">Total TVA :</label>
-                                    <label for="" id="total_ttva" class="fs-3"></label>
+                                    <label for="" id="total_ttva" ></label>
                                 </div>
 
                             </div>

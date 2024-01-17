@@ -93,6 +93,7 @@ class CommandController extends Controller
         $command->HT = $data['total_ht'];
         $command->TVA = $data['total_ttva'];
         $command->TTTC = $data['total_ttc'];
+        $command->rest_pay = $data['total_ttc'];
         $command->status = $data['status'];
         $command->status_date = $data['status_date'];
         $command->client_id = $data['client'];
@@ -100,7 +101,7 @@ class CommandController extends Controller
         $command->comment = $data['comment'];
         $command->save();
         foreach ($data['products'] as $item) {
-            DB::table('product_commands')->insert([
+            DB::table('product_command')->insert([
                 'id' => Str::uuid(),
                 'command_id' => $command->id,
                 'product_id' => $item['id'],

@@ -1,193 +1,219 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>How To Generate Invoice PDF In Laravel 9 - Techsolutionstuff</title>
-
+    <title>Imprission du devis</title>
+    {{-- <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500&display=swap" rel="stylesheet"> --}}
 </head>
 <style type="text/css">
-    body{
+    body {
         font-family: 'Roboto Condensed', sans-serif;
     }
-    .m-0{
+
+    .m-0 {
         margin: 0px;
     }
-    .p-0{
+
+    .p-0 {
         padding: 0px;
     }
-    .pt-5{
-        padding-top:5px;
+
+    .pt-5 {
+        padding-top: 5px;
     }
-    .mt-10{
-        margin-top:10px;
+
+    .mt-10 {
+        margin-top: 10px;
     }
-    .text-center{
-        text-align:center !important;
+
+    .text-center {
+        text-align: center !important;
     }
-    .w-100{
+
+    .w-100 {
         width: 100%;
     }
-    .w-50{
-        width:50%;
+
+    .w-50 {
+        width: 50%;
     }
-    .w-85{
-        width:85%;
+
+    .w-85 {
+        width: 85%;
     }
-    .w-15{
-        width:15%;
+
+    .w-15 {
+        width: 15%;
     }
-    .logo img{
-        width:200px;
-        height:60px;
+
+    .logo img {
+        width: 200px;
+        height: 60px;
     }
-    .gray-color{
-        color:#5D5D5D;
+
+    .gray-color {
+        color: #5D5D5D;
     }
-    .text-bold{
+
+    .text-bold {
         font-weight: bold;
     }
-    .border{
-        border:1px solid black;
+
+    .border {
+        border: 1px solid black;
     }
-    table tr,th,td{
+
+    table tr,
+    th,
+    td {
         border: 1px solid #d2d2d2;
-        border-collapse:collapse;
-        padding:7px 8px;
+        border-collapse: collapse;
+        padding: 7px 8px;
     }
-    table tr th{
+
+    table tr th {
         background: #F4F4F4;
-        font-size:15px;
+        font-size: 15px;
     }
-    table tr td{
-        font-size:13px;
+
+    table tr td {
+        font-size: 13px;
     }
-    table{
-        border-collapse:collapse;
+
+    table {
+        border-collapse: collapse;
     }
-    .box-text p{
-        line-height:10px;
+
+    .box-text p {
+        line-height: 10px;
     }
-    .float-left{
-        float:left;
+
+    .float-left {
+        float: left;
     }
-    .total-part{
-        font-size:16px;
-        line-height:12px;
+
+    .total-part {
+        font-size: 16px;
+        line-height: 12px;
     }
-    .total-right p{
-        padding-right:20px;
+
+    .total-right p {
+        padding-right: 20px;
     }
 </style>
-<body>
-<div class="head-title">
-    <h1 class="text-center m-0 p-0">Devis</h1>
-</div>
-<div class="add-detail mt-10">
-    <div class="w-50 float-left logo mt-10">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTW0qFGxyFTY4eI1cmFrFWi5YUT_jkreXwE6Q&usqp=CAU" alt="Logo">
-    </div>
-    <div class="w-50 float-left mt-10">
-        {{-- <p class="m-0 pt-5 text-bold w-100">Devis N°- <span class="gray-color">#DV-1/2023</span></p> --}}
-        <p class="m-0 pt-5 text-bold w-100">Devis N°- <span class="gray-color">#{{$object->devis_code}}</span></p>
-        <p class="m-0 pt-5 text-bold w-100">Order Id - <span class="gray-color">
-            {{-- {{object->devis_code}} --}}
-        </span></p>
-        <p class="m-0 pt-5 text-bold w-100">Date de devis - <span class="gray-color">22-01-2023</span></p>
-    </div>
 
-    <div style="clear: both;"></div>
-</div>
-<div class="table-section bill-tbl w-100 mt-10">
-    <table class="table w-100 mt-10">
-        <tr>
-            <th class="w-50">From</th>
-            <th class="w-50">To</th>
-        </tr>
-        <tr>
-            <td>
-                <div class="box-text">
-                    <p>Mountain View,</p>
-                    <p>California,</p>
-                    <p>United States</p>
-                    <p>Contact: (650) 253-0000</p>
-                </div>
-            </td>
-            <td>
-                <div class="box-text">
-                    <p> 410 Terry Ave N,</p>
-                    <p>Seattle WA 98109,</p>
-                    <p>United States</p>
-                    <p>Contact: 1-206-266-1000</p>
-                </div>
-            </td>
-        </tr>
-    </table>
-</div>
-<div class="table-section bill-tbl w-100 mt-10">
-    <table class="table w-100 mt-10">
-        <tr>
-            <th class="w-50">Payment Method</th>
-            <th class="w-50">Shipping Method</th>
-        </tr>
-        <tr>
-            <td>Cash On Delivery</td>
-            <td>Free Shipping - Free Shipping</td>
-        </tr>
-    </table>
-</div>
-<div class="table-section bill-tbl w-100 mt-10">
-    <table class="table w-100 mt-10">
-        <tr>
-            <th class="w-50">REF</th>
-            <th class="w-50">Désignation & المنتوج</th>
-            <th class="w-50">Unité</th>
-            <th class="w-50">Prix</th>
-            <th class="w-50">Qte</th>
-            <th class="w-50">Montant</th>
-        </tr>
-        <tr align="center">
-            <td>M101</td>
-            <td>Andoid Smart Phone</td>
-            <td>500.2</td>
-            <td>3</td>
-            <td>1500</td>
-            <td>50</td>
-        </tr>
-        <tr align="center">
-            <td>M102</td>
-            <td>Andoid Smart Phone</td>
-            <td>250</td>
-            <td>2</td>
-            <td>500</td>
-            <td>50</td>
-        </tr>
-        <tr align="center">
-            <td>T1010</td>
-            <td>Andoid Smart Phone</td>
-            <td>1000</td>
-            <td>5</td>
-            <td>5000</td>
-            <td>500</td>
-        </tr>
-        <tr>
-            <td colspan="6">
-                <div class="total-part">
-                    <div class="total-left w-85 float-left" align="right">
-                        <p>Sub Total</p>
-                        <p>Tax (18%)</p>
-                        <p>Total Payable</p>
+<body>
+    <div class="head-title">
+        <h1 class="text-center m-0 p-0">Devis</h1>
+    </div>
+    <div class="add-detail mt-10">
+        <div class="w-50 float-left logo mt-10">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTW0qFGxyFTY4eI1cmFrFWi5YUT_jkreXwE6Q&usqp=CAU"
+                alt="Logo">
+        </div>
+        <div class="w-50 float-left mt-10">
+            {{-- <p class="m-0 pt-5 text-bold w-100">Devis N°- <span class="gray-color">#DV-1/2023</span></p> --}}
+            <p class="m-0 pt-5 text-bold w-100">Devis N°- <span class="gray-color">#{{ $devis->devis_code }}</span></p>
+            <p class="m-0 pt-5 text-bold w-100">Order Id - <span class="gray-color">{{ $devis->id }}
+                </span></p>
+            <p class="m-0 pt-5 text-bold w-100">Date de devis - <span class="gray-color">{{ $devis->created_at }}</span>
+            </p>
+        </div>
+
+        <div style="clear: both;"></div>
+    </div>
+    <div class="table-section bill-tbl w-100 mt-10">
+        <table class="table w-100 mt-10">
+            <tr>
+                <th class="w-50">From</th>
+                <th class="w-50">To</th>
+            </tr>
+            <tr>
+                <td>
+                    <div class="box-text">
+                        <p>Mountain View,</p>
+                        <p>California,</p>
+                        <p>United States</p>
+                        <p>Contact: (650) 253-0000</p>
                     </div>
-                    <div class="total-right w-15 float-left text-bold" align="right">
-                        <p>7600</p>
-                        <p>400</p>
-                        <p>8000.00</p>
+                </td>
+                <td>
+                    <div class="box-text">
+                        <p> 410 Terry Ave N,</p>
+                        <p>Seattle WA 98109,</p>
+                        <p>United States</p>
+                        <p>Contact: 1-206-266-1000</p>
                     </div>
-                    <div style="clear: both;"></div>
-                </div>
-            </td>
-        </tr>
-    </table>
-</div>
-<a href="{{route('devis.printDevisInvoice',$object->id)}}" class="btn btn-success">Imprimer devis</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="table-section bill-tbl w-100 mt-10">
+        <table class="table w-100 mt-10">
+            <tr>
+                <th class="w-50">Payment Method</th>
+                <th class="w-50">Shipping Method</th>
+            </tr>
+            <tr>
+                <td>Cash On Delivery</td>
+                <td>Free Shipping - Free Shipping</td>
+            </tr>
+        </table>
+    </div>
+    <div class="table-section bill-tbl w-100 mt-10">
+        <table class="table w-100 mt-10">
+            <tr>
+                <th class="w-50">REF</th>
+                <th class="w-50">Désignation & {{utf8_encode("يييي")}}</th>
+                <th class="w-50">Unité</th>
+                <th class="w-50">Qte</th>
+                <th class="w-50">Prix</th>
+                <th class="w-50">HT</th>
+                <th class="w-50">TVA</th>
+                <th class="w-50">Total TVA</th>
+                <th class="w-50">Total TTC</th>
+
+            </tr>
+            @foreach ($devis->products as $product)
+            <tr align="center">
+                <td>{{$product->product_code}}</td>
+                <td>{{$product->getDesignation()}}</td>
+                <td>{{$product->unite}}</td>
+                <td>{{$product->pivot->quantity}}</td>
+                <td>{{$product->price_unit}}</td>
+                <td>{{$product->pivot->TOTAL_HT}}</td>
+                <td>{{$product->pivot->TVA}}</td>
+                <td>{{$product->pivot->TOTAL_TVA}}</td>
+                <td>{{$product->pivot->TOTAL_TTC}}</td>
+
+
+
+            </tr>
+            @endforeach
+
+            <tr>
+                <td colspan="9">
+                    <div class="total-part">
+                        <div class="total-left w-85 float-left" align="right">
+                            <p>Sous Total</p>
+                            <p>Tva</p>
+                            <p>Total </p>
+                        </div>
+                        <div class="total-right w-15 float-left text-bold" align="right">
+                            <p>{{ $devis->HT }}</p>
+                            <p>{{ $devis->TVA }}</p>
+                            <p>{{ $devis->TTTC }}</p>
+                        </div>
+                        <div style="clear: both;"></div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <a href="{{ route('devis.ViewDevisInvoice', $devis->id) }}" class="btn btn-primary">Voir devis</a>
+</body>
 
 </html>

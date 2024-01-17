@@ -100,22 +100,22 @@
                             <div
                                 class="bg-info text-light h-25 w-100 d-flex  justify-content-between align-items-center px-4 mb-1">
                                 <label for="" id="commands">Commande N° :</label>
-                                <label for="" id="num_commands" class="fs-3">{{ $object->command_code }}</label>
+                                <label for="" id="num_commands" >{{ $object->command_code }}</label>
                             </div>
                             <div
                                 class="bg-primary text-light h-25 w-100 d-flex  justify-content-between align-items-center px-4 mb-1">
                                 <label for="">Total TTC :</label>
-                                <label for="" id="total_ttc" class="fs-3">{{ $object->TTTC }}</label>
+                                <label for="" id="total_ttc" >{{ $object->TTTC }}</label>
                             </div>
                             <div
                                 class="bg-success text-light h-25 w-100 d-flex  justify-content-between align-items-center px-4 mb-1">
                                 <label for="">Total HT :</label>
-                                <label for="" id="total_ht" class="fs-3">{{ $object->HT }}</label>
+                                <label for="" id="total_ht" >{{ $object->HT }}</label>
                             </div>
                             <div
                                 class="bg-warning text-light h-25 w-100 d-flex  justify-content-between align-items-center px-4 mb-1">
                                 <label for="">Total TVA :</label>
-                                <label for="" id="total_ttva" class="fs-3">{{ $object->TVA }}</label>
+                                <label for="" id="total_ttva" >{{ $object->TVA }}</label>
                             </div>
                         </div>
                     </div>

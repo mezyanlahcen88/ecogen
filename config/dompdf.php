@@ -187,6 +187,8 @@ return array(
          * @var string
          */
         "default_font" => "serif",
+        // 'font' => base_path('public/assets/fonts/Cairo/static/Cairo-Bold.ttf'),
+
 
         /**
          * Image DPI setting

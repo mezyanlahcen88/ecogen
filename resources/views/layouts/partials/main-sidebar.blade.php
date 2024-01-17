@@ -215,7 +215,7 @@
                                         <a href="{{ route('commands.index') }}" class="nav-link" data-key="roles"> <span
                                                 class="text-uppercase">{{ trans('translation.navigation_navigation_bon_command') }}
                                             </span>
-                                            <span class="badge badge-pill bg-danger" data-key="users">1</span>
+                                            {{-- <span class="badge badge-pill bg-danger" data-key="users">1</span> --}}
                                         </a>
                                     </li>
                                 @endcan
@@ -224,7 +224,7 @@
                                         <a href="{{ route('roles.index') }}" class="nav-link" data-key="roles"> <span
                                                 class="text-uppercase">{{ trans('translation.navigation_navigation_bon_livraison') }}
                                             </span>
-                                            <span class="badge badge-pill bg-danger" data-key="users">1</span>
+                                            {{-- <span class="badge badge-pill bg-danger" data-key="users">1</span> --}}
                                         </a>
                                     </li>
                                 @endcan
@@ -233,10 +233,19 @@
                                         <a href="{{ route('roles.index') }}" class="nav-link" data-key="roles"> <span
                                                 class="text-uppercase">{{ trans('translation.navigation_navigation_bon_avoir') }}
                                             </span>
-                                            <span class="badge badge-pill bg-danger" data-key="users">1</span>
+                                            {{-- <span class="badge badge-pill bg-danger" data-key="users">1</span> --}}
                                         </a>
                                     </li>
                                 @endcan
+                                @can('role-list')
+                                <li class="nav-item">
+                                    <a href="{{ route('reglements.index') }}" class="nav-link" data-key="reglements"> <span
+                                            class="text-uppercase">{{ trans('translation.navigation_navigation_reglements') }}
+                                        </span>
+                                        {{-- <span class="badge badge-pill bg-danger" data-key="users">1</span> --}}
+                                    </a>
+                                </li>
+                            @endcan
                             </ul>
                         </div>
                     </li>

@@ -86,7 +86,7 @@
                                 <th>Mode de reglement</th>
                                 <th>Montant</th>
                                 <th>Echéance</th>
-                                <th>Action</th>
+                                {{-- <th>Action</th> --}}
                             </tr>
                         </thead>
                         <tbody class="list form-check-all" id=RegTableBody>
@@ -94,7 +94,7 @@
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td></td>
+                                {{-- <td></td> --}}
                             </tr>
                         </tbody>
                     </table>

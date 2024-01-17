@@ -18,12 +18,8 @@
     <td>{{$product->product_code}}</td>
     <td>{{$product->pivot->designation}}</td>
     <td>{{$product->unite}}</td>
-    <td><div class="input-step">
-        <button type="button" class="minus">–</button>
-        <input type="number" class="product-quantity" id="product-qty-1" value="{{$product->pivot->quantity}}" readonly="">
-        <button type="button" class="plus">+</button>
-    </div>
-  </td>
+    <td>{{$product->pivot->quantity}}</td>
+
   <td>{{$product->pivot->price}}</td>
   <td>{{$product->pivot->TOTAL_HT}}</td>
   <td>{{$product->pivot->TVA}}</td>

@@ -8,7 +8,7 @@ use App\Models\Client;
 use App\Models\Product;
 use App\Forms\DevisForm;
 use App\Models\Category;
-use Barryvdh\DomPDF\Facade as PDF;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Str;
 use App\Enums\StaticOptions;
 use Illuminate\Http\Request;
@@ -369,15 +369,16 @@ DB::table('product_devis')
 
     public function viewDevisInvoice($id)
     {
-        $object = Devis::with('products')->findOrfail($id);
-        return view('devis.devis_pdf', compact('object'));
+        $devis = Devis::with('products')->findOrfail($id);
+        return view('devis.devis_pdf', compact('devis'));
     }
 
     public function printDevisInvoice($id)
 {
-    $object = Devis::with('products')->findOrfail($id)->toArray();
-    $pdf = PDF::loadView('devis.devis_pdf', compact($object));
-    $filename = $object['devis_code'] . '_' . now()->format('YmdHis') . '.pdf';
+    $devis = Devis::with('products')->findOrfail($id);
+    $data = ['devis'=>$devis];
+    $pdf = PDF::loadView('devis.devis_pdf', $data);
+    $filename = $devis['devis_code'] . '_' . now()->format('YmdHis') . '.pdf';
     return $pdf->download($filename);
 }
 
