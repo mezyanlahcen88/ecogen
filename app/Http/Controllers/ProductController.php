@@ -118,7 +118,7 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         // $validated = $request->validated();
-        dd($request->all());
+        // dd($request->all());
         $object = new Product();
         $object->id = Str::uuid();
         $object->product_code = $request->product_code;

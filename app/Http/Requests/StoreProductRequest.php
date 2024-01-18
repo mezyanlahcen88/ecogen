@@ -25,7 +25,7 @@ class StoreProductRequest extends FormRequest
     public function rules()
     {
         return [
-            'product_code' => ['bail', 'required',Rule::unique('products', 'product_code')->ignore($this->product)],
+            'product_code' => ['bail', 'required',Rule::unique('products','product_code')->ignore($this->product)],
             'name_fr' =>  ['bail', 'required', 'min:3'],
             'category_id' =>  ['bail', 'required'],
             'scategory_id' =>  ['bail', 'required'],

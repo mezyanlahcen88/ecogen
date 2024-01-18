@@ -17,18 +17,7 @@
     ])
 @endsection
 @section('content')
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-
-
-    <form action="{{ route('products.store') }}" method="post" id="userForm" autocomplete="on" enctype="multipart/form-data">
+    <form action="{{ route('products.store') }}" method="post"  autocomplete="on" enctype="multipart/form-data">
         @csrf
         <div class="row">
 

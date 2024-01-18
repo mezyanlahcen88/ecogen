@@ -10,6 +10,7 @@
             <th>{{ trans('translation.devis_table_tva') }} %</th>
             <th>{{ trans('translation.devis_table_total_tva') }}</th>
             <th>{{ trans('translation.devis_table_total_ttc') }}</th>
+            <th>{{ trans('translation.general_general_action') }}</th>
         </tr>
     </thead>
     <tbody class="list form-check-all" id="productTableBody">

@@ -375,7 +375,10 @@ DB::table('product_devis')
 
     public function printDevisInvoice($id)
 {
-    $devis = Devis::with('products')->findOrfail($id);
+    $devis = Devis::with('products')
+    ->with('client')
+    ->findOrfail($id);
+    // return $devis;
     $data = ['devis'=>$devis];
     $pdf = PDF::loadView('devis.devis_pdf', $data);
     $filename = $devis['devis_code'] . '_' . now()->format('YmdHis') . '.pdf';
