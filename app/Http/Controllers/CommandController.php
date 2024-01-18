@@ -8,6 +8,7 @@ use App\Models\Command;
 use App\Models\Product;
 use App\Models\Category;
 use Barryvdh\DomPDF\PDF;
+use App\Models\Reglement;
 use App\Forms\CommandForm;
 use Illuminate\Support\Str;
 use App\Enums\StaticOptions;
@@ -145,6 +146,8 @@ class CommandController extends Controller
         $object = Command::findOrfail($id);
         $products = Product::pluck('name_fr', 'id');
         $categories = Category::where('parent_id', null)->pluck('name', 'id');
+        $detailsReglement = $object->reglements()->get();
+        // $detailsReglement = Reglement::where('command_id', $id);
         $clients = Client::pluck('name_fr', 'id');
 
         $command_status = $this->staticOptions::DEVIS_STATUS;
@@ -161,6 +164,7 @@ class CommandController extends Controller
             'clients' => $clients,
             'commandProducts' => $commandProducts,
             'reglements' => $reglements,
+            'detailsReglement' => $detailsReglement,
         ];
 
         // Check if the request expects JSON

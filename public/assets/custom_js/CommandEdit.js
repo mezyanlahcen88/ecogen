@@ -45,6 +45,7 @@ const newProduit = {
 
 $(document).ready(function () {
     loadTableFromLocalStorage();
+    tableReglements();
     calculeTotals();
 });
 
@@ -84,6 +85,7 @@ function loadTableFromLocalStorage() {
     $('select[name="status"]').val(selectedStatus).trigger("change");
     $("#comment").val(selectedStatus).val(data.object.comment);
     initializeDatePicker(data);
+
 }
 
 function initializeDatePicker(data) {
@@ -665,33 +667,34 @@ $(".storeCommand").on("click", function (e) {
 
 var reglements = [];
 var newReglement = {
+    id:"",
     command_id: "",
     ref_reg: "",
     nature_reg: "",
     parent_type: "",
     parent_id: "",
-    modePaiment: "",
-    num_order: "",
+    mode_reg: "",
     comment: "",
-    montantPayer: "",
-    dateEcheance: "",
+    amount_reg: "",
+    date_reg: "",
 };
 $("#btnValider").on("click", function (e) {
     e.preventDefault();
     var montantTotalPayer = 0;
-    var data = JSON.parse(localStorage.getItem("reglements")) || [];
+    // var data = JSON.parse(localStorage.getItem("reglements")) || [];
     var commande = JSON.parse(localStorage.getItem("product_commandEdit"));
+    var data = commande.detailsReglement;
     if (data && data.length > 0) {
         // Calcule le prix hors taxe
         montantTotalPayer = data.reduce(
-            (acc, reg) => acc + reg.montantPayer,
+            (acc, reg) => acc + reg.amount_reg,
             0
         );
     }
     var reg = Object.assign({}, newReglement);
     var command_id = commande.object.id;
     var parent_id = commande.object.client_id;
-    console.log(command_id);
+    console.log(montantTotalPayer);
     var total_ttc = parseFloat($("#total_ttc").text());
     var total_ht = parseFloat($("#total_ht").text());
     var total_ttva = parseFloat($("#total_ttva").text());
@@ -699,25 +702,26 @@ $("#btnValider").on("click", function (e) {
     var num_order = $("#check_ref").val();
     var comment = $("#commentReg").val();
     var montantPayer = parseFloat($("#montantPayer").val());
-    console.log("total_ttc : " + total_ttc);
-    console.log("total_ht : " + total_ht);
-    console.log("total_ttva : " + total_ttva);
-    console.log("montantPayer : " + montantPayer);
+    // console.log("total_ttc : " + total_ttc);
+    // console.log("total_ht : " + total_ht);
+    // console.log("total_ttva : " + total_ttva);
+    // console.log("montantPayer : " + montantPayer);
     reg.command_id = command_id;
     reg.parent_id = parent_id;
-    reg.modePaiment = modePaiment;
-    reg.num_order = num_order;
+    reg.mode_reg = modePaiment;
+    reg.ref_reg = num_order;
     reg.comment = comment;
-    reg.montantPayer = montantPayer;
+    reg.amount_reg = montantPayer;
     var dateObj = new Date();
     // Formate la date selon le format YYYY-MM-DD HH:MM:SS
-    reg.dateEcheance = dateObj.toISOString().slice(0, 19).replace('T', ' ');
+    reg.date_reg = dateObj.toISOString().slice(0, 19).replace('T', ' ');
     if (montantPayer + montantTotalPayer <= total_ttc) {
         var rest_payer = total_ttc - (montantPayer + montantTotalPayer);
         $("#rest_payer").text(rest_payer.toFixed(2));
-        reglements.push(reg);
-        localStorage.setItem("reglements", JSON.stringify(reglements));
-        console.log(rest_payer);
+        data.push(reg);
+        // reglements.push(reg);
+        localStorage.setItem("product_commandEdit", JSON.stringify(commande));
+        // console.log(rest_payer);
         tableReglements();
     } else {
         console.log("le montant entrer et plus grand que le reste à payer !");
@@ -725,8 +729,9 @@ $("#btnValider").on("click", function (e) {
 });
 
 function tableReglements() {
-    var data = JSON.parse(localStorage.getItem("reglements")) || [];
-    var listeReg = data;
+    var data = JSON.parse(localStorage.getItem("product_commandEdit")) || [];
+    var listeReg = data.detailsReglement;
+    console.log(listeReg);
     // tableBody.empty();
     $("#RegTableBody").empty();
     listeReg.forEach((reg) => {
@@ -739,13 +744,13 @@ function appendTableRegRow(reg) {
     var row =
         '<tr class="text-center">' +
         "<td>" +
-        reg.modePaiment +
+        reg.mode_reg +
         "</td>" +
         "<td>" +
-        reg.montantPayer +
+        reg.amount_reg +
         "</td>" +
         "<td>" +
-        reg.dateEcheance +
+        reg.date_reg +
         "</td>" +
         "<td>" +
         // '<td>' +
@@ -762,8 +767,10 @@ $(".storeReglement").on("click", function (e) {
     e.preventDefault();
 
     // let formData = new FormData($("#commands_form")[0]);
+    var data = JSON.parse(localStorage.getItem("product_commandEdit")) || [];
+    var listeReg = data.detailsReglement;
     var data = {
-        reglements: JSON.parse(localStorage.getItem("reglements")),
+        reglements: listeReg,
     };
     console.log(data);
     $.ajaxSetup({

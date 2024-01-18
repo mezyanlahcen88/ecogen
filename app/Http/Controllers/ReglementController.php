@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Command;
 use App\Dto\ReglementDto;
 use App\Models\Reglement;
 use Illuminate\Support\Str;
@@ -41,9 +42,9 @@ class ReglementController extends Controller
     public function index()
     {
 
-           $tableRows =(new Reglement())->getRowsTable();
+        $tableRows = (new Reglement())->getRowsTable();
         $objects = Reglement::get();
-        return view('reglements.index',compact('tableRows','objects'));
+        return view('reglements.index', compact('tableRows', 'objects'));
     }
     /**
      * Display a list of soft-deleted records.
@@ -53,8 +54,8 @@ class ReglementController extends Controller
     public function trashed(Request $request)
     {
         $objects = Reglement::onlyTrashed()->get();
-        $tableRows =(new Reglement())->getRowsTableTrashed();
-        return view('reglements.trashedIndex', compact('tableRows','objects'));
+        $tableRows = (new Reglement())->getRowsTableTrashed();
+        return view('reglements.trashedIndex', compact('tableRows', 'objects'));
     }
 
     /**
@@ -67,8 +68,7 @@ class ReglementController extends Controller
 
         $object = new Reglement();
         $variable = '';
-        return view('reglements.create',compact('variable'));
-
+        return view('reglements.create', compact('variable'));
     }
 
     /**
@@ -79,25 +79,31 @@ class ReglementController extends Controller
      */
     public function store(Request $request)
     {
-        // $validated = $request->validated();
         $data = $request->all();
         foreach ($data['reglements'] as $item) {
-            DB::table('reglements')->insert([
-                'id' => Str::uuid(),
-                'command_id' => $item['command_id'],
-                'ref_reg' => 'test_ref',
-                'date_reg' => $item['dateEcheance'],
-                'amount_reg' => $item['montantPayer'],
-                'mode_reg' => $item['modePaiment'],
-                'nature_reg' => 'vente',
-                'parent_type' => 'client',
-                'parent_id' => $item['parent_id'],
-                'comment' => $item['comment'],
-            ]);
+            if (empty($item['id'])) {
+                $reglement = new Reglement();
+                $reglement->id = Str::uuid();
+                $reglement->command_id = $item['command_id'];
+                $reglement->ref_reg = 'test_ref';
+                $reglement->date_reg = $item['date_reg'];
+                $reglement->amount_reg = $item['amount_reg'];
+                $reglement->mode_reg = $item['mode_reg'];
+                $reglement->nature_reg = 'vente';
+                $reglement->parent_type = 'client';
+                $reglement->parent_id = $item['parent_id'];
+                $reglement->comment = $item['comment'];
+                $reglement->save();
+
+                $command = Command::findOrFail($item['command_id']);
+                $command->rest_pay = $command->rest_pay - $item['amount_reg'];
+                $command->save();
+            };
+
         }
-        // incDevisNumerotation();
-        return response()->json(['success'=>true]);
-        // ->with('redirectTo', route('devis.index'));
+
+        return response()->json(['success' => true]);
+
     }
     /**
      * Display the specified resource.
@@ -119,7 +125,7 @@ class ReglementController extends Controller
     public function edit($id)
     {
         $object = reglement::findOrfail($id);
-        return view('reglements.edit',compact('object'));
+        return view('reglements.edit', compact('object'));
     }
 
     /**
@@ -129,10 +135,10 @@ class ReglementController extends Controller
      * @param  \App\Models\Reglement  $reglement
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreReglementRequest $request,string $id)
+    public function update(StoreReglementRequest $request, string $id)
     {
         $validated = $request->validated();
-        $this->crudService->updateRecord(new Reglement(),$validated,$id);
+        $this->crudService->updateRecord(new Reglement(), $validated, $id);
         return redirect()->route('reglements.index');
     }
 
@@ -144,11 +150,10 @@ class ReglementController extends Controller
      */
     public function destroy(Request $request)
     {
-      $object = Reglement::findOrFail($request->id)->delete();
-
+        $object = Reglement::findOrFail($request->id)->delete();
     }
 
-            /**
+    /**
      * Restore a soft-deleted user.
      *
      * @param \Illuminate\Http\Request $request The HTTP request object.

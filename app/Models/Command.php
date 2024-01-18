@@ -3,6 +3,7 @@
 namespace App\Models;
 
 
+use App\Models\Reglement;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -57,6 +58,10 @@ class Command extends Model
         return $this->belongsTo(Client::class, 'client_id', 'id');
     }
 
+    public function reglements()
+{
+    return $this->hasMany(Reglement::class, 'command_id');
+}
 
     /**
      *getters pour recuperer les attribute de type file pour l'utiliser dans le crud

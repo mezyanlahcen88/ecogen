@@ -3,6 +3,7 @@
 namespace App\Models;
 
 
+use App\Models\Command;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -37,6 +38,10 @@ class Reglement extends Model
 
 //  put the relation of this Model Here
 
+public function command()
+{
+    return $this->belongsTo(Command::class, 'command_id', 'id');
+}
 
 //  put the relation of this Model Here
 

@@ -12,7 +12,7 @@
                         <div
                             class="bg-info text-light h-25 w-100 d-flex  justify-content-between align-items-center px-4 mb-1">
                             <label for="" id="commands">Reste à payer</label>
-                            <label for="" id="rest_payer" class="fs-3">{{ $object->TTTC }}</label>
+                            <label for="" id="rest_payer" class="fs-3">{{ $object->rest_pay }}</label>
                         </div>
                         <div
                             class="bg-success text-light h-25 w-100 d-flex  justify-content-between align-items-center px-4 mb-1">
