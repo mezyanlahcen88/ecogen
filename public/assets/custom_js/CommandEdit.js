@@ -667,7 +667,7 @@ $(".storeCommand").on("click", function (e) {
 
 var reglements = [];
 var newReglement = {
-    id:"",
+    id: "",
     command_id: "",
     ref_reg: "",
     nature_reg: "",
@@ -768,11 +768,12 @@ $(".storeReglement").on("click", function (e) {
 
     // let formData = new FormData($("#commands_form")[0]);
     var data = JSON.parse(localStorage.getItem("product_commandEdit")) || [];
+    var commandId = data.object.id;
     var listeReg = data.detailsReglement;
-    var data = {
+    var postData = {
         reglements: listeReg,
     };
-    console.log(data);
+    console.log(postData);
     $.ajaxSetup({
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -781,25 +782,42 @@ $(".storeReglement").on("click", function (e) {
     $.ajax({
         url: "/reglements",
         type: "POST",
-        data: data,
+        data: postData,
         dataType: "json",
-        success: function (data) {
-            if (data.success) {
-                localStorage.removeItem("reglements");
+        success: function (response) {
+            if (response.success) {
+                localStorage.removeItem("product_commandEdit");
                 // $('#productTableBody').empty();
-                loadTableFromLocalStorage();
+                data.detailsReglement = [];
+                getCommandDetails(commandId);
                 location.reload();
                 console.log("delete storage");
+                loadTableFromLocalStorage();
 
+                // localStorage.setItem("product_commandEdit", JSON.stringify(data));
                 Swal.fire(
                     "Super!",
                     "Réglement a été créé avec succès",
                     "success"
                 );
-                // if (data.hasOwnProperty('redirectTo')) {
-                //     window.location.href = data.redirectTo;
-                // }
+
             }
         },
     });
 });
+
+ function getCommandDetails(commandId) {
+    console.log(commandId);
+    $.ajax({
+        url: "/commands/" + commandId + "/edit",
+        type: 'GET',
+        dataType: 'json', // Changez ceci en 'html'
+        success: function (data) {
+            // $('#contenuDynamique').html(data.html);
+            localStorage.setItem('product_commandEdit', JSON.stringify(data));
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+};
