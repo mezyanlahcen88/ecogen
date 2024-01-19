@@ -105,7 +105,7 @@
                             'input_type' => 'number',
                             'class_name' => '',
                             'column_id' => 'buy_price',
-                            'column_value' => old('buy_price'),
+                            'column_value' => old('buy_price') ?? 0,
                             'readonly' => 'false',
                         ])
                         @include('form.input', [
@@ -116,7 +116,7 @@
                             'input_type' => 'number',
                             'class_name' => '',
                             'column_id' => 'price_unit',
-                            'column_value' => old('price_unit'),
+                            'column_value' => old('price_unit')  ?? 0,
                             'readonly' => 'false',
                         ])
                         @include('form.input', [
@@ -127,7 +127,7 @@
                             'input_type' => 'number',
                             'class_name' => '',
                             'column_id' => 'price_gros',
-                            'column_value' => old('price_gros'),
+                            'column_value' => old('price_gros')  ?? 0,
                             'readonly' => 'false',
                         ])
                         @include('form.input', [
@@ -138,7 +138,7 @@
                             'input_type' => 'number',
                             'class_name' => '',
                             'column_id' => 'price_reseller',
-                            'column_value' => old('price_reseller'),
+                            'column_value' => old('price_reseller')  ?? 0,
                             'readonly' => 'false',
                         ])
                         @include('form.input', [
@@ -149,7 +149,7 @@
                             'input_type' => 'number',
                             'class_name' => '',
                             'column_id' => 'latest_price',
-                            'column_value' => old('latest_price'),
+                            'column_value' => old('latest_price')  ?? 0,
                             'readonly' => 'false',
                         ])
 
@@ -161,7 +161,7 @@
                             'input_type' => 'number',
                             'class_name' => '',
                             'column_id' => 'remise',
-                            'column_value' => old('remise'),
+                            'column_value' => old('remise')  ?? 0,
                             'readonly' => 'false',
                         ])
                         @include('form.input', [
@@ -172,7 +172,7 @@
                             'input_type' => 'number',
                             'class_name' => '',
                             'column_id' => 'tva',
-                            'column_value' => old('tva'),
+                            'column_value' => old('tva')  ?? 0,
                             'readonly' => 'false',
                         ])
                         @include('form.input', [
@@ -183,7 +183,7 @@
                             'input_type' => 'number',
                             'class_name' => '',
                             'column_id' => 'min_stock',
-                            'column_value' => old('min_stock'),
+                            'column_value' => old('min_stock')  ?? 0,
                             'readonly' => 'false',
                         ])
                         @include('form.singleSelect', [

@@ -112,7 +112,7 @@
                                     'label' => 'client_form_ville_id',
                                     'optional' => 'text-secondary',
                                     'divID' => 'ville_id',
-                                    'options' => [],
+                                    'options' => $villes,
                                     'object' => $object,
                                 ])
                                 @include('form.singleSelect', [
@@ -122,7 +122,7 @@
                                     'label' => 'client_form_secteur_id',
                                     'optional' => 'text-secondary',
                                     'divID' => 'secteur_id',
-                                    'options' => [],
+                                    'options' => $secteurs,
                                     'object' => $object,
                                 ])
                                 @include('form.input', [

@@ -137,12 +137,15 @@ class ClientController extends Controller
     {
         $object = client::findOrFail($id);
         $regions = Region::pluck('name', 'id');
+        $villes = Ville::where('region_id',$object->region_id)->pluck('name', 'id');
+        $secteurs = Secteur::where('ville_id',$object->ville_id)->pluck('name', 'id');
+
         $client_types = $this->staticOptions::CLIENT_TYPES;
         $parent_types = $this->staticOptions::PARENT_TYPES;
         $garanties_types = $this->staticOptions::GARANTIES_TYPES;
         $fonctions = Profession::pluck('name', 'id');
 
-        return view('clients.edit', compact( 'object' ,'regions', 'client_types', 'parent_types', 'fonctions','garanties_types'));
+        return view('clients.edit', compact( 'object' ,'regions', 'client_types', 'parent_types', 'fonctions','garanties_types','villes','secteurs'));
     }
 
     /**
