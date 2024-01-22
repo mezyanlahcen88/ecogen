@@ -8,13 +8,13 @@
                     <i class="ri-search-line search-icon"></i>
                 </div>
             </div> --}}
-            <div class="col-lg-2">
+            <div class="col-lg-3">
                 <div class="mt-0">
                     <input type="text" class="form-control" data-provider="flatpickr" data-date-format="d/m/Y" data-range-date="true" placeholder="{{Carbon\Carbon::now()->format('d/m/Y')}}">
                 </div>
             </div>
             <!--end col-->
-            <div class="col-xxl-2 col-sm-4">
+            <div class="col-xxl-3 col-sm-4">
                 <div>
                     <select class="js-example-basic-single" name="user" id="user">
                         <option value="">Chosir Famille</option>
@@ -25,7 +25,7 @@
                 </div>
             </div>
             <!--end col-->
-            <div class="col-xxl-2 col-sm-4">
+            <div class="col-xxl-3 col-sm-4">
                 <div>
                     <select class="js-example-basic-single"  name="sfamille" id="sfamille">
                         <option value="">Chosir S-famille</option>
@@ -35,7 +35,7 @@
                 </div>
             </div>
             <!--end col-->
-            <div class="col-xxl-2 col-sm-4">
+            <div class="col-xxl-3 col-sm-4">
                 <div>
                     <select class="js-example-basic-single"  name="archive" id="archive">
                         <option value="">Chosir Archive</option>
@@ -44,14 +44,14 @@
                     </select>
                 </div>
             </div>
-            <div class="col-xxl-2 col-sm-4">
+            {{-- <div class="col-xxl-3 col-sm-4">
                 <div>
                     <button type="button" class="btn btn-primary w-100" onclick="reload_table();"> <i
                             class="ri-equalizer-fill me-1 align-bottom"></i>
 
                     </button>
                 </div>
-            </div>
+            </div> --}}
             <!--end col-->
 
         </div>

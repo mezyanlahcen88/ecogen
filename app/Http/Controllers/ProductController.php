@@ -190,10 +190,10 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreProductRequest $request,string $id)
+    public function update(Request $request,string $id)
     {
-        $validated = $request->validated();
-
+        // $validated = $request->validated();
+        // dd($request->all());
         $object = Product::findOrFail($id);
         $object->product_code = $request->product_code;
         $object->name_fr = $request->name_fr;
@@ -215,6 +215,7 @@ class ProductController extends Controller
         // $object->stock_methode = $request->stock_methode;
         // $object->archive = $request->archive;
         $object->brand_id = $request->brand_id;
+        $object->created_at = $request->created_at;
         $object->updated_at = \Carbon\Carbon::now()->format('Y-m-d H:i:s');
         if($request->hasFile('picture')){
             dealWithPicture($request,$object,'picture', $request->name_fr,'products','update');

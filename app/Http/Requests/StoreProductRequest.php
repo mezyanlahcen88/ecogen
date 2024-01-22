@@ -42,7 +42,7 @@ class StoreProductRequest extends FormRequest
              'min_stock' =>  ['bail', 'required'],
              'unite' =>  ['bail', 'required'],
              'warehouse_id' =>  ['bail', 'required'],
-             'bar_code' =>  ['bail', 'required'],
+             'bar_code' =>  ['bail', 'nullable'],
              'brand_id' =>  ['bail', 'required'],
 
         ];

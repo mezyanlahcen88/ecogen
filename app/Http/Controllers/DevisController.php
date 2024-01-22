@@ -317,7 +317,10 @@ DB::table('product_devis')
      */
     public function destroy(Request $request)
     {
-        $object = Devis::findOrFail($request->id)->delete();
+        $object = Devis::findOrFail($request->id);
+        if($object->status != 'Validé'){
+         $object->delete();
+        }
     }
 
     /**

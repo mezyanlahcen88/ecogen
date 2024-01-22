@@ -15,11 +15,6 @@
                             <label for="" id="rest_payer" class="fs-3">{{ $object->rest_pay }}</label>
                         </div>
                         <div
-                            class="bg-success text-light h-25 w-100 d-flex  justify-content-between align-items-center px-4 mb-1">
-                            <label for="">Montant :</label>
-                            <label for="" id="total_ht" class="fs-3">{{ $object->HT }}</label>
-                        </div>
-                        <div
                             class="bg-primary text-light h-25 w-100 d-flex  justify-content-between align-items-center px-4 mb-1">
                             <label for="">Total TTC :</label>
                             <label for="" id="total_ttc" class="fs-3">{{ $object->TTTC }}</label>

@@ -25,8 +25,10 @@ class UpdateProductRequest extends FormRequest
     public function rules()
     {
         return [
-            'product_code' => ['bail', 'required',Rule::unique('products','product_code')->ignore($this->product)],
+            // 'product_code' => ['bail', 'required',Rule::unique('products','product_code')->ignore($this->product)],
             'name_fr' =>  ['bail', 'required', 'min:3'],
+            'name_ar' =>  ['bail', 'required', 'min:3'],
+
             'category_id' =>  ['bail', 'required'],
             'scategory_id' =>  ['bail', 'required'],
             'buy_price' =>  ['bail', 'required'],
@@ -39,11 +41,10 @@ class UpdateProductRequest extends FormRequest
             'min_stock' =>  ['bail', 'required'],
             'unite' =>  ['bail', 'required'],
             'warehouse_id' =>  ['bail', 'required'],
-            'bar_code' =>  ['bail', 'required'],
+            'bar_code' =>  ['bail', 'nullable'],
             'stockable' =>  ['bail', 'nullable'],
-            'archive' =>  ['bail', 'required',],
+            // 'archive' =>  ['bail', 'required'],
             'brand_id' =>  ['bail', 'required'],
-            'name_ar' =>  ['bail', 'required', 'min:3'],
            //  'picture' =>  ['bail', 'required'],
         ];
     }
