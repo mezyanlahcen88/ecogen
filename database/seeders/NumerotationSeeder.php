@@ -50,7 +50,7 @@ class NumerotationSeeder extends Seeder
          Numerotation::create([
             'id' => 'b706edbc-e91e-4e71-adf0-225f8428e38a',
             'doc_type' => 'Client',
-            'prefix' => 'Cl-',
+            'prefix' => 'CL-',
             'increment_num' => 0,
             'comments' => '<p>Client</p>',
             'active' => 1,

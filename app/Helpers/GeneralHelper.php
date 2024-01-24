@@ -230,6 +230,28 @@ if (!function_exists('acceptImageType')) {
 //     }
 // }
 
+if (!function_exists('getClientNumerotation')) {
+    function getClientNumerotation()
+    {
+        $num = Numerotation::where('doc_type', 'Client')->first();
+
+        if (!$num) {
+            throw new Exception('No Numerotation record found for doc_type "Client"');
+        }
+        $codeClient = $num->prefix . ($num->increment_num + 1);
+        return $codeClient;
+    }
+}
+
+if (!function_exists('incClientNumerotation')) {
+    function incClientNumerotation()
+    {
+        $num = Numerotation::where('doc_type', 'Client')->first();
+        $num->increment_num = $num->increment_num + 1;
+        $num->save();
+    }
+}
+
 if (!function_exists('getProduitNumerotation')) {
     function getProduitNumerotation()
     {
@@ -348,5 +370,14 @@ if (!function_exists('checkExpirationDate')) {
         } else {
             return 'still';
         }
+    }
+}
+
+if (!function_exists('getPrefix')) {
+    function getPrefix($model)
+    {
+        $prefix = Numerotation::where('doc_type', $model)
+        ->first();
+         return $prefix->prefix;
     }
 }

@@ -148,7 +148,7 @@ class ProductController extends Controller
             dealWithPicture($request,$object,'picture', $request->name_fr,'products','store');
         }
         $object->save();
-        if (strpos($request->product_code, 'PR-') !== false) {
+        if (strpos($request->product_code, getPrefix('Produit')) !== false) {
             incProduitNumerotation();
         }
         return redirect()->route('products.index');

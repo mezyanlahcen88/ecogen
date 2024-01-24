@@ -30,6 +30,28 @@
                         <div class="card-body">
                             <div class="row">
                                 @include('form.input', [
+                                    'cols' => 'col-md-6 ',
+                                    'column' => 'code_client',
+                                    'model' => 'client',
+                                    'optional' => 'text-danger',
+                                    'input_type' => 'text',
+                                    'class_name' => '',
+                                    'column_id' => 'code_client',
+                                    'column_value' => $object->code_client,
+                                    'readonly' => 'false',
+                                ])
+                                @include('form.input', [
+                                    'cols' => 'col-md-6',
+                                    'column' => 'plafond',
+                                    'model' => 'client',
+                                    'optional' => 'text-secondary',
+                                    'input_type' => 'number',
+                                    'class_name' => '',
+                                    'column_id' => 'plafond',
+                                    'column_value' => $object->plafond,
+                                    'readonly' => 'false',
+                                ])
+                                @include('form.input', [
                                     'cols' => 'col-md-6',
                                     'column' => 'name_fr',
                                     'model' => 'client',

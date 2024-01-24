@@ -31,8 +31,9 @@ return new class extends Migration
             $table->text('address')->nullable();
             $table->text('obs')->nullable();
             $table->string('created_by');
-            $table->integer('remise')->nullable();
+            $table->integer('remise')->default(0);
             $table->double('total_garanties',8,2)->default(0.00);
+            $table->double('plafond',8,2)->default(0.00);
             $table->string('parent_type')->nullable();
             $table->string('parent_id')->nullable();
             $table->boolean('active')->default(1);

@@ -92,7 +92,7 @@ class ClientController extends Controller
         $object = new Client();
         $object->id = Str::uuid();
         // $object->code_client = getClientNumerotation();
-        $object->code_client = 'CLT-1';
+        $object->code_client = $request->code_client;
         $object->ice = $request->ice;
         $object->name_ar = $request->name_ar;
         $object->name_fr = $request->name_fr;
@@ -105,6 +105,7 @@ class ClientController extends Controller
         $object->ville_id = $request->ville_id;
         $object->secteur_id = $request->secteur_id;
         $object->cd_postale = $request->cd_postale;
+        $object->plafond = $request->plafond;
         $object->address = $request->address;
         $object->obs = $request->obs;
         $object->created_by = Auth::id();
@@ -113,6 +114,9 @@ class ClientController extends Controller
         $object->parent_id = $request->parent_id;
         $object->parent_type = $request->parent_type;
         $object->save();
+        if (strpos($request->code_client, getPrefix('Client')) !== false) {
+            incClientNumerotation();
+        }
         return redirect()->route('clients.createGaranty', $object->id);
     }
 
