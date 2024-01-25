@@ -544,19 +544,15 @@ $(document).ready(function () {
             success: function (data) {
                 if (data.success) {
                     localStorage.removeItem("product_command");
-                    // $('#productTableBody').empty();
                     loadTableFromLocalStorage();
                     location.reload();
-                    console.log("delete storage");
 
                     Swal.fire(
                         'Super!',
                         'Commande a été créée avec succès',
                         'success'
                     )
-                    // if (data.hasOwnProperty('redirectTo')) {
-                    //     window.location.href = data.redirectTo;
-                    // }
+                    window.location.href = '/commands/'+data.id;
                 }
             },
         });

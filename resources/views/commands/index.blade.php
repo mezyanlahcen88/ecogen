@@ -25,6 +25,7 @@
 
 
 @section('card-body')
+@include('commands.command_filter')
     @include('commands.table',[
         'model'=>'commands',
     ])
@@ -33,6 +34,7 @@
 @section('js')
     @include('layouts.includes.datatable_js')
     <script src="{{ asset('assets/custom_js/getCommandIndex.js') }}"></script>
+    <script src="{{ asset('assets/custom_js/delete_advanced.js') }}"></script>
     <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
 @endsection
 

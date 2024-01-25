@@ -1,4 +1,4 @@
-$(document).on('click', '.remove-item-btn', function (e) {
+$(document).on('click', '.remove-item-btn-upd', function (e) {
     e.preventDefault();
         let id = $(this).attr('data-id');
         let routeName = $(this).attr('data-route-name');
@@ -30,12 +30,22 @@ $(document).on('click', '.remove-item-btn', function (e) {
                     _token: $csrf
                 },
                 success: function (response) {
-                    location.reload()
-                    swalWithBootstrapButtons.fire(
-                        'Supprimé!',
-                        'l\'enregistrement a été supprimé avec succès.',
-                        'success'
-                    )
+                    if(response.success){
+                        location.reload()
+                        swalWithBootstrapButtons.fire(
+                            'Supprimé!',
+                            response.message,
+                            'success'
+                        )
+                    }else{
+                        swalWithBootstrapButtons.fire(
+                            'Annulé!',
+                            response.message,
+                            'error'
+                        )
+                    }
+
+
 
                 }
             });

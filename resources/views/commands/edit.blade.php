@@ -35,9 +35,8 @@
                                     <!-- Default Modals -->
                                     <button type="button" class="btn btn-primary " data-bs-toggle="modal"
                                         data-bs-target="#myModal">Mode de reglemnt</button>
-                                    <button type="button" class="btn btn-info">
-                                        {{ trans('translation.general_general_save') }}
-                                    </button>
+                                        <button type="submit"
+                                        class="btn btn-primary storeCommand">{{ trans('translation.commands_action_edit') }}</button>
                                 </div>
                             </div>
                         </div>
@@ -172,7 +171,7 @@
             <div class="col-lg-12">
                 <div class="text-start">
                     <button type="submit"
-                        class="btn btn-primary storeCommand">{{ trans('translation.general_general_save') }}</button>
+                        class="btn btn-primary storeCommand">{{ trans('translation.commands_action_edit') }}</button>
                 </div>
             </div>
         </div>

@@ -90,11 +90,23 @@ class Command extends Model
     {
         return [
             'command_code' => 'command_code',
-            'ht' => 'ht',
-            'tva' => 'tva',
-            'tttc' => 'tttc',
+            'HT' => 'ht',
+            'TVA' => 'tva',
+            'TTTC' => 'tttc',
             'status' => 'status',
             'status_date' => 'status_date',
         ];
     }
+
+    public function scopeValid($query)
+{
+    return $query->where('status', 'Validé');
+}
+
+public function scopeWait($query)
+{
+    return $query->where('status', 'En attente');
+}
+
+
 }

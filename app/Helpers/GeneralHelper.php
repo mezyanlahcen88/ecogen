@@ -381,3 +381,27 @@ if (!function_exists('getPrefix')) {
          return $prefix->prefix;
     }
 }
+
+
+if (!function_exists('getDevisStatus')) {
+    function getDevisStatus()
+    {
+         $status = [
+            'En attente'=>'En attente',
+            'Validé'=>'Validé',
+            'Rejeté'=>'Rejeté',
+        ];
+         return $status;
+    }
+}
+
+if (!function_exists('getCommandStatus')) {
+    function getCommandStatus()
+    {
+         $status = [
+            'Validé'=>'Validé',
+            'Rejeté'=>'Rejeté',
+        ];
+         return $status;
+    }
+}

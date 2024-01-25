@@ -8,8 +8,7 @@
     @endcan
         @can('commands-edit')
             <div class="edit">
-                {{-- <a href="{{ route('commands.edit', $object->id)}}" title="Edit"><span class="badge  text-bg-info"><i class="las la-edit"></i></span></a>
-                </a> --}}
+
                 <a href="#" id="command_edit" class="getCommand" data-command-id="{{ $object->id }}" title="Edit"><span
                     class="badge  text-bg-info"><i class="las la-edit"></i></span></a>
             </a>
@@ -17,7 +16,7 @@
         @endcan
         @can('commands-delete')
             <div class="remove">
-                <a href="#" class="remove-item-btn" data-bs-toggle="modal"
+                <a href="#" class="remove-item-btn-upd" data-bs-toggle="modal"
                 data-id="{{ $object->id }}" data-route-name="{{ route('commands.destroy', 'delete') }}">
               <span class="badge  text-bg-danger"><i class="las la-trash"></i></span></a>
             </div>
