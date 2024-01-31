@@ -21,17 +21,23 @@
         <div class="row">
             <div class="col-12">
                 <div class="card">
+
                     <div class="card-header border-0">
                         <div class="row align-items-center gy-3">
-                            <div class="col-sm">
+                            <div class="col-md-3">
                                 <h5 class="card-title mb-0">{{ trans('translation.devis_action_add') }}</h5>
                             </div>
-                            <div class="col-sm-auto">
+                            <div class="col-md-6 datails p-2 d-flex justify-content-center align-items-center">
+                                <div class="detail_ele bg-primary p-1 col-4"><label for="" class="label_text">Garanties</label></div>
+                                <div class="detail_ele bg-warning  p-1 col-4"><label for="" class="label_text">Test</label></div>
+                                <div class="detail_ele bg-danger  p-1 col-4"><label for="" class="label_text">Plafond</label></div>
+                            </div>
+                            <div class="col-md-3">
                                 <div class="d-flex gap-1 flex-wrap">
-                                    <button type="button" class="btn btn-primary">Imprimer devis TTC</button>
+                                    {{-- <button type="button" class="btn btn-primary">Imprimer devis TTC</button>
                                     <button type="button" class="btn btn-success">Imprimer devis</button>
-                                    <button type="button" class="btn btn-warning"> Transfer bon command</button>
-                                    <button type="button" class="btn btn-info">
+                                    <button type="button" class="btn btn-warning"> Transfer bon command</button> --}}
+                                    <button type="button" class="btn btn-info flex-end">
                                         {{ trans('translation.general_general_save') }}</button>
                                 </div>
                             </div>

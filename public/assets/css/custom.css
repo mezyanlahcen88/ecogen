@@ -100,3 +100,10 @@
 .rtl{
     direction: rtl;
 }
+
+.detail_ele{
+    width: 33%;
+    height: 50px;
+    color: white;
+    margin-right: 8px;
+}

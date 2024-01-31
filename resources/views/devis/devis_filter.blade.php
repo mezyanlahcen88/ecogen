@@ -8,19 +8,19 @@
                     <i class="ri-search-line search-icon"></i>
                 </div>
             </div> --}}
-            <div class="col-lg-3">
+            <div class="col-md-3">
                 <div class="mt-0">
                     <input type="text" class="form-control" data-provider="flatpickr" data-date-format="d/m/Y" placeholder="Date début" name="start_date">
                 </div>
             </div>
             <!--end col-->
-            <div class="col-lg-3">
+            <div class="col-md-3">
                 <div class="mt-0">
                     <input type="text" class="form-control" data-provider="flatpickr" data-date-format="d/m/Y" placeholder="Date fin" name="fin_date">
                 </div>
             </div>
             <!--end col-->
-            <div class="col-xxl-3 col-sm-4">
+            <div class="col-md-3">
                 <div>
                     <select class="js-example-basic-single"  name="client" id="client">
                         <option value="">Chosir client</option>
@@ -32,7 +32,7 @@
                 </div>
             </div>
             <!--end col-->
-            <div class="col-xxl-3 col-sm-4">
+            <div class="col-md-3">
                 <div>
                     <select class="js-example-basic-single"  name="status" id="status">
                         <option value="">Status</option>
