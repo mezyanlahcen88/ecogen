@@ -20,7 +20,7 @@
                 </div>
             </div>
             <!--end col-->
-            <div class="col-xxl-3 col-sm-4">
+            <div class="col-xxl-3 col-sm-3">
                 <div>
                     <select class="js-example-basic-single"  name="client" id="client">
                         <option value="">Chosir client</option>
@@ -32,7 +32,7 @@
                 </div>
             </div>
             <!--end col-->
-            <div class="col-xxl-3 col-sm-4">
+            <div class="col-xxl-3 col-sm-3">
                 <div>
                     <select class="js-example-basic-single"  name="status" id="status">
                         <option value="">Status</option>
