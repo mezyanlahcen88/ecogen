@@ -75,9 +75,10 @@ class Command extends Model
             'HT' => 'ht',
             'TVA' => 'tva',
             'TTTC' => 'tttc',
+            'total_restant' => 'total_restant',
+            'total_payant' => 'total_payant',
             'status' => 'status',
             'status_date' => 'status_date',
-
         ];
     }
 

@@ -96,7 +96,8 @@ class CommandController extends Controller
         $command->HT = $data['total_ht'];
         $command->TVA = $data['total_ttva'];
         $command->TTTC = $data['total_ttc'];
-        $command->rest_pay = $data['total_ttc'];
+        $command->total_payant = 0.00;
+        $command->total_restant = $data['total_ttc'];
         $command->status = $data['status'];
         $command->status_date = $data['status_date'];
         $command->client_id = $data['client'];
