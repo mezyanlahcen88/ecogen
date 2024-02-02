@@ -32,6 +32,8 @@ $(document).ready(function () {
         tva: 0,
         ttva: 0,
         ttc: 0,
+        remise: 0,
+        tremise: 0,
     }
 
     $('.getProduct').on('click', function () {
@@ -72,9 +74,12 @@ $(document).ready(function () {
         p.quantite = 1;
         p.prix = data.price_unit;
         p.tva = data.tva;
-        p.ht = Math.round((data.price_unit * p.quantite));
-        p.ttva = Math.round((p.prix * p.quantite) * (p.tva / 100));
-        p.ttc = Math.round((p.prix * p.quantite) * (1 + (p.tva / 100)));
+        p.remise = data.remise;
+        p.tremise = Math.round((p.quantite * p.remise));
+        p.ht = Math.round((data.price_unit * p.quantite) - ((data.price_unit * p.quantite) * p.tremise/100));
+        p.ttva = Math.round(p.ht * (p.tva / 100));
+        p.ttc = Math.round(p.ht * (1 + (p.tva / 100)));
+
         return p;
     }
 
@@ -87,7 +92,7 @@ $(document).ready(function () {
         if (existingProduct) {
             // If it exists, update the quantity
             existingProduct.quantite += 1;
-            existingProduct.ht = Math.round((existingProduct.prix * existingProduct.quantite));
+            existingProduct.ht = Math.round((existingProduct.prix * existingProduct.quantite) - ((existingProduct.prix * existingProduct.quantite) * existingProduct.total_remise/100));
             existingProduct.ttva = Math.round((((existingProduct.tva / 100) * existingProduct.ht)));
             existingProduct.ttc = Math.round((((existingProduct.ht) * (1 + (existingProduct.tva / 100)))));
             console.log("pushProdToListe prix:" + existingProduct.prix);
@@ -124,7 +129,7 @@ $(document).ready(function () {
         counter++;
 
         // Properties to include in the td cells
-        const propertiesToInclude = ['ref', 'designation', 'unite', 'quantite', 'prix', 'ht', 'tva', 'ttva', 'ttc'];
+        const propertiesToInclude = ['ref', 'designation', 'unite', 'quantite', 'prix', 'ht', 'tva', 'remise', 'tremise', 'ttva', 'ttc'];
 
         // Iterate over properties to include and create td elements
         propertiesToInclude.forEach((key) => {
@@ -159,7 +164,7 @@ $(document).ready(function () {
                         qteInput.value = 1;
                     }
                     updateLocalStorageQuantityPrixTva(idProd, qteInput.value, 'quantite');
-                    updateLocalStorageHTTTTVA(idProd, qteInput.value, $(`#product-prix-${product.id}`).val(), 20);
+                    updateLocalStorageHTTTTVA(idProd, qteInput.value, $(`#product-prix-${product.id}`).val(), $(`#product-tva-${product.id}`).val(), $(`#product-remise-${product.id}`).val());
                     tableProducts();
                 });
 
@@ -203,7 +208,7 @@ $(document).ready(function () {
                     console.log(idProd);
                     console.log($(`#product-qty-${product.id}`).val());
                     updateLocalStorageQuantityPrixTva(idProd, prixInput.value, 'prix');
-                    updateLocalStorageHTTTTVA(idProd, $(`#product-qty-${product.id}`).val(), prixInput.value, 20);
+                    updateLocalStorageHTTTTVA(idProd, $(`#product-qty-${product.id}`).val(), prixInput.value, $(`#product-tva-${product.id}`).val(), $(`#product-remise-${product.id}`).val());
                     tableProducts();
                 });
 
@@ -246,7 +251,7 @@ $(document).ready(function () {
                     const idProd = id.slice(12);
 
                     updateLocalStorageQuantityPrixTva(idProd, tvaInput.value, 'tva');
-                    updateLocalStorageHTTTTVA(idProd, $(`#product-qty-${product.id}`).val(), $(`#product-prix-${product.id}`).val(), tvaInput.value);
+                    updateLocalStorageHTTTTVA(idProd, $(`#product-qty-${product.id}`).val(), $(`#product-prix-${product.id}`).val(), tvaInput.value, $(`#product-remise-${product.id}`).val());
                     tableProducts();
                 });
 
@@ -261,6 +266,48 @@ $(document).ready(function () {
                 tvaDiv.append(minusButtonTva, tvaInput, plusButtonTva);
 
                 td.append(tvaDiv);
+            } else if (key === 'remise') {
+                // Create prix div with buttons (similar to quantity div)
+                const remiseDiv = $('<div>').addClass('input-step');
+
+                // Create minus button
+                const minusButtonRemise = $('<button>')
+                    .addClass('minus')
+                    .prop("type", "button")
+                    .text('–')
+                    .on('click', () => decrease(product.id, 'remise'));
+
+                // Create tva input
+                const remiseInput = document.createElement('input');
+                remiseInput.type = 'number';
+                remiseInput.classList.add('product-remise');
+                remiseInput.id = `product-remise-${product.id}`;
+                remiseInput.value = product.remise;
+                remiseInput.addEventListener('blur', function () {
+                    // Récupère l'élément input actuel
+                    const input = $(this);
+                    // Récupère l'id de l'élément input
+                    const id = input.attr("id");
+                    // Appelez la fonction increase en passant l'ID du produit
+                    // updateQuantite(remiseInput.value, id);
+                    const idProd = id.slice(12);
+
+                    updateLocalStorageQuantityPrixTva(idProd, remiseInput.value, 'remise');
+                    updateLocalStorageHTTTTVA(idProd, $(`#product-qty-${product.id}`).val(), $(`#product-prix-${product.id}`).val(), $(`#product-tva-${product.id}`).val(), remiseInput.value);
+                    tableProducts();
+                });
+
+                // Create plus button
+                const plusButtonRemise = $('<button>')
+                    .addClass('plus')
+                    .prop("type", "button")
+                    .text('+')
+                    .on('click', () => increase(product.id, 'remise'));
+
+                // Append buttons and input to the div
+                tvaDiv.append(minusButtonRemise, remiseInput, plusButtonRemise);
+
+                td.append(remiseDiv);
             } else {
                 td.text(product[key]);
             }
@@ -427,16 +474,15 @@ $(document).ready(function () {
         }
     }
 
-    function updateLocalStorageHTTTTVA(id, newQuantity, newPrix, newTva) {
+    function updateLocalStorageHTTTTVA(id, newQuantity, newPrix, newTva,newRemise) {
         var listeProd = JSON.parse(localStorage.getItem('product_command')) || [];
         var existingProduct = listeProd.find((product) => product.id === id);
         if (existingProduct) {
             // Update ht based on the new quantity
-            existingProduct.ht = Math.round((parseFloat(newPrix) * parseFloat(newQuantity)));
+            existingProduct.ht = Math.round((parseFloat(newPrix) * parseFloat(newQuantity)) - (parseFloat(newPrix) * parseFloat(newQuantity) * parseFloat(newRemise) / 100));
 
             // Update tttva based on the updated ht and tva
-            existingProduct.ttva = Math.round((parseFloat(newPrix) * parseFloat(newQuantity) * (newTva /
-                100)));
+            existingProduct.ttva = Math.round((existingProduct.ht * (newTva /100)));
             existingProduct.ttc = Math.round((((existingProduct.ht) * (1 + (newTva / 100)))));
 
             localStorage.setItem('product_command', JSON.stringify(listeProd));

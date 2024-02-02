@@ -790,16 +790,17 @@ $(".storeReglement").on("click", function (e) {
                 // $('#productTableBody').empty();
                 data.detailsReglement = [];
                 getCommandDetails(commandId);
-                location.reload();
-                console.log("delete storage");
-                loadTableFromLocalStorage();
-
-                // localStorage.setItem("product_commandEdit", JSON.stringify(data));
                 Swal.fire(
                     "Super!",
                     "Réglement a été créé avec succès",
                     "success"
                 );
+                location.reload();
+                console.log("delete storage");
+                loadTableFromLocalStorage();
+
+                // localStorage.setItem("product_commandEdit", JSON.stringify(data));
+
 
             }
         },
@@ -813,7 +814,6 @@ $(".storeReglement").on("click", function (e) {
         type: 'GET',
         dataType: 'json', // Changez ceci en 'html'
         success: function (data) {
-            // $('#contenuDynamique').html(data.html);
             localStorage.setItem('product_commandEdit', JSON.stringify(data));
         },
         error: function (error) {
