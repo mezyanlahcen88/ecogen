@@ -81,15 +81,28 @@ public function client()
      public function getRowsTableTrashed(){
          return [
             'devis_code' => 'devis_code',
-            'ht' => 'ht',
-            'tva' => 'tva',
-            'tttc' => 'tttc',
+            'HT' => 'ht',
+            'TVA' => 'tva',
+            'TTTC' => 'tttc',
             'status' => 'status',
             'status_date' => 'status_date',
           ];
           }
 
 
+public function scopeValid($query)
+{
+    return $query->where('status', 'Validé');
+}
 
+public function scopeWait($query)
+{
+    return $query->where('status', 'En attente');
+}
+
+public function scopeRejected($query)
+{
+    return $query->where('status', 'Rejeté');
+}
 
 }

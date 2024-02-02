@@ -7,6 +7,7 @@
                 @endforeach
                 <th>Total Garanty</th>
                 <th>Piece Garanty</th>
+                <th>Plafond</th>
                 <th class="sort" data-sort="action">{{ trans('translation.general_general_action') }}
                 </th>
             </tr>
@@ -17,7 +18,7 @@
                     @foreach ($tableRows as $key => $value)
                         <td> {{ $object->$key }}</td>
                     @endforeach
-                    <td>{{getTotalGaranties(collect($object->garanties))}} <span class="badge bg-success mt-n2">{{$object->garanties->count()}}</span></td>
+                    <td>{{getTotalGaranties(collect($object->garanties))}} DH <span class="badge bg-success mt-n2">{{$object->garanties->count()}}</span></td>
                     {{-- <td>231654DFE</td> --}}
                     <td>
                         <button  class="btn badge bg-success" data-bs-toggle="tooltip" data-bs-html="true" title="
@@ -30,6 +31,7 @@
                             les documents
                         </button>
                     </td>
+                    <td> {{ $object->plafond }} DH</td>
                     <td>
                         @include('clients.actions')
                     </td>

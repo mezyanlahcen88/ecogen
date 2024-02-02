@@ -45,7 +45,8 @@ class DevisController extends Controller
     {
         $tableRows = (new Devis())->getRowsTable();
         $objects = Devis::get();
-        return view('devis.index', compact('tableRows', 'objects'));
+        $clients = Client::get();
+        return view('devis.index', compact('tableRows', 'objects','clients'));
     }
     /**
      * Display a list of soft-deleted records.
@@ -117,7 +118,11 @@ class DevisController extends Controller
             ]);
         }
         incDevisNumerotation();
-        return response()->json(['success'=>true]);
+
+        return response()->json([
+            'success'=>true,
+            'id'=>$devis->id,
+        ]);
         // ->with('redirectTo', route('devis.index'));
     }
 
@@ -317,7 +322,20 @@ DB::table('product_devis')
      */
     public function destroy(Request $request)
     {
-        $object = Devis::findOrFail($request->id)->delete();
+        $object = Devis::findOrFail($request->id);
+        if($object->status != 'Validé'){
+         $object->delete();
+         return response()->json([
+            'success'=>true,
+            'message'=>trans('translation.devis_message_delete')
+        ]);
+        }else{
+         return response()->json([
+            'success'=>false,
+            'message'=>'vous ne pouvez pas supprimer ce devis car il est accepté'
+        ]);
+
+        }
     }
 
     /**
@@ -375,7 +393,10 @@ DB::table('product_devis')
 
     public function printDevisInvoice($id)
 {
-    $devis = Devis::with('products')->findOrfail($id);
+    $devis = Devis::with('products')
+    ->with('client')
+    ->findOrfail($id);
+    // return $devis;
     $data = ['devis'=>$devis];
     $pdf = PDF::loadView('devis.devis_pdf', $data);
     $filename = $devis['devis_code'] . '_' . now()->format('YmdHis') . '.pdf';

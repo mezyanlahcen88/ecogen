@@ -42,7 +42,10 @@ public function command()
 {
     return $this->belongsTo(Command::class, 'command_id', 'id');
 }
-
+public function client()
+{
+    return $this->belongsTo(Client::class, 'parent_id', 'id');
+}
 //  put the relation of this Model Here
 
 
@@ -55,12 +58,10 @@ public function command()
     public function getRowsTable(){
         return [
              'ref_reg' => 'ref_reg',
-             'date_reg' => 'date_reg',
              'amount_reg' => 'amount_reg',
              'mode_reg' => 'mode_reg',
              'nature_reg' => 'nature_reg',
              'parent_type' => 'parent_type',
-             'parent_id' => 'parent_id',
          ];
      }
 
@@ -72,12 +73,10 @@ public function command()
      public function getRowsTableTrashed(){
          return [
             'ref_reg' => 'ref_reg',
-            'date_reg' => 'date_reg',
             'amount_reg' => 'amount_reg',
             'mode_reg' => 'mode_reg',
             'nature_reg' => 'nature_reg',
             'parent_type' => 'parent_type',
-            'parent_id' => 'parent_id',
           ];
           }
 

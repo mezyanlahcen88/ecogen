@@ -59,6 +59,7 @@ public function garanties()
 
     public function getRowsTable(){
         return [
+             'code_client' => 'code_client',
              'ice' => 'ice',
              'name_ar' => 'name_ar',
              'name_fr' => 'name_fr',

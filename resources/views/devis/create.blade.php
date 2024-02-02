@@ -22,18 +22,13 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header border-0">
-                        <div class="row align-items-center gy-3">
-                            <div class="col-sm">
+                        <div class="row ">
+                            <div class="col-md-3">
                                 <h5 class="card-title mb-0">{{ trans('translation.devis_action_add') }}</h5>
                             </div>
-                            <div class="col-sm-auto">
-                                <div class="d-flex gap-1 flex-wrap">
-                                    <button type="button" class="btn btn-primary">Imprimer devis TTC</button>
-                                    <button type="button" class="btn btn-success">Imprimer devis</button>
-                                    <button type="button" class="btn btn-warning"> Transfer bon command</button>
+                            <div class="col-md-3">
                                     <button type="button" class="btn btn-info">
                                         {{ trans('translation.general_general_save') }}</button>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -71,8 +66,6 @@
                                         'options' => [],
                                         'object' => false,
                                     ])
-
-
                                     @include('form.singleSelect', [
                                         'cols' => 'col-md-6 ',
                                         'column' => 'product_id',
@@ -99,7 +92,6 @@
                                                 class="las la-check"></i></a>
                                     </div>
                                 </div>
-
                             </div>
                             <div class="col-md-4">
                                 <div class="row">
@@ -128,7 +120,6 @@
                                             <textarea class="form-control" name="comment" id="comment" rows="5">{{ old('comment') }}</textarea>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -153,7 +144,6 @@
                                     <label for="">Total TVA :</label>
                                     <label for="" id="total_ttva" >0.00</label>
                                 </div>
-
                             </div>
                         </div>
                     </div>

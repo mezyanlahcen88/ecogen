@@ -117,9 +117,9 @@
         <div class="w-50 float-left mt-10">
             {{-- <p class="m-0 pt-5 text-bold w-100">Devis N°- <span class="gray-color">#DV-1/2023</span></p> --}}
             <p class="m-0 pt-5 text-bold w-100">Devis N°- <span class="gray-color">#{{ $devis->devis_code }}</span></p>
-            <p class="m-0 pt-5 text-bold w-100">Order Id - <span class="gray-color">{{ $devis->id }}
-                </span></p>
-            <p class="m-0 pt-5 text-bold w-100">Date de devis - <span class="gray-color">{{ $devis->created_at }}</span>
+                  <p class="m-0 pt-5 text-bold w-100">Date de devis - <span class="gray-color">
+                {{ Carbon\Carbon::parse($devis->created_at )->format('d/m/Y') }}
+            </span>
             </p>
         </div>
 
@@ -128,41 +128,58 @@
     <div class="table-section bill-tbl w-100 mt-10">
         <table class="table w-100 mt-10">
             <tr>
-                <th class="w-50">From</th>
-                <th class="w-50">To</th>
+                <th class="w-50">Ecogen Societé</th>
+                <th class="w-50">Client</th>
             </tr>
             <tr>
                 <td>
                     <div class="box-text">
-                        <p>Mountain View,</p>
-                        <p>California,</p>
-                        <p>United States</p>
-                        <p>Contact: (650) 253-0000</p>
+                        <p>Designation
+                            : {{ $devis->client->name_fr }} | {{ $devis->client->name_ar }},</p>
+                        <p>ICE
+                            : {{ $devis->client->ice }},</p>
+                        <p>EMAIL
+                            : {{ $devis->client->email }},</p>
+                        <p>TELEPHONE
+                            : {{ $devis->client->phone }},</p>
+                        <p>FAX
+                            : {{ $devis->client->fax }},</p>
+                        <p>ADRESSE
+                            : {{ $devis->client->address }},</p>
                     </div>
                 </td>
                 <td>
                     <div class="box-text">
-                        <p> 410 Terry Ave N,</p>
-                        <p>Seattle WA 98109,</p>
-                        <p>United States</p>
-                        <p>Contact: 1-206-266-1000</p>
+
+                        <p>Designation
+                            : {{ $devis->client->name_fr }} | {{ $devis->client->name_ar }},</p>
+                        <p>ICE
+                            : {{ $devis->client->ice }},</p>
+                        <p>EMAIL
+                            : {{ $devis->client->email }},</p>
+                        <p>TELEPHONE
+                            : {{ $devis->client->phone }},</p>
+                        <p>FAX
+                            : {{ $devis->client->fax }},</p>
+                        <p>ADRESSE
+                            : {{ $devis->client->address }},</p>
                     </div>
                 </td>
             </tr>
         </table>
     </div>
-    <div class="table-section bill-tbl w-100 mt-10">
+    {{-- <div class="table-section bill-tbl w-100 mt-10">
         <table class="table w-100 mt-10">
             <tr>
-                <th class="w-50">Payment Method</th>
-                <th class="w-50">Shipping Method</th>
+                <th class="w-50">Methode de paiment</th>
+                <th class="w-50">Methode de livraison</th>
             </tr>
             <tr>
-                <td>Cash On Delivery</td>
-                <td>Free Shipping - Free Shipping</td>
+                <td>Espece ,cheque ..</td>
+                <td>Transport</td>
             </tr>
         </table>
-    </div>
+    </div> --}}
     <div class="table-section bill-tbl w-100 mt-10">
         <table class="table w-100 mt-10">
             <tr>
@@ -188,9 +205,6 @@
                 <td>{{$product->pivot->TVA}}</td>
                 <td>{{$product->pivot->TOTAL_TVA}}</td>
                 <td>{{$product->pivot->TOTAL_TTC}}</td>
-
-
-
             </tr>
             @endforeach
 
@@ -213,7 +227,6 @@
             </tr>
         </table>
     </div>
-    <a href="{{ route('devis.ViewDevisInvoice', $devis->id) }}" class="btn btn-primary">Voir devis</a>
 </body>
 
 </html>

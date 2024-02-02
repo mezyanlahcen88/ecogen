@@ -30,8 +30,11 @@
                                 <a href="{{route('devis.ViewDevisInvoice',$object->id)}}" class="btn btn-primary">Voir  devis</a>
                                 <a href="{{route('devis.printDevisInvoice',$object->id)}}" class="btn btn-success">Imprimer devis</a>
                                 <a href="#" class="btn btn-warning"> Transfer bon command</a>
-                                <button type="button" class="btn btn-info">
-                                    {{ trans('translation.general_general_save') }}</button>
+                                {{-- <button type="button" class="btn btn-info">
+                                    {{ trans('translation.devis_action_edit') }}</button> --}}
+                                    <a href="#" id="devis_edit" class="getDevis" data-devis-id="{{ $object->id }}" title="Edit"><span
+                                        class="btn btn-info">{{ trans('translation.devis_action_edit') }}</span></a>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -136,4 +139,6 @@
 @endsection
 @section('js')
     @include('layouts.includes.form_js')
+    <script src="{{ asset('assets/custom_js/getProductEdit.js') }}"></script>
+    <script src="{{ asset('assets/custom_js/delete_advanced.js') }}"></script>
 @endsection

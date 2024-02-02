@@ -232,7 +232,7 @@
                 <div class="card card-body">
                     <div class="between-center">
                         <div class="form-check form-switch form-switch-md" dir="ltr">
-                            <input type="checkbox" class="form-check-input" id="customSwitchsizelg" value="1"
+                            <input type="checkbox" class="form-check-input" id="customSwitchsizelg" value="{{$object->stockable}}"
                                 name="stockable" {{$object->stockable ? 'checked' : ''}}>
                             <label class="form-check-label" for="customSwitchsizelg">Agir sur le stock</label>
                         </div>
@@ -264,6 +264,6 @@
 @section('js')
     @include('layouts.includes.form_js')
     <script src="{{ asset('assets/custom_js/validate_number.js') }}"></script>
-    {!! JsValidator::formRequest('App\Http\Requests\StoreProductRequest') !!}
+    {!! JsValidator::formRequest('App\Http\Requests\UpdateProductRequest') !!}
 
 @endsection

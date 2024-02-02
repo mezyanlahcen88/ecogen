@@ -46,7 +46,9 @@ class CommandController extends Controller
     {
         $tableRows = (new Command())->getRowsTable();
         $objects = Command::get();
-        return view('commands.index', compact('tableRows', 'objects'));
+        $clients = Client::get();
+
+        return view('commands.index', compact('tableRows', 'objects','clients'));
     }
     /**
      * Display a list of soft-deleted records.
@@ -94,7 +96,8 @@ class CommandController extends Controller
         $command->HT = $data['total_ht'];
         $command->TVA = $data['total_ttva'];
         $command->TTTC = $data['total_ttc'];
-        $command->rest_pay = $data['total_ttc'];
+        $command->total_payant = 0.00;
+        $command->total_restant = $data['total_ttc'];
         $command->status = $data['status'];
         $command->status_date = $data['status_date'];
         $command->client_id = $data['client'];
@@ -119,7 +122,10 @@ class CommandController extends Controller
             ]);
         }
         incCommandNumerotation();
-        return response()->json(['success' => true]);
+        return response()->json([
+            'success'=>true,
+            'id'=>$command->id,
+        ]);
         // ->with('redirectTo', route('Command.index'));
     }
 
@@ -150,7 +156,7 @@ class CommandController extends Controller
         // $detailsReglement = Reglement::where('command_id', $id);
         $clients = Client::pluck('name_fr', 'id');
 
-        $command_status = $this->staticOptions::DEVIS_STATUS;
+        $command_status = $this->staticOptions::COMMAND_STATUS;
         $reglements = $this->staticOptions::GARANTIES_TYPES;
 
         $commandProducts = $object->products()->get();
@@ -250,7 +256,19 @@ DB::table('product_command')
      */
     public function destroy(Request $request)
     {
-        $object = Command::findOrFail($request->id)->delete();
+        $object = Command::findOrFail($request->id);
+        if($object->status != 'Validé'){
+            $object->delete();
+            return response()->json([
+               'success'=>true,
+               'message'=>trans('translation.commands_message_delete')
+           ]);
+           }else{
+            return response()->json([
+               'success'=>false,
+               'message'=>'vous ne pouvez pas supprimer cet commande car il est accepté']);
+
+           }
     }
 
     /**

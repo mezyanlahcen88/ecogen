@@ -19,7 +19,8 @@ return new class extends Migration
             $table->double('HT',8,2);
             $table->integer('TVA');
             $table->double('TTTC',8,2);
-            $table->double('rest_pay',8,2);
+            $table->double('total_payant',8,2);
+            $table->double('total_restant',8,2);
             $table->string('status');
             $table->timestamp('status_date');
             $table->boolean('active')->default(1);

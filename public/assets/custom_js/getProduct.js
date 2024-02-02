@@ -584,7 +584,6 @@ $(document).ready(function () {
             success: function (data) {
                 if (data.success) {
                     localStorage.removeItem("product_devis");
-                    // $('#productTableBody').empty();
                     loadTableFromLocalStorage();
                     location.reload();
                     console.log("delete storage");
@@ -594,9 +593,8 @@ $(document).ready(function () {
                         "Devis a été créé avec succès",
                         "success"
                     );
-                    // if (data.hasOwnProperty('redirectTo')) {
-                    //     window.location.href = data.redirectTo;
-                    // }
+                    window.location.href = '/devis/'+data.id/"edit";
+
                 }
             },
         });

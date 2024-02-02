@@ -96,7 +96,8 @@ class ReglementController extends Controller
                 $reglement->save();
 
                 $command = Command::findOrFail($item['command_id']);
-                $command->rest_pay = $command->rest_pay - $item['amount_reg'];
+                $command->total_restant = $command->total_restant - $item['amount_reg'];
+                $command->total_payant = $command->total_payant + $item['amount_reg'];
                 $command->save();
             };
 

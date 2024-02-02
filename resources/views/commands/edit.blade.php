@@ -1,6 +1,7 @@
 @extends('layouts.main_layout')
 @section('title')
-    {{ env('APP_NAME') }} | {{ trans('translation.commands_form_manage_commands') }} | {{ trans('translation.commands_action_edit') }}
+    {{ env('APP_NAME') }} | {{ trans('translation.commands_form_manage_commands') }} |
+    {{ trans('translation.commands_action_edit') }}
 @stop
 @section('css')
     @include('layouts.includes.form_css')
@@ -16,7 +17,7 @@
     ])
 @endsection
 @section('content')
-    <form action="{{ route('commands.update','commandeid') }}" method="post" id="commands_form" enctype="multipart/form-data">
+    <form action="{{ route('commands.update', 'commandeid') }}" method="post" id="commands_form" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <div class="row">
@@ -25,18 +26,17 @@
                     <div class="card-header border-0">
                         <div class="row align-items-center gy-3">
                             <div class="col-sm">
-                                <h5 class="card-title mb-0">{{ trans('translation.commands_action_edit') }}</h5>
+                                <h5 class="card-title mb-0">Reste à payer</h5>
                             </div>
                             <div class="col-sm-auto">
                                 <div class="d-flex gap-1 flex-wrap">
                                     <button type="button" class="btn btn-primary">Imprimer la commande TTC</button>
                                     <button type="button" class="btn btn-success">Imprimer la commande</button>
-                                   <!-- Default Modals -->
-<button type="button" class="btn btn-primary " data-bs-toggle="modal" data-bs-target="#myModal">Mode de reglemnt</button>
-
-
-                                    <button type="button" class="btn btn-info">
-                                        {{ trans('translation.general_general_save') }}</button>
+                                    <!-- Default Modals -->
+                                    <button type="button" class="btn btn-primary " data-bs-toggle="modal"
+                                        data-bs-target="#myModal">Mode de reglemnt</button>
+                                        <button type="submit"
+                                        class="btn btn-primary storeCommand">{{ trans('translation.commands_action_edit') }}</button>
                                 </div>
                             </div>
                         </div>
@@ -75,8 +75,6 @@
                                         'options' => [],
                                         'object' => false,
                                     ])
-
-
                                     @include('form.singleSelect', [
                                         'cols' => 'col-md-6 ',
                                         'column' => 'product_id',
@@ -103,7 +101,6 @@
                                                 class="las la-check"></i></a>
                                     </div>
                                 </div>
-
                             </div>
                             <div class="col-md-4">
                                 <div class="row">
@@ -120,9 +117,10 @@
                                     <div class="col-md-6">
                                         <div>
                                             <label class="form-label my-1">Date de crétation</label>
-                                            <input type="text" class="form-control" data-provider="flatpickr" data-enable-time
-                                                data-date-format="Y-m-d"
-                                                placeholder="{{ Carbon\Carbon::now()->format('d-m-Y H:i') }}" name="status_date" value="{{$object->status_date}}">
+                                            <input type="text" class="form-control" data-provider="flatpickr"
+                                                data-enable-time data-date-format="Y-m-d"
+                                                placeholder="{{ Carbon\Carbon::now()->format('d-m-Y H:i') }}"
+                                                name="status_date" value="{{ $object->status_date }}">
                                         </div>
                                     </div>
                                     <div class="col-md-12 col-xl-12 col-xs-12 col-sm-12">
@@ -132,32 +130,29 @@
                                             <textarea class="form-control" name="comment" id="comment" rows="5">{{ $object->comment }}</textarea>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div
                                     class="bg-info text-light h-25 w-100 d-flex  justify-content-between align-items-center px-4 mb-1">
                                     <label for="" id="commands">Commande N° :</label>
-                                    <label for="" id="num_commands"
-                                        >{{ $object->command_code }}</label>
+                                    <label for="" id="num_commands">{{ $object->command_code }}</label>
                                 </div>
                                 <div
                                     class="bg-primary text-light h-25 w-100 d-flex  justify-content-between align-items-center px-4 mb-1">
                                     <label for="">Total TTC :</label>
-                                    <label for="" id="total_ttc" >{{ $object->TTTC }}</label>
+                                    <label for="" id="total_ttc">{{ $object->TTTC }}</label>
                                 </div>
                                 <div
                                     class="bg-success text-light h-25 w-100 d-flex  justify-content-between align-items-center px-4 mb-1">
                                     <label for="">Total HT :</label>
-                                    <label for="" id="total_ht" >{{ $object->HT }}</label>
+                                    <label for="" id="total_ht">{{ $object->HT }}</label>
                                 </div>
                                 <div
                                     class="bg-warning text-light h-25 w-100 d-flex  justify-content-between align-items-center px-4 mb-1">
                                     <label for="">Total TVA :</label>
-                                    <label for="" id="total_ttva" >{{ $object->TVA }}</label>
+                                    <label for="" id="total_ttva">{{ $object->TVA }}</label>
                                 </div>
-
                             </div>
                         </div>
                     </div>
@@ -175,13 +170,13 @@
             </div>
             <div class="col-lg-12">
                 <div class="text-start">
-                    <button type="submit" class="btn btn-primary storeCommand">{{ trans('translation.general_general_save') }}</button>
+                    <button type="submit"
+                        class="btn btn-primary storeCommand">{{ trans('translation.commands_action_edit') }}</button>
                 </div>
             </div>
         </div>
     </form>
     @include('commands.reglements')
-
 @endsection
 @section('js')
     @include('layouts.includes.form_js')

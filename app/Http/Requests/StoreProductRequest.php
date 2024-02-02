@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreProductRequest extends FormRequest
 {
@@ -24,33 +24,35 @@ class StoreProductRequest extends FormRequest
      */
     public function rules()
     {
+
+
         return [
-            'product_code' => ['bail', 'required',Rule::unique('products', 'product_code')->ignore($this->product)],
-            'name_fr' =>  ['bail', 'required', 'min:3'],
-            'category_id' =>  ['bail', 'required'],
-            'scategory_id' =>  ['bail', 'required'],
-            'buy_price' =>  ['bail', 'required'],
-            'price_unit' =>  ['bail', 'required'],
-            'price_gros' =>  ['bail', 'required'],
-            'price_reseller' =>  ['bail', 'required'],
-            'latest_price' =>  ['bail', 'required'],
-            'remise' =>  ['bail', 'required'],
-            'tva' =>  ['bail', 'required'],
-            'min_stock' =>  ['bail', 'required'],
-            'unite' =>  ['bail', 'required'],
-            'warehouse_id' =>  ['bail', 'required'],
-            'bar_code' =>  ['bail', 'required'],
-            'stockable' =>  ['bail', 'nullable'],
-            'archive' =>  ['bail', 'required',],
-            'brand_id' =>  ['bail', 'required'],
-            'name_ar' =>  ['bail', 'required', 'min:3'],
-           //  'picture' =>  ['bail', 'required'],
+             'product_code' => ['bail', 'required',Rule::unique('products', 'product_code')->ignore($this->product)],
+             'name_fr' =>  ['bail', 'required', 'min:3'],
+             'name_ar' =>  ['bail', 'required', 'min:3'],
+             'category_id' =>  ['bail', 'required'],
+             'scategory_id' =>  ['bail', 'required'],
+             'buy_price' =>  ['bail', 'required'],
+             'price_unit' =>  ['bail', 'required'],
+             'price_gros' =>  ['bail', 'required'],
+             'price_reseller' =>  ['bail', 'required'],
+             'latest_price' =>  ['bail', 'required'],
+             'remise' =>  ['bail', 'required'],
+             'tva' =>  ['bail', 'required'],
+             'min_stock' =>  ['bail', 'required'],
+             'unite' =>  ['bail', 'required'],
+             'warehouse_id' =>  ['bail', 'required'],
+             'bar_code' =>  ['bail', 'nullable'],
+             'brand_id' =>  ['bail', 'required'],
+
         ];
     }
-    // public function messages()
-    // {
-    //     return [
-    //         'name_ar.required' => 'المرجو إدخال المعلومات',
-    //     ];
-    // }
+
+    public function messages()
+    {
+        return [
+            'name_ar.required' => 'المرجو إدخال المعلومات',
+        ];
+    }
 }
+?>

@@ -29,9 +29,9 @@
                             <div class="d-flex gap-1 flex-wrap">
                                 <a href="{{route('commands.generatePdf',$object->id)}}" class="btn btn-primary">Imprimer commande TTC</a>
                                 <a href="{{route('commands.generatePdf',$object->id)}}" class="btn btn-success">Imprimer commande</a>
-                                <a href="#" class="btn btn-warning"> Transfer bon command</a>
-                                <button type="button" class="btn btn-info">
-                                    {{ trans('translation.general_general_save') }}</button>
+                                <a href="#" class="btn btn-warning"> Transfer bon ommand</a>
+                                <a href="#" id="command_edit" class="getCommand" data-command-id="{{ $object->id }}" title="Edit"><span
+                                    class="btn btn-info">{{ trans('translation.commands_action_edit') }}</span></a>
                             </div>
                         </div>
                     </div>

@@ -18,7 +18,7 @@ class NumerotationSeeder extends Seeder
             'id' => 'fb7a7118-7b76-4cad-ba47-af7536686998',
             'doc_type' => 'Produit',
             'prefix' => 'PR-',
-            'increment_num' => 0,
+            'increment_num' => 2,
             'comments' => '<p>Produit</p>',
             'active' => 1,
             'created_at' => '2023-12-27 18:59:44',
@@ -50,7 +50,7 @@ class NumerotationSeeder extends Seeder
          Numerotation::create([
             'id' => 'b706edbc-e91e-4e71-adf0-225f8428e38a',
             'doc_type' => 'Client',
-            'prefix' => 'Cl-',
+            'prefix' => 'CL-',
             'increment_num' => 0,
             'comments' => '<p>Client</p>',
             'active' => 1,

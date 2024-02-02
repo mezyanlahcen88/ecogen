@@ -26,6 +26,7 @@
 
 @section('card-body')
     <div id="contenuDynamique">
+        @include('devis.devis_filter')
 
         @include('devis.table', [
             'model' => 'devis',
@@ -38,6 +39,7 @@
     @include('layouts.includes.datatable_js')
     <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
     <script src="{{ asset('assets/custom_js/categories_scategories.js') }}"></script>
+    <script src="{{ asset('assets/custom_js/delete_advanced.js') }}"></script>
     <script src="{{ asset('assets/custom_js/getProductIndex.js') }}"></script>
 
 @endsection

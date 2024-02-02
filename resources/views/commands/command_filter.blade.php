@@ -10,37 +10,35 @@
             </div> --}}
             <div class="col-lg-3">
                 <div class="mt-0">
-                    <input type="text" class="form-control" data-provider="flatpickr" data-date-format="d/m/Y" data-range-date="true" placeholder="{{Carbon\Carbon::now()->format('d/m/Y')}}">
+                    <input type="text" class="form-control" data-provider="flatpickr" data-date-format="d/m/Y" placeholder="Date début" name="start_date">
                 </div>
             </div>
             <!--end col-->
-            <div class="col-xxl-3 col-sm-4">
+            <div class="col-lg-3">
+                <div class="mt-0">
+                    <input type="text" class="form-control" data-provider="flatpickr" data-date-format="d/m/Y" placeholder="Date fin" name="fin_date">
+                </div>
+            </div>
+            <!--end col-->
+            <div class="col-xxl-3 col-sm-3">
                 <div>
-                    <select class="js-example-basic-single" name="user" id="user">
-                        <option value="">Chosir Famille</option>
-                        {{-- @foreach ($users as $user)
-                            <option value="{{ $user->id }}">{{ $user->name }}</option>
-                        @endforeach --}}
+                    <select class="js-example-basic-single"  name="client" id="client">
+                        <option value="">Chosir client</option>
+                        @foreach ($clients as $client)
+                        <option value="{{$client->id}}">{{$client->getDesignation()}}</option>
+
+                        @endforeach
                     </select>
                 </div>
             </div>
             <!--end col-->
-            <div class="col-xxl-3 col-sm-4">
+            <div class="col-xxl-3 col-sm-3">
                 <div>
-                    <select class="js-example-basic-single"  name="sfamille" id="sfamille">
-                        <option value="">Chosir S-famille</option>
-                        <option value="0">Inactive</option>
-                        <option value="1">Active</option>
-                    </select>
-                </div>
-            </div>
-            <!--end col-->
-            <div class="col-xxl-3 col-sm-4">
-                <div>
-                    <select class="js-example-basic-single"  name="archive" id="archive">
-                        <option value="">Chosir Archive</option>
-                        <option value="1">Archive</option>
-                        <option value="0">Inarchive</option>
+                    <select class="js-example-basic-single"  name="status" id="status">
+                        <option value="">Status</option>
+                        @foreach (getDevisStatus() as $key => $value)
+                        <option value="{{$key}}">{{$value}}</option>
+                        @endforeach
                     </select>
                 </div>
             </div>

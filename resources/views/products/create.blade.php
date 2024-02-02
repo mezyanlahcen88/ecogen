@@ -17,18 +17,7 @@
     ])
 @endsection
 @section('content')
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-
-
-    <form action="{{ route('products.store') }}" method="post" id="userForm" autocomplete="on" enctype="multipart/form-data">
+    <form action="{{ route('products.store') }}" method="post" autocomplete="on" enctype="multipart/form-data">
         @csrf
         <div class="row">
 
@@ -47,13 +36,15 @@
                             'column_value' => getProduitNumerotation(),
                             'readonly' => 'false',
                         ])
-    <div class="col-lg-6">
-        <div>
-            <label class="form-label my-1">Date de crétation</label>
-            <input type="text" class="form-control" data-provider="flatpickr" data-date-format="Y-m-d H:i:S" placeholder="{{Carbon\Carbon::now()->format('Y-m-d H:i:s')}}" name="created_at" value="{{Carbon\Carbon::now()->format('Y-m-d H:i:S')}}">
-        </div>
-    </div>
-
+                        <div class="col-lg-6">
+                            <div>
+                                <label class="form-label my-1">Date de crétation</label>
+                                <input type="text" class="form-control" data-provider="flatpickr"
+                                    data-date-format="Y-m-d H:i:S"
+                                    placeholder="{{ Carbon\Carbon::now()->format('Y-m-d H:i:s') }}" name="created_at"
+                                    value="{{ Carbon\Carbon::now()->format('Y-m-d H:i:S') }}">
+                            </div>
+                        </div>
                         @include('form.input', [
                             'cols' => 'col-md-6',
                             'column' => 'name_fr',
@@ -76,7 +67,6 @@
                             'column_value' => old('name_ar'),
                             'readonly' => 'false',
                         ])
-
                         @include('form.singleSelect', [
                             'cols' => 'col-md-4 ',
                             'column' => 'category_id',
@@ -116,7 +106,7 @@
                             'input_type' => 'number',
                             'class_name' => '',
                             'column_id' => 'buy_price',
-                            'column_value' => old('buy_price'),
+                            'column_value' => old('buy_price') ?? 0,
                             'readonly' => 'false',
                         ])
                         @include('form.input', [
@@ -127,7 +117,7 @@
                             'input_type' => 'number',
                             'class_name' => '',
                             'column_id' => 'price_unit',
-                            'column_value' => old('price_unit'),
+                            'column_value' => old('price_unit') ?? 0,
                             'readonly' => 'false',
                         ])
                         @include('form.input', [
@@ -138,7 +128,7 @@
                             'input_type' => 'number',
                             'class_name' => '',
                             'column_id' => 'price_gros',
-                            'column_value' => old('price_gros'),
+                            'column_value' => old('price_gros') ?? 0,
                             'readonly' => 'false',
                         ])
                         @include('form.input', [
@@ -149,7 +139,7 @@
                             'input_type' => 'number',
                             'class_name' => '',
                             'column_id' => 'price_reseller',
-                            'column_value' => old('price_reseller'),
+                            'column_value' => old('price_reseller') ?? 0,
                             'readonly' => 'false',
                         ])
                         @include('form.input', [
@@ -160,7 +150,7 @@
                             'input_type' => 'number',
                             'class_name' => '',
                             'column_id' => 'latest_price',
-                            'column_value' => old('latest_price'),
+                            'column_value' => old('latest_price') ?? 0,
                             'readonly' => 'false',
                         ])
 
@@ -172,7 +162,7 @@
                             'input_type' => 'number',
                             'class_name' => '',
                             'column_id' => 'remise',
-                            'column_value' => old('remise'),
+                            'column_value' => old('remise') ?? 0,
                             'readonly' => 'false',
                         ])
                         @include('form.input', [
@@ -183,7 +173,7 @@
                             'input_type' => 'number',
                             'class_name' => '',
                             'column_id' => 'tva',
-                            'column_value' => old('tva'),
+                            'column_value' => old('tva') ?? 0,
                             'readonly' => 'false',
                         ])
                         @include('form.input', [
@@ -194,7 +184,7 @@
                             'input_type' => 'number',
                             'class_name' => '',
                             'column_id' => 'min_stock',
-                            'column_value' => old('min_stock'),
+                            'column_value' => old('min_stock') ?? 0,
                             'readonly' => 'false',
                         ])
                         @include('form.singleSelect', [
@@ -278,5 +268,5 @@
     @include('layouts.includes.form_js')
     <script src="{{ asset('assets/custom_js/validate_number.js') }}"></script>
     <script src="{{ asset('assets/custom_js/categories_scategories.js') }}"></script>
-    {!! JsValidator::formRequest('App\Http\Requests\StoreProductRequest') !!}
+    {{-- {!! JsValidator::formRequest('App\Http\Requests\StoreProductRequest') !!} --}}
 @endsection
