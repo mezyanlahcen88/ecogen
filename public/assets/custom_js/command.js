@@ -76,7 +76,7 @@ $(document).ready(function () {
         p.tva = data.tva;
         p.remise = data.remise;
         p.tremise = Math.round((p.quantite * p.remise));
-        p.ht = Math.round((data.price_unit * p.quantite) - ((data.price_unit * p.quantite) * p.tremise/100));
+        p.ht = Math.round((data.price_unit * p.quantite) - data.price_unit * p.quantite * p.tremise / 100);
         p.ttva = Math.round(p.ht * (p.tva / 100));
         p.ttc = Math.round(p.ht * (1 + (p.tva / 100)));
 
@@ -92,7 +92,7 @@ $(document).ready(function () {
         if (existingProduct) {
             // If it exists, update the quantity
             existingProduct.quantite += 1;
-            existingProduct.ht = Math.round((existingProduct.prix * existingProduct.quantite) - ((existingProduct.prix * existingProduct.quantite) * existingProduct.total_remise/100));
+            existingProduct.ht = Math.round((existingProduct.prix * existingProduct.quantite) - existingProduct.prix * existingProduct.quantite * existingProduct.tremise / 100);
             existingProduct.ttva = Math.round((((existingProduct.tva / 100) * existingProduct.ht)));
             existingProduct.ttc = Math.round((((existingProduct.ht) * (1 + (existingProduct.tva / 100)))));
             console.log("pushProdToListe prix:" + existingProduct.prix);
@@ -129,7 +129,7 @@ $(document).ready(function () {
         counter++;
 
         // Properties to include in the td cells
-        const propertiesToInclude = ['ref', 'designation', 'unite', 'quantite', 'prix', 'ht', 'tva', 'remise', 'tremise', 'ttva', 'ttc'];
+        const propertiesToInclude = ['ref', 'designation', 'unite', 'quantite', 'prix', 'ht', 'tva', 'ttva', 'remise', 'tremise', 'ttc'];
 
         // Iterate over properties to include and create td elements
         propertiesToInclude.forEach((key) => {
@@ -305,7 +305,7 @@ $(document).ready(function () {
                     .on('click', () => increase(product.id, 'remise'));
 
                 // Append buttons and input to the div
-                tvaDiv.append(minusButtonRemise, remiseInput, plusButtonRemise);
+                remiseDiv.append(minusButtonRemise, remiseInput, plusButtonRemise);
 
                 td.append(remiseDiv);
             } else {
@@ -335,6 +335,8 @@ $(document).ready(function () {
         var prix = parseFloat(prixInput.val());
         var tvaInput = $(`#product-tva-${id}`);
         var tva = parseFloat(tvaInput.val());
+        var remiseInput = $(`#product-remise-${id}`);
+        var remise = parseFloat(remiseInput.val());
         if (type === 'quantite') {
             if (!isNaN(qte)) {
                 // Update the quantity in the input
@@ -345,7 +347,7 @@ $(document).ready(function () {
                 updateLocalStorageQuantityPrixTva(id, qte, 'quantite');
 
                 // Calculate and update ht and tttva in the localStorage
-                updateLocalStorageHTTTTVA(id, qte, prix, tva);
+                updateLocalStorageHTTTTVA(id, qte, prix, tva, remise);
                 tableProducts();
             } else {
                 console.error(`La quantité n'est pas un nombre valide.`);
@@ -360,7 +362,7 @@ $(document).ready(function () {
                 updateLocalStorageQuantityPrixTva(id, prix, 'prix');
 
                 // Calculate and update ht and tttva in the localStorage
-                updateLocalStorageHTTTTVA(id, qte, prix, tva);
+                updateLocalStorageHTTTTVA(id, qte, prix, tva, remise);
                 tableProducts();
             } else {
                 console.error(`Le prix n'est pas un nombre valide.`);
@@ -375,13 +377,27 @@ $(document).ready(function () {
                 updateLocalStorageQuantityPrixTva(id, tva, 'tva');
 
                 // Calculate and update ht and tttva in the localStorage
-                updateLocalStorageHTTTTVA(id, qte, prix, tva);
+                updateLocalStorageHTTTTVA(id, qte, prix, tva, remise);
                 tableProducts();
             } else {
                 console.error(`Le tva n'est pas un nombre valide.`);
             }
-        }
+        } else if (type === 'remise') {
+            if (!isNaN(remise)) {
+                // Update the tva in the input
+                remise += 1;
+                remiseInput.val(remise);
 
+                // Update the localStorage with the new tva
+                updateLocalStorageQuantityPrixTva(id, remise, 'remise');
+
+                // Calculate and update ht and tttva in the localStorage
+                updateLocalStorageHTTTTVA(id, qte, prix, tva, remise);
+                tableProducts();
+            } else {
+                console.error(`La remise n'est pas un nombre valide.`);
+            }
+        }
     }
 
     function decrease(id, type) {
@@ -391,6 +407,8 @@ $(document).ready(function () {
         var prix = parseFloat(prixInput.val());
         var tvaInput = $(`#product-tva-${id}`);
         var tva = parseFloat(tvaInput.val());
+        var remiseInput = $(`#product-remise-${id}`);
+        var remise = parseFloat(remiseInput.val());
         if (type === 'quantite') {
             if (!isNaN(qte) && qte > 1) {
                 qte -= 1;
@@ -402,7 +420,7 @@ $(document).ready(function () {
                 updateLocalStorageQuantityPrixTva(id, qte, 'quantite');
 
                 // Calculate and update ht and tttva in the localStorage
-                updateLocalStorageHTTTTVA(id, qte, prix, tva);
+                updateLocalStorageHTTTTVA(id, qte, prix, tva, remise);
                 tableProducts();
 
             } else {
@@ -419,7 +437,7 @@ $(document).ready(function () {
                 updateLocalStorageQuantityPrixTva(id, prix, 'prix');
 
                 // Calculate and update ht and tttva in the localStorage
-                updateLocalStorageHTTTTVA(id, qte, prix, tva);
+                updateLocalStorageHTTTTVA(id, qte, prix, tva, remise);
                 tableProducts();
 
             } else {
@@ -436,7 +454,24 @@ $(document).ready(function () {
                 updateLocalStorageQuantityPrixTva(id, tva, 'tva');
 
                 // Calculate and update ht and tttva in the localStorage
-                updateLocalStorageHTTTTVA(id, qte, prix, tva);
+                updateLocalStorageHTTTTVA(id, qte, prix, tva, remise);
+                tableProducts();
+
+            } else {
+                console.error("Invalid tva or tva cannot be decreased further.");
+            }
+        } else if (type === 'remise') {
+            if (!isNaN(remise) && remise >= 0) {
+                remise -= 1;
+
+                // Update the tva in the input field
+                remiseInput.value = remise;
+
+                // Update the localStorage with the new tva
+                updateLocalStorageQuantityPrixTva(id, remise, 'remise');
+
+                // Calculate and update ht and tttva in the localStorage
+                updateLocalStorageHTTTTVA(id, qte, prix, tva, remise);
                 tableProducts();
 
             } else {
@@ -471,18 +506,27 @@ $(document).ready(function () {
                 existingProduct.tva = newValue;
                 localStorage.setItem('product_command', JSON.stringify(listeProd));
             }
+        } else if (type === 'remise') {
+            var listeProd = JSON.parse(localStorage.getItem('product_command')) || [];
+            var existingProduct = listeProd.find((product) => product.id === id);
+
+            if (existingProduct) {
+                existingProduct.remise = newValue;
+                localStorage.setItem('product_command', JSON.stringify(listeProd));
+            }
         }
     }
 
-    function updateLocalStorageHTTTTVA(id, newQuantity, newPrix, newTva,newRemise) {
+    function updateLocalStorageHTTTTVA(id, newQuantity, newPrix, newTva, newRemise) {
         var listeProd = JSON.parse(localStorage.getItem('product_command')) || [];
         var existingProduct = listeProd.find((product) => product.id === id);
         if (existingProduct) {
             // Update ht based on the new quantity
-            existingProduct.ht = Math.round((parseFloat(newPrix) * parseFloat(newQuantity)) - (parseFloat(newPrix) * parseFloat(newQuantity) * parseFloat(newRemise) / 100));
+            existingProduct.ht = Math.round((parseFloat(newPrix) * parseFloat(newQuantity)) - parseFloat(newPrix) * parseFloat(newQuantity) * parseFloat(newRemise) / 100);
 
             // Update tttva based on the updated ht and tva
-            existingProduct.ttva = Math.round((existingProduct.ht * (newTva /100)));
+            existingProduct.ttva = Math.round((existingProduct.ht * (newTva / 100)));
+            existingProduct.tremise = Math.round((existingProduct.quantite * newRemise));
             existingProduct.ttc = Math.round((((existingProduct.ht) * (1 + (newTva / 100)))));
 
             localStorage.setItem('product_command', JSON.stringify(listeProd));
@@ -507,26 +551,6 @@ $(document).ready(function () {
         $("#total_ttc").text(prixTTC.toFixed(2));
     }
 
-    //update quantite ht ttva ttc
-    // function updateQuantite(quantite, idInput) {
-    //     var listeProd = JSON.parse(localStorage.getItem('product_command')) || [];
-
-    //     // Récupère id du produit
-    //     const id = idInput.slice(12);
-    //     var existingProduct = listeProd.find((product) => product.id === id);
-    //     console.log(id);
-    //     console.log(quantite);
-
-    //     if (existingProduct) {
-    //         // If it exists, update the quantity
-    //         existingProduct.quantite = quantite;
-    //         existingProduct.ht = Math.round((existingProduct.prix * existingProduct.quantite));
-    //         existingProduct.ttva = Math.round((((existingProduct.tva / 100) * existingProduct.ht)));
-    //         localStorage.setItem('product_command', JSON.stringify(listeProd));
-    //     }
-    //     loadTableFromLocalStorage();
-    //     calculeTotals();
-    // };
 
     function deleteProduct(productId) {
         // e.preventDefault();
@@ -598,7 +622,7 @@ $(document).ready(function () {
                         'Commande a été créée avec succès',
                         'success'
                     )
-                    window.location.href = '/commands/'+data.id;
+                    window.location.href = '/commands/' + data.id;
                 }
             },
         });
@@ -606,4 +630,3 @@ $(document).ready(function () {
     });
 
 });
-

@@ -9,6 +9,8 @@
             <th>{{ trans('translation.commands_table_ht') }}</th>
             <th>{{ trans('translation.commands_table_tva') }} %</th>
             <th>{{ trans('translation.commands_table_total_tva') }}</th>
+            <th>{{ trans('translation.commands_table_remise') }} %</th>
+            <th>{{ trans('translation.commands_table_total_remise') }}</th>
             <th>{{ trans('translation.commands_table_total_ttc') }}</th>
             <th>{{ trans('translation.general_general_action') }}</th>
         </tr>
