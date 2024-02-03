@@ -624,6 +624,26 @@ $(document).ready(function () {
                     )
                     window.location.href = '/commands/' + data.id;
                 }
+                if (data.error) {
+                    // location.reload();
+
+                    Swal.fire(
+                        'Error!',
+                        'Commande n\'a pas été créée avec succès',
+                        'error'
+                    )
+                }
+            },
+            error: function (data) {
+                if (data.error) {
+                    // location.reload();
+
+                    Swal.fire(
+                        'Error!',
+                        'Commande n\'a pas été créée avec succès',
+                        'error'
+                    )
+                }
             },
         });
 

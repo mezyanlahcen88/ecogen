@@ -87,6 +87,8 @@ class CommandController extends Controller
      */
     public function store(Request $request)
     {
+        try {
+        DB::beginTransaction();
         // $validated = $request->validated();
         $data = $request->all();
 
@@ -123,11 +125,18 @@ class CommandController extends Controller
             ]);
         }
         incCommandNumerotation();
+         DB::commit();
         return response()->json([
             'success'=>true,
             'id'=>$command->id,
         ]);
         // ->with('redirectTo', route('Command.index'));
+        } catch (\Exception $e) {
+        // En cas d'exception, annuler la transaction
+        DB::rollBack();
+
+        return response()->json(['success' => false, 'error' => $e->getMessage()]);
+    }
     }
 
     /**
