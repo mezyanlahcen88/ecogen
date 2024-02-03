@@ -21,7 +21,7 @@ $(document).ready(function () {
         });
     }
 
-//test push git hub
+//test push git hub 2 git main
     var newProduit = {
         ref: '',
         designation: '',
