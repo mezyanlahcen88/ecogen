@@ -805,7 +805,7 @@ $("#btnValider").on("click", function (e) {
     var dateObj = new Date();
     // Formate la date selon le format YYYY-MM-DD HH:MM:SS
     reg.date_reg = dateObj.toISOString().slice(0, 19).replace('T', ' ');
-    if (montantPayer + montantTotalPayer <= total_ttc) {
+    if (montantPayer + montantTotalPayer <= total_ttc && montantPayer > 0) {
         var rest_payer = total_ttc - (montantPayer + montantTotalPayer);
         $("#rest_payer").text(rest_payer.toFixed(2));
         data.push(reg);
