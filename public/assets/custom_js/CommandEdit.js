@@ -808,13 +808,22 @@ $("#btnValider").on("click", function (e) {
     if (montantPayer + montantTotalPayer <= total_ttc && montantPayer > 0) {
         var rest_payer = total_ttc - (montantPayer + montantTotalPayer);
         $("#rest_payer").text(rest_payer.toFixed(2));
+        if (rest_payer === 0) {
+            $('#montantPayer').val(0);
+            $('#montantPayer').prop('readonly', true);
+        }
         data.push(reg);
         // reglements.push(reg);
         localStorage.setItem("product_commandEdit", JSON.stringify(commande));
         // console.log(rest_payer);
         tableReglements();
     } else {
-        console.log("le montant entrer et plus grand que le reste à payer !");
+        console.log("le montant entrer est plus grand que le reste à payer !");
+         Swal.fire(
+             "Super!",
+             "Le montant saisi n'est as valide ou plus grand que le reste à payer",
+             "error"
+         );
     }
 });
 
