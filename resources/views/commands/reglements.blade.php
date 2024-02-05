@@ -32,7 +32,8 @@
                             style="height: 184px">
                             <input type="number"
                                 class="form-control w-50  bg-soft-success text-white border-0 fs-1 text-center"
-                                name="" id="montantPayer" aria-describedby="helpId" value="0" />
+                                name="" id="montantPayer" aria-describedby="helpId" value="0"
+                                 @if ($object->total_restant <= 0) readonly @endif />
 
 
                         </div>

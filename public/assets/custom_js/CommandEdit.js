@@ -37,6 +37,8 @@ const newProduit = {
         quantity: 0,
         price: 0,
         TVA: 0,
+        remise: 0,
+        total_remise: 0,
         TOTAL_HT: 0,
         TOTAL_TVA: 0,
         TOTAL_TTC: 0,
@@ -165,9 +167,11 @@ function objectProd(data) {
         quantity: 1,
         price: data.price_unit,
         TVA: data.tva,
-        TOTAL_HT: Math.round(data.price_unit * 1),
-        TOTAL_TVA: Math.round(data.price_unit * 1 * (data.tva / 100)),
-        TOTAL_TTC: Math.round(data.price_unit * 1 * (1 + data.tva / 100)),
+        remise: data.remise,
+        total_remise: Math.round(1 * data.remise),
+        TOTAL_HT: Math.round((data.price_unit * 1) - data.price_unit * 1 * data.total_remise / 100),
+        TOTAL_TVA: Math.round(((data.price_unit * 1) - data.price_unit * 1 * data.total_remise / 100) * (data.tva / 100)),
+        TOTAL_TTC: Math.round(((data.price_unit * 1) - data.price_unit * 1 * data.total_remise / 100) * (1 + data.tva / 100)),
     };
     return p;
 }
@@ -180,9 +184,10 @@ function pushProdToListe(prod) {
 
     if (existingProduct) {
         // If it exists, update the quantity
+
         existingProduct.pivot.quantity += 1;
         existingProduct.pivot.TOTAL_HT = Math.round(
-            existingProduct.pivot.price * existingProduct.pivot.quantity
+            existingProduct.pivot.price * existingProduct.pivot.quantity - existingProduct.pivot.price * existingProduct.pivot.quantity * existingProduct.total_remise / 100
         );
         existingProduct.pivot.TOTAL_TVA = Math.round(
             (existingProduct.pivot.TVA / 100) * existingProduct.pivot.TOTAL_HT
@@ -280,6 +285,24 @@ function appendTableRow(product) {
         product.pivot.TOTAL_TVA +
         "</td>" +
         "<td>" +
+        '    <div class="input-step">' +
+        '<button type="button" class="minus" id="decreaseRemise-' +
+        product.pivot.product_id +
+        '">–</button>' +
+        '<input type="number" class="product-quantity" id="product-remise-' +
+        product.pivot.product_id +
+        '" value="' +
+        product.pivot.remise +
+        '">' +
+        ' <button type="button" class="plus" id="increaseRemise-' +
+        product.pivot.product_id +
+        '">+</button>' +
+        "    </div>" +
+        "</td>" +
+        "<td>" +
+        product.pivot.total_remise +
+        "</td>" +
+        "<td>" +
         product.pivot.TOTAL_TTC +
         "</td>" +
         "<td>" +
@@ -304,13 +327,14 @@ function appendTableRow(product) {
         }
         var prix = $("#product-prix-" + product.pivot.product_id).val();
         var tva = $("#product-tva-" + product.pivot.product_id).val();
+        var remise = $("#product-remise-" + product.pivot.product_id).val();
         updateLocalStorageQuantityPrixTva(
             product.pivot.product_id,
             qte,
             "quantite"
         );
         // Calculate and update ht and tttva in the localStorage
-        updateLocalStorageHTTTTVA(id, qte, prix, tva);
+        updateLocalStorageHTTTTVA(id, qte, prix, tva, remise);
         tableProducts();
     });
     $("#increasePrix-" + product.pivot.product_id).on("click", () =>
@@ -324,13 +348,14 @@ function appendTableRow(product) {
         var qte = $("#product-qty-" + product.pivot.product_id).val();
         var prix = $("#product-prix-" + product.pivot.product_id).val();
         var tva = $("#product-tva-" + product.pivot.product_id).val();
+        var remise = $("#product-remise-" + product.pivot.product_id).val();
         updateLocalStorageQuantityPrixTva(
             product.pivot.product_id,
             prix,
             "prix"
         );
         // Calculate and update ht and tttva in the localStorage
-        updateLocalStorageHTTTTVA(id, qte, prix, tva);
+        updateLocalStorageHTTTTVA(id, qte, prix, tva, remise);
         tableProducts();
     });
     $("#increaseTva-" + product.pivot.product_id).on("click", () =>
@@ -344,9 +369,27 @@ function appendTableRow(product) {
         var qte = $("#product-qty-" + product.pivot.product_id).val();
         var prix = $("#product-prix-" + product.pivot.product_id).val();
         var tva = $("#product-tva-" + product.pivot.product_id).val();
+        var remise = $("#product-remise-" + product.pivot.product_id).val();
         updateLocalStorageQuantityPrixTva(product.pivot.product_id, tva, "tva");
         // Calculate and update ht and tttva in the localStorage
-        updateLocalStorageHTTTTVA(id, qte, prix, tva);
+        updateLocalStorageHTTTTVA(id, qte, prix, tva, remise);
+        tableProducts();
+    });
+    $("#increaseRemise-" + product.pivot.product_id).on("click", () =>
+        increase(product.pivot.product_id, "remise")
+    );
+    $("#decreaseRemise-" + product.pivot.product_id).on("click", () =>
+        decrease(product.pivot.product_id, "remise")
+    );
+    $("#product-remise-" + product.pivot.product_id).on("blur", () => {
+        id = product.pivot.product_id;
+        var qte = $("#product-qty-" + product.pivot.product_id).val();
+        var prix = $("#product-prix-" + product.pivot.product_id).val();
+        var tva = $("#product-tva-" + product.pivot.product_id).val();
+        var remise = $("#product-remise-" + product.pivot.product_id).val();
+        updateLocalStorageQuantityPrixTva(product.pivot.product_id, remise, "remise");
+        // Calculate and update ht and tttva in the localStorage
+        updateLocalStorageHTTTTVA(id, qte, prix, tva, remise);
         tableProducts();
     });
     $("#deleteProduct-" + product.pivot.product_id).on("click", () =>
@@ -361,6 +404,8 @@ function increase(id, type) {
     var prix = parseFloat(prixInput.val());
     var tvaInput = $(`#product-tva-${id}`);
     var tva = parseFloat(tvaInput.val());
+    var remiseInput = $(`#product-remise-${id}`);
+    var remise = parseFloat(remiseInput.val());
     if (type === "quantite") {
         if (!isNaN(qte)) {
             // Update the quantity in the input
@@ -371,7 +416,7 @@ function increase(id, type) {
             updateLocalStorageQuantityPrixTva(id, qte, "quantite");
 
             // Calculate and update ht and tttva in the localStorage
-            updateLocalStorageHTTTTVA(id, qte, prix, tva);
+            updateLocalStorageHTTTTVA(id, qte, prix, tva, remise);
             tableProducts();
         } else {
             console.error(`La quantité n'est pas un nombre valide.`);
@@ -386,7 +431,7 @@ function increase(id, type) {
             updateLocalStorageQuantityPrixTva(id, prix, "prix");
 
             // Calculate and update ht and tttva in the localStorage
-            updateLocalStorageHTTTTVA(id, qte, prix, tva);
+            updateLocalStorageHTTTTVA(id, qte, prix, tva, remise);
             tableProducts();
         } else {
             console.error(`Le prix n'est pas un nombre valide.`);
@@ -401,10 +446,25 @@ function increase(id, type) {
             updateLocalStorageQuantityPrixTva(id, tva, "tva");
 
             // Calculate and update ht and tttva in the localStorage
-            updateLocalStorageHTTTTVA(id, qte, prix, tva);
+            updateLocalStorageHTTTTVA(id, qte, prix, tva, remise);
             tableProducts();
         } else {
             console.error(`Le tva n'est pas un nombre valide.`);
+        }
+    } else if (type === "remise") {
+        if (!isNaN(remise)) {
+            // Update the remise in the input
+            remise += 1;
+            remiseInput.val(remise);
+
+            // Update the localStorage with the new remise
+            updateLocalStorageQuantityPrixTva(id, remise, "remise");
+
+            // Calculate and update ht and tttva in the localStorage
+            updateLocalStorageHTTTTVA(id, qte, prix, tva, remise);
+            tableProducts();
+        } else {
+            console.error(`La remise n'est pas un nombre valide.`);
         }
     }
 }
@@ -416,6 +476,8 @@ function decrease(id, type) {
     var prix = parseFloat(prixInput.val());
     var tvaInput = $(`#product-tva-${id}`);
     var tva = parseFloat(tvaInput.val());
+    var remiseInput = $(`#product-remise-${id}`);
+    var remise = parseFloat(remiseInput.val());
     if (type === "quantite") {
         if (!isNaN(qte) && qte > 1) {
             qte -= 1;
@@ -427,7 +489,7 @@ function decrease(id, type) {
             updateLocalStorageQuantityPrixTva(id, qte, "quantite");
 
             // Calculate and update ht and tttva in the localStorage
-            updateLocalStorageHTTTTVA(id, qte, prix, tva);
+            updateLocalStorageHTTTTVA(id, qte, prix, tva, remise);
             tableProducts();
         } else {
             console.error(
@@ -445,7 +507,7 @@ function decrease(id, type) {
             updateLocalStorageQuantityPrixTva(id, prix, "prix");
 
             // Calculate and update ht and tttva in the localStorage
-            updateLocalStorageHTTTTVA(id, qte, prix, tva);
+            updateLocalStorageHTTTTVA(id, qte, prix, tva, remise);
             tableProducts();
         } else {
             console.error(
@@ -463,10 +525,26 @@ function decrease(id, type) {
             updateLocalStorageQuantityPrixTva(id, tva, "tva");
 
             // Calculate and update ht and tttva in the localStorage
-            updateLocalStorageHTTTTVA(id, qte, prix, tva);
+            updateLocalStorageHTTTTVA(id, qte, prix, tva, remise);
             tableProducts();
         } else {
             console.error("Invalid tva or tva cannot be decreased further.");
+        }
+    } else if (type === "remise") {
+        if (!isNaN(remise) && remise >= 0) {
+            remise -= 1;
+
+            // Update the remise in the input field
+            remiseInput.value = remise;
+
+            // Update the localStorage with the new remise
+            updateLocalStorageQuantityPrixTva(id, remise, "remise");
+
+            // Calculate and update ht and tttva in the localStorage
+            updateLocalStorageHTTTTVA(id, qte, prix, tva, remise);
+            tableProducts();
+        } else {
+            console.error("Invalid remise or remise cannot be decreased further.");
         }
     }
 }
@@ -502,23 +580,35 @@ function updateLocalStorageQuantityPrixTva(id, newValue, type) {
             existingProduct.pivot.TVA = newValue;
             localStorage.setItem("product_commandEdit", JSON.stringify(data));
         }
+    } else if (type === "remise") {
+        var data =
+            JSON.parse(localStorage.getItem("product_commandEdit")) || [];
+        var listeProd = data.commandProducts;
+        var existingProduct = listeProd.find((product) => product.id === id);
+
+        if (existingProduct) {
+            existingProduct.pivot.remise = newValue;
+            localStorage.setItem("product_commandEdit", JSON.stringify(data));
+        }
     }
 }
 
-function updateLocalStorageHTTTTVA(id, newQuantity, newPrix, newTva) {
+function updateLocalStorageHTTTTVA(id, newQuantity, newPrix, newTva, newRemise) {
     var data = JSON.parse(localStorage.getItem("product_commandEdit")) || [];
     var listeProd = data.commandProducts;
     var existingProduct = listeProd.find((product) => product.id === id);
     if (existingProduct) {
         // Update ht based on the new quantity
         existingProduct.pivot.TOTAL_HT = Math.round(
-            parseFloat(newPrix) * parseFloat(newQuantity)
-        );
-
+            (parseFloat(newPrix) * parseFloat(newQuantity)) - parseFloat(newPrix) * parseFloat(newQuantity) * parseFloat(newRemise) / 100);
         // Update tttva based on the updated ht and tva
         existingProduct.pivot.TOTAL_TVA = Math.round(
             parseFloat(newPrix) * parseFloat(newQuantity) * (newTva / 100)
         );
+        // Update tremise based on the updated qte and remise
+
+        existingProduct.pivot.total_remise = Math.round((existingProduct.pivot.quantity * newRemise));
+
         existingProduct.pivot.TOTAL_TTC = Math.round(
             existingProduct.pivot.TOTAL_HT * (1 + newTva / 100)
         );
@@ -715,16 +805,25 @@ $("#btnValider").on("click", function (e) {
     var dateObj = new Date();
     // Formate la date selon le format YYYY-MM-DD HH:MM:SS
     reg.date_reg = dateObj.toISOString().slice(0, 19).replace('T', ' ');
-    if (montantPayer + montantTotalPayer <= total_ttc) {
+    if (montantPayer + montantTotalPayer <= total_ttc && montantPayer > 0) {
         var rest_payer = total_ttc - (montantPayer + montantTotalPayer);
         $("#rest_payer").text(rest_payer.toFixed(2));
+        if (rest_payer === 0) {
+            $('#montantPayer').val(0);
+            $('#montantPayer').prop('readonly', true);
+        }
         data.push(reg);
         // reglements.push(reg);
         localStorage.setItem("product_commandEdit", JSON.stringify(commande));
         // console.log(rest_payer);
         tableReglements();
     } else {
-        console.log("le montant entrer et plus grand que le reste à payer !");
+        console.log("le montant entrer est plus grand que le reste à payer !");
+         Swal.fire(
+             "Super!",
+             "Le montant saisi n'est as valide ou plus grand que le reste à payer",
+             "error"
+         );
     }
 });
 
@@ -790,30 +889,30 @@ $(".storeReglement").on("click", function (e) {
                 // $('#productTableBody').empty();
                 data.detailsReglement = [];
                 getCommandDetails(commandId);
-                location.reload();
-                console.log("delete storage");
-                loadTableFromLocalStorage();
-
-                // localStorage.setItem("product_commandEdit", JSON.stringify(data));
                 Swal.fire(
                     "Super!",
                     "Réglement a été créé avec succès",
                     "success"
                 );
+                location.reload();
+                console.log("delete storage");
+                loadTableFromLocalStorage();
+
+                // localStorage.setItem("product_commandEdit", JSON.stringify(data));
+
 
             }
         },
     });
 });
 
- function getCommandDetails(commandId) {
+function getCommandDetails(commandId) {
     console.log(commandId);
     $.ajax({
         url: "/commands/" + commandId + "/edit",
         type: 'GET',
         dataType: 'json', // Changez ceci en 'html'
         success: function (data) {
-            // $('#contenuDynamique').html(data.html);
             localStorage.setItem('product_commandEdit', JSON.stringify(data));
         },
         error: function (error) {

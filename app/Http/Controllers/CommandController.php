@@ -87,6 +87,8 @@ class CommandController extends Controller
      */
     public function store(Request $request)
     {
+        try {
+        DB::beginTransaction();
         // $validated = $request->validated();
         $data = $request->all();
 
@@ -96,8 +98,9 @@ class CommandController extends Controller
         $command->HT = $data['total_ht'];
         $command->TVA = $data['total_ttva'];
         $command->TTTC = $data['total_ttc'];
-        $command->total_payant = 0.00;
-        $command->total_restant = $data['total_ttc'];
+        // $command->total_payant = 0.00;
+        // $command->total_restant = $data['total_ttc'];
+        $command->rest_pay = $data['total_ttc'];
         $command->status = $data['status'];
         $command->status_date = $data['status_date'];
         $command->client_id = $data['client'];
@@ -112,8 +115,8 @@ class CommandController extends Controller
                 'designation' => $item['designation'],
                 'quantity' => $item['quantite'],
                 'price' => $item['prix'],
-                'remise' => 5,
-                'total_remise' => 5,
+                'remise' => $item['remise'],
+                'total_remise' => $item['tremise'],
                 'TOTAL_HT' => $item['ht'],
                 'TVA' => $item['tva'],
                 'TOTAL_TVA' => $item['ttva'],
@@ -122,12 +125,18 @@ class CommandController extends Controller
             ]);
         }
         incCommandNumerotation();
-        trackinkAddedDoc($data['client'] ,'Command');
-
+         DB::commit();
         return response()->json([
             'success'=>true,
             'id'=>$command->id,
         ]);
+        // ->with('redirectTo', route('Command.index'));
+        } catch (\Exception $e) {
+        // En cas d'exception, annuler la transaction
+        DB::rollBack();
+
+        return response()->json(['success' => false, 'error' => $e->getMessage()]);
+    }
     }
 
     /**
@@ -210,8 +219,8 @@ class CommandController extends Controller
                 'designation' => $item['designation'],
                 'quantity' => $item['quantity'],
                 'price' => $item['price'],
-                'remise' => 5,
-                'total_remise' => 5,
+                'remise' => $item['remise'],
+                'total_remise' => $item['total_remise'],
                 'TOTAL_HT' => $item['TOTAL_HT'],
                 'TVA' => $item['TVA'],
                 'TOTAL_TVA' => $item['TOTAL_TVA'],
