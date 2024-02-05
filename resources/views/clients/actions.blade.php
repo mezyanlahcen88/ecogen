@@ -14,7 +14,7 @@
         @endcan
         @can('client-delete')
             <div class="remove">
-                <a href="#" class="remove-item-btn" data-bs-toggle="modal"
+                <a href="#" class="remove-item-btn-upd" data-bs-toggle="modal"
                 data-id="{{ $object->id }}" data-route-name="{{ route('clients.destroy', 'delete') }}">
               <span class="badge  text-bg-danger"><i class="las la-trash"></i></span></a>
             </div>

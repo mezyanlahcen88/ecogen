@@ -48,6 +48,38 @@ class DevisController extends Controller
         $clients = Client::get();
         return view('devis.index', compact('tableRows', 'objects','clients'));
     }
+
+    public function getDevisJson()
+    {
+        $products = Devis::with('category')->with('scategory');
+        return Datatables($products)
+
+        // ->filterColumn('user.name' , function($query , $keyword){
+        //     if(is_numeric($keyword)){
+        //         $query->whereRelation('user','id', $keyword);
+        //     }else{
+        //         $query->whereRelation('user','name','LIKE',"%{$keyword}%");
+        //     }
+        // })
+        ->filterColumn('archive' , function($query , $keyword){
+            $query->where('archive', $keyword);
+        })
+        ->addIndexColumn()
+        ->addColumn('archive' , function(Product $product){
+            return '<span class="badge ' . (!$product->archive ? 'bg-danger' : 'bg-success') . ' text-uppercase">' . ($product->archive ? 'Archive' : 'Inarchive') . '</span>
+             ';
+        })
+        ->addColumn('actions', function (Product $object) {
+            return view('products.actions', compact('object'));
+        })
+        ->rawColumns(['archive','actions'])
+        ->editColumn('created_at','{{\Carbon\Carbon::parse($created_at)->format("d/m/Y")}}')
+        ->editColumn('picture',function (Product $object) {
+            return view('products.image', compact('object'));
+         })
+        ->setRowAttr(['align'=>'center'])
+        ->make(true);
+    }
     /**
      * Display a list of soft-deleted records.
      *
@@ -118,6 +150,7 @@ class DevisController extends Controller
             ]);
         }
         incDevisNumerotation();
+        trackinkAddedDoc($data['client'] ,'Devis');
 
         return response()->json([
             'success'=>true,

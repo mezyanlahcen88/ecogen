@@ -194,9 +194,20 @@ class ClientController extends Controller
      */
     public function destroy(Request $request)
     {
-        $object = Client::findOrFail($request->id)->delete();
+        $object = Client::findOrFail($request->id);
+        if($object->count_docs == 0){
+         $object->delete();
+         return response()->json([
+            'success'=>true,
+            'message'=>trans('translation.client_message_delete')
+        ]);
+        }else{
+         return response()->json([
+            'success'=>false,
+            'message'=>'vous ne pouvez pas supprimer ce client car il a  '. $object->count_docs .' document(s)'
+        ]);
     }
-
+}
     /**
      * Restore a soft-deleted user.
      *
@@ -270,6 +281,7 @@ class ClientController extends Controller
         $object = Client::findOrFail($request->parent_id);
         $object->total_garanties = $object->total_garanties + $request->amount;
         $object->save();
+        trackinkAddedDoc($request->parent_id ,'Garantie');
         return back();
     }
 }

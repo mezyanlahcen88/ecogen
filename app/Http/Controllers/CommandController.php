@@ -122,11 +122,12 @@ class CommandController extends Controller
             ]);
         }
         incCommandNumerotation();
+        trackinkAddedDoc($data['client'] ,'Command');
+
         return response()->json([
             'success'=>true,
             'id'=>$command->id,
         ]);
-        // ->with('redirectTo', route('Command.index'));
     }
 
     /**
