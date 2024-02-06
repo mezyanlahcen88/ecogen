@@ -26,10 +26,9 @@ class ProductFactory extends Factory
         $brands = Brand::pluck('id')->toArray();
         $user = User::first()->uuid;
 
-
-        return [
+      return [
             'id' =>  Str::uuid(),
-            'product_code' =>  'PR-'.Str::random(6),
+            'product_code' =>  'PR-'.$this->faker->numberBetween(1111111, 9999991),
             'name_fr' =>  $this->faker->name,
             'name_ar' =>  $this->faker->name,
             'category_id' =>  $this->faker->randomElement($categories),
@@ -39,8 +38,8 @@ class ProductFactory extends Factory
             'price_gros'=>  $this->faker->randomFloat(2, 11.11, 99.99),
             'price_reseller' =>  $this->faker->randomFloat(2, 11.11, 99.99),
             'latest_price' =>  $this->faker->randomFloat(2, 11.11, 99.99),
-            'remise' =>  $this->faker->numberBetween(1, 99),
-            'tva' =>  $this->faker->numberBetween(1, 99),
+            'remise' =>  $this->faker->randomElement([0,5,10]),
+            'tva' =>  $this->faker->randomElement([7,10,15,20]),
             'min_stock' =>  $this->faker->numberBetween(1, 99),
             'unite' =>  $this->faker->randomElement(['KG', 'Piece', 'Ton']),
             'warehouse_id'=>  'fb7a7118-7b76-4cad-ba47-af7536686998',

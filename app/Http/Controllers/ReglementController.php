@@ -98,6 +98,7 @@ class ReglementController extends Controller
                 $command = Command::findOrFail($item['command_id']);
                 $command->total_restant = $command->total_restant - $item['amount_reg'];
                 $command->total_payant = $command->total_payant + $item['amount_reg'];
+                $command->status = 'Validé';
                 $command->save();
             };
 

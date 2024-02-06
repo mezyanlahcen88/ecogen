@@ -806,16 +806,16 @@ $("#btnValider").on("click", function (e) {
     // Formate la date selon le format YYYY-MM-DD HH:MM:SS
     reg.date_reg = dateObj.toISOString().slice(0, 19).replace('T', ' ');
     if (montantPayer + montantTotalPayer <= total_ttc && montantPayer > 0) {
-        var rest_payer = total_ttc - (montantPayer + montantTotalPayer);
-        $("#rest_payer").text(rest_payer.toFixed(2));
-        if (rest_payer === 0) {
+        var total_restanter = total_ttc - (montantPayer + montantTotalPayer);
+        $("#total_restanter").text(total_restanter.toFixed(2));
+        if (total_restanter === 0) {
             $('#montantPayer').val(0);
             $('#montantPayer').prop('readonly', true);
         }
         data.push(reg);
         // reglements.push(reg);
         localStorage.setItem("product_commandEdit", JSON.stringify(commande));
-        // console.log(rest_payer);
+        // console.log(total_restanter);
         tableReglements();
     } else {
         console.log("le montant entrer est plus grand que le reste à payer !");
