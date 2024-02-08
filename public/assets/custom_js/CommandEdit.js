@@ -817,6 +817,7 @@ $("#btnValider").on("click", function (e) {
         localStorage.setItem("product_commandEdit", JSON.stringify(commande));
         // console.log(rest_payer);
         tableReglements();
+        $('#montantPayer').val(0);
     } else {
         console.log("le montant entrer est plus grand que le reste à payer !");
          Swal.fire(
@@ -827,19 +828,80 @@ $("#btnValider").on("click", function (e) {
     }
 });
 
+// function tableReglements() {
+//     var data = JSON.parse(localStorage.getItem("product_commandEdit")) || [];
+//     var listeReg = data.detailsReglement;
+//     console.log(listeReg);
+//     // tableBody.empty();
+//     $("#RegTableBody").empty();
+//     listeReg.forEach((reg) => {
+//         appendTableRegRow(reg);
+//     });
+//     // calculeTotals();
+// }
 function tableReglements() {
-    var data = JSON.parse(localStorage.getItem("product_commandEdit")) || [];
-    var listeReg = data.detailsReglement;
-    console.log(listeReg);
-    // tableBody.empty();
+    var data = JSON.parse(localStorage.getItem("product_commandEdit")) || {};
+    var listeReg = data.detailsReglement || [];
+    // console.log(listeReg);
+
+    // Vide le corps de la table
     $("#RegTableBody").empty();
-    listeReg.forEach((reg) => {
-        appendTableRegRow(reg);
+
+    // Parcourt la liste des reglements et ajoute chaque ligne à la table
+    listeReg.forEach((reg, index) => {
+        appendTableRegRow(reg, index);
     });
+
     // calculeTotals();
 }
 // Fonction pour générer le HTML pour chaque produit
-function appendTableRegRow(reg) {
+// function appendTableRegRow(reg) {
+//     var row =
+//         '<tr class="text-center">' +
+//         "<td>" +
+//         reg.mode_reg +
+//         "</td>" +
+//         "<td>" +
+//         reg.amount_reg +
+//         "</td>" +
+//         "<td>" +
+//         reg.date_reg +
+//         "</td>" +
+//         "<td>" +
+//         '<td>' +
+//         '    <button type="button" onClick="deleteReglement()" class="btn" id="deleteReglement-' + index + '"><i class="las la-times text-danger fs-1"></i></button>' +
+//         '</td>' +
+//         "</tr>";
+
+//     $("#RegTableBody").append(row);
+
+//     // $('#deleteProduct-' + product.pivot.product_id).on('click', () => deleteProduct(product.pivot.product_id));
+// }
+
+
+// function deleteReglement(index) {
+//     // e.preventDefault();
+//     // Récupérer les produits actuels depuis le localStorage
+//     var data = JSON.parse(localStorage.getItem('product_commandEdit'));
+//     var listeReglements = data.detailsReglement;
+
+//     // Vérifier s'il y a des produits dans le localStorage
+//     if (listeReglements) {
+
+//             listeReglements.splice(index, 1);
+
+//             // Mettre à jour le localStorage avec la nouvelle liste de reglements
+//             localStorage.setItem('product_commandEdit', JSON.stringify(data));
+//             console.log('Reglement supprimé avec succès.');
+
+//     } else {
+//         console.log('Aucun reglement trouvé dans le localStorage.');
+//     }
+//     tableReglements();
+// }
+
+
+function appendTableRegRow(reg, index) {
     var row =
         '<tr class="text-center">' +
         "<td>" +
@@ -852,15 +914,69 @@ function appendTableRegRow(reg) {
         reg.date_reg +
         "</td>" +
         "<td>" +
-        // '<td>' +
-        // '    <button type="button" class="btn" id="deleteProduct-' + product.pivot.product_id + '"><i class="las la-times text-danger fs-1"></i></button>' +
-        // '</td>' +
+        '<td>' +
+        '    <button type="button" class="btn editerReglement" data-index="' + index + '"><i class="las la-edit text-danger fs-1"></i></button>' +
+            '</td>' +
+        '<td>' +
+        '    <button type="button" class="btn deleteReglement" data-index="' + index + '"><i class="las la-times text-danger fs-1"></i></button>' +
+        '</td>' +
         "</tr>";
 
     $("#RegTableBody").append(row);
-
-    // $('#deleteProduct-' + product.pivot.product_id).on('click', () => deleteProduct(product.pivot.product_id));
 }
+
+// Attachez un gestionnaire d'événements de délégation à un élément parent
+$("#RegTableBody").on('click', '.deleteReglement', function () {
+    // Obtenez l'index de la ligne à supprimer
+    var index = $(this).data('index');
+
+    // Récupérez les données actuelles depuis le localStorage
+    var data = JSON.parse(localStorage.getItem('product_commandEdit'));
+    var listeReglements = data.detailsReglement;
+        console.log(listeReglements);
+    var montantSaisie = listeReglements[index].amount_reg;
+    var rest_payer = parseFloat($("#rest_payer").text());
+    rest_payer = rest_payer + montantSaisie
+    console.log(rest_payer);
+    $("#rest_payer").text(rest_payer.toFixed(2));
+    // Vérifiez s'il y a des reglements dans le localStorage
+    if (listeReglements) {
+        // Supprimez le reglement à l'index spécifié
+        listeReglements.splice(index, 1);
+
+        // Mettez à jour le localStorage avec la nouvelle liste de reglements
+        localStorage.setItem('product_commandEdit', JSON.stringify(data));
+         $("#montantPayer").val(0);
+         $('select[name="reglement"]').val("");
+         $("#check_ref").val("");
+         $("#commentReg").val("");
+        console.log('Reglement supprimé avec succès.');
+    } else {
+        console.log('Aucun reglement trouvé dans le localStorage.');
+    }
+
+    // Actualisez la table des reglements
+    tableReglements();
+});
+
+$("#RegTableBody").on('click', '.editerReglement', function () {
+    // Obtenez l'index de la ligne à supprimer
+    var index = $(this).data('index');
+
+    // Récupérez les données actuelles depuis le localStorage
+    var data = JSON.parse(localStorage.getItem('product_commandEdit'));
+    var listeReglements = data.detailsReglement;
+    console.log(listeReglements);
+    var montantSaisie = listeReglements[index].amount_reg;
+    var modePaiment = listeReglements[index].mode_reg;
+    var num_order = listeReglements[index].num_order;
+    var comment = listeReglements[index].comment;
+    $("#montantPayer").val(montantSaisie);
+    $('select[name="reglement"]').val(modePaiment);
+    $("#check_ref").val(num_order);
+    $("#commentReg").val(comment);
+
+});
 
 $(".storeReglement").on("click", function (e) {
     e.preventDefault();
