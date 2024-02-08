@@ -79,13 +79,15 @@ class ReglementController extends Controller
      */
     public function store(Request $request)
     {
+        // we need 5 paramtre document_id document_type nature_reg client parent_id
         $data = $request->all();
         foreach ($data['reglements'] as $item) {
             if (empty($item['id'])) {
                 $reglement = new Reglement();
                 $reglement->id = Str::uuid();
-                $reglement->command_id = $item['command_id'];
-                $reglement->ref_reg = 'test_ref';
+                $reglement->reg_code = incRegNumerotation();
+                $reglement->document_id = $item['document_id'];
+                $reglement->document_type = $item['document_type'];
                 $reglement->date_reg = $item['date_reg'];
                 $reglement->amount_reg = $item['amount_reg'];
                 $reglement->mode_reg = $item['mode_reg'];

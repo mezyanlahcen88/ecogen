@@ -60,7 +60,7 @@ class Command extends Model
 
     public function reglements()
 {
-    return $this->hasMany(Reglement::class, 'command_id');
+    return $this->hasMany(Reglement::class, 'document_id');
 }
 
     /**

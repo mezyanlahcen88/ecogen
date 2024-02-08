@@ -335,6 +335,35 @@ if (!function_exists('incDevisNumerotation')) {
     }
 }
 
+
+if (!function_exists('getRegNumerotation')) {
+    function getRegNumerotation()
+    {
+        $num = Numerotation::where('doc_type', 'Reglement')
+            ->latest()
+            ->first();
+
+        if (!$num) {
+            throw new Exception('No Numerotation record found for doc_type "Reglement"');
+        }
+        $codeCommand = $num->prefix . $num->increment_num + 1;
+
+        return $codeCommand;
+    }
+}
+
+
+if (!function_exists('incRegNumerotation')) {
+    function incRegNumerotation()
+    {
+        $num = Numerotation::where('doc_type', 'Reglement')
+            ->latest()
+            ->first();
+        $num->increment_num = $num->increment_num + 1;
+        $num->save();
+    }
+}
+
 if (!function_exists('getExercice')) {
     function getExercice()
     {
