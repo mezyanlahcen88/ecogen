@@ -11,7 +11,7 @@
                     </tr>
                 </thead>
                 <tbody class="list form-check-all">
-                    @foreach ($objects as $object)
+                    {{-- @foreach ($objects as $object)
                         <tr class="text-center">
                             @foreach ($tableRows as $key => $value)
                                  <td> {{ $object->$key }}</td>
@@ -28,7 +28,7 @@
                                 @include('devis.actions')
                             </td>
                         </tr>
-                    @endforeach
+                    @endforeach --}}
                 </tbody>
             </table>
 </div>

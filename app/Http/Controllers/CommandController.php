@@ -48,7 +48,7 @@ class CommandController extends Controller
         $objects = Command::get();
         $clients = Client::get();
 
-        return view('commands.index', compact('tableRows', 'objects','clients'));
+        return view('commands.index', compact('tableRows', 'objects', 'clients'));
     }
     /**
      * Display a list of soft-deleted records.
@@ -88,55 +88,54 @@ class CommandController extends Controller
     public function store(Request $request)
     {
         try {
-        DB::beginTransaction();
-        // $validated = $request->validated();
-        $data = $request->all();
+            DB::beginTransaction();
+            // $validated = $request->validated();
+            $data = $request->all();
 
-        $command = new Command();
-        $command->id = Str::uuid();
-        $command->command_code = $data['num_command'];
-        $command->HT = $data['total_ht'];
-        $command->TVA = $data['total_ttva'];
-        $command->TTTC = $data['total_ttc'];
-        $command->total_payant = 0.00;
-        $command->total_restant = $data['total_ttc'];
-        $command->status = $data['status'];
-        $command->status_date = $data['status_date'];
-        $command->client_id = $data['client'];
-        $command->created_by = Auth::id();
-        $command->comment = $data['comment'];
-        $command->save();
-        foreach ($data['products'] as $item) {
-            DB::table('product_command')->insert([
-                'id' => Str::uuid(),
-                'command_id' => $command->id,
-                'product_id' => $item['id'],
-                'designation' => $item['designation'],
-                'quantity' => $item['quantite'],
-                'price' => $item['prix'],
-                'remise' => $item['remise'],
-                'total_remise' => $item['tremise'],
-                'TOTAL_HT' => $item['ht'],
-                'TVA' => $item['tva'],
-                'TOTAL_TVA' => $item['ttva'],
-                'TOTAL_TTC' => $item['ttc'],
-                'unite' => $item['unite'],
+            $command = new Command();
+            $command->id = Str::uuid();
+            $command->command_code = $data['num_command'];
+            $command->HT = $data['total_ht'];
+            $command->TVA = $data['total_ttva'];
+            $command->TTTC = $data['total_ttc'];
+            $command->total_payant = 0.0;
+            $command->total_restant = $data['total_ttc'];
+            $command->status = $data['status'];
+            $command->status_date = $data['status_date'];
+            $command->client_id = $data['client'];
+            $command->created_by = Auth::id();
+            $command->comment = $data['comment'];
+            $command->save();
+            foreach ($data['products'] as $item) {
+                DB::table('product_command')->insert([
+                    'id' => Str::uuid(),
+                    'command_id' => $command->id,
+                    'product_id' => $item['id'],
+                    'designation' => $item['designation'],
+                    'quantity' => $item['quantite'],
+                    'price' => $item['prix'],
+                    'remise' => $item['remise'],
+                    'total_remise' => $item['tremise'],
+                    'TOTAL_HT' => $item['ht'],
+                    'TVA' => $item['tva'],
+                    'TOTAL_TVA' => $item['ttva'],
+                    'TOTAL_TTC' => $item['ttc'],
+                    'unite' => $item['unite'],
+                ]);
+            }
+            incCommandNumerotation();
+            DB::commit();
+            trackinkAddedDoc($data['client'], 'commande');
+            return response()->json([
+                'success' => true,
+                'id' => $command->id,
             ]);
-        }
-        incCommandNumerotation();
-         DB::commit();
-         trackinkAddedDoc($data['client'],'commande');
-        return response()->json([
-            'success'=>true,
-            'id'=>$command->id,
-        ]);
-        // ->with('redirectTo', route('Command.index'));
+            // ->with('redirectTo', route('Command.index'));
         } catch (\Exception $e) {
-        // En cas d'exception, annuler la transaction
-        DB::rollBack();
+            DB::rollBack();
 
-        return response()->json(['success' => false, 'error' => $e->getMessage()]);
-    }
+            return response()->json(['success' => false, 'error' => $e->getMessage()]);
+        }
     }
 
     /**
@@ -241,21 +240,19 @@ class CommandController extends Controller
                     ->update($productDevisData);
             } else {
                 // Le product_command n'existe pas, créez un nouveau
-                DB::table('product_command')->insert(
-                    array_merge(['id' => Str::uuid(), 'command_id' => $command->id, 'product_id' => $item['product_id']], $productDevisData)
-                );
+                DB::table('product_command')->insert(array_merge(['id' => Str::uuid(), 'command_id' => $command->id, 'product_id' => $item['product_id']], $productDevisData));
             }
 
             $updatedProductIds[] = $item['product_id'];
         }
 
-// Supprimer les product_command qui ne sont pas dans la liste mise à jour
-DB::table('product_command')
-    ->where('command_id', $command->id)
-    ->whereNotIn('product_id', $updatedProductIds)
-    ->delete();
+        // Supprimer les product_command qui ne sont pas dans la liste mise à jour
+        DB::table('product_command')
+            ->where('command_id', $command->id)
+            ->whereNotIn('product_id', $updatedProductIds)
+            ->delete();
         // incDevisNumerotation();
-        return response()->json(['success'=>true]);
+        return response()->json(['success' => true]);
     }
 
     /**
@@ -267,18 +264,18 @@ DB::table('product_command')
     public function destroy(Request $request)
     {
         $object = Command::findOrFail($request->id);
-        if($object->status != 'Validé'){
+        if ($object->status != 'Validé') {
             $object->delete();
             return response()->json([
-               'success'=>true,
-               'message'=>trans('translation.commands_message_delete')
-           ]);
-           }else{
+                'success' => true,
+                'message' => trans('translation.commands_message_delete'),
+            ]);
+        } else {
             return response()->json([
-               'success'=>false,
-               'message'=>'vous ne pouvez pas supprimer cet commande car il est accepté']);
-
-           }
+                'success' => false,
+                'message' => 'vous ne pouvez pas supprimer cet commande car il est accepté',
+            ]);
+        }
     }
 
     /**
@@ -290,9 +287,7 @@ DB::table('product_command')
      */
     public function restore(Request $request, $id)
     {
-        $object = Command::withTrashed()
-            ->findOrFail($id)
-            ->restore();
+        $object = Command::withTrashed()->findOrFail($id)->restore();
         // storeSidebar();
         return redirect()->route('commands.index');
     }
@@ -330,9 +325,7 @@ DB::table('product_command')
 
     public function generatePdf($id)
     {
-        $object = Command::with('products')
-            ->findOrfail($id)
-            ->toArray();
+        $object = Command::with('products')->findOrfail($id)->toArray();
 
         $pdf = PDF::loadView('command.command_pdf', $object);
         $filename = $object['command_code'] . '_' . now()->format('YmdHis') . '.pdf';

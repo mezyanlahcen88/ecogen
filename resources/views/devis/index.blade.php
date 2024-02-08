@@ -41,5 +41,6 @@
     <script src="{{ asset('assets/custom_js/categories_scategories.js') }}"></script>
     <script src="{{ asset('assets/custom_js/delete_advanced.js') }}"></script>
     <script src="{{ asset('assets/custom_js/getProductIndex.js') }}"></script>
+    <script src="{{ asset('assets/custom_js/yajra datatables/devis_datatable.js') }}"></script>
 
 @endsection
