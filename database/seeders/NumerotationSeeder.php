@@ -69,6 +69,17 @@ class NumerotationSeeder extends Seeder
             'updated_at' => '2023-12-27 18:59:44',
             'deleted_at' => null,
          ]);
+         Numerotation::create([
+            'id' => 'b706edbc-e91e-4e71-adf0-225f8428e95f',
+            'doc_type' => 'Reglement',
+            'prefix' => 'REG-',
+            'increment_num' => 0,
+            'comments' => '<p>Reglement numerotation</p>',
+            'active' => 1,
+            'created_at' => '2023-12-27 18:59:44',
+            'updated_at' => '2023-12-27 18:59:44',
+            'deleted_at' => null,
+         ]);
         //  Numerotation::create();
 
     }

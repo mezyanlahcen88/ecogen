@@ -48,6 +48,38 @@ class DevisController extends Controller
         $clients = Client::get();
         return view('devis.index', compact('tableRows', 'objects','clients'));
     }
+
+    public function getDevisJson()
+    {
+        $devis = Devis::with('client')->with('products');
+        return Datatables($devis)
+
+        // ->filterColumn('user.name' , function($query , $keyword){
+        //     if(is_numeric($keyword)){
+        //         $query->whereRelation('user','id', $keyword);
+        //     }else{
+        //         $query->whereRelation('user','name','LIKE',"%{$keyword}%");
+        //     }
+        // })
+        ->filterColumn('status' , function($query , $keyword){
+            $query->where('status', $keyword);
+        })
+        ->addIndexColumn()
+        ->addColumn('active' , function(Devis $devis){
+            return '<span class="badge ' . (!$devis->active ? 'bg-danger' : 'bg-success') . ' text-uppercase">' . ($devis->active ? 'Archive' : 'Inactive') . '</span>
+             ';
+        })
+        ->addColumn('actions', function (Product $object) {
+            return view('products.actions', compact('object'));
+        })
+        ->rawColumns(['active','actions'])
+        ->editColumn('status_date','{{\Carbon\Carbon::parse($status_date)->format("d/m/Y")}}')
+        // ->editColumn('picture',function (Product $object) {
+        //     return view('products.image', compact('object'));
+        //  })
+        ->setRowAttr(['align'=>'center'])
+        ->make(true);
+    }
     /**
      * Display a list of soft-deleted records.
      *
@@ -108,8 +140,8 @@ class DevisController extends Controller
                 'designation' => $item['designation'],
                 'quantity' => $item['quantite'],
                 'price' => $item['prix'],
-                'remise' => 5,
-                'total_remise' => 5,
+                'remise' => 0,
+                'total_remise' => 0,
                 'TOTAL_HT' => $item['ht'],
                 'TVA' => $item['tva'],
                 'TOTAL_TVA' => $item['ttva'],
@@ -118,12 +150,13 @@ class DevisController extends Controller
             ]);
         }
         incDevisNumerotation();
+        trackinkAddedDoc($data['client'] ,'Devis');
 
         return response()->json([
             'success'=>true,
             'id'=>$devis->id,
         ]);
-        // ->with('redirectTo', route('devis.index'));
+       
     }
 
     /**

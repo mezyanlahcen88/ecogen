@@ -15,14 +15,15 @@ return new class extends Migration
     {
         Schema::create('reglements', function (Blueprint $table) {
             $table->uuid('id')->unique();
-            $table->foreignUuid('command_id')->constrained()->onDelete('cascade');
-            $table->string('ref_reg');
+            $table->string('reg_code')->unique();
+            $table->uuid('document_id')->comment('bc,dv ...');
+            $table->string('document_type')->comment('bc,dv ..');
             $table->timestamp('date_reg');
             $table->double('amount_reg',8,2);
             $table->string('mode_reg')->comment('espece,virement');
             $table->string('nature_reg')->comment('achat,vente');
             $table->string('parent_type')->comment('supplier,client');
-            $table->uuid('parent_id');
+            $table->uuid('parent_id')->comment('supplier,client');
             $table->text('comment');
             $table->timestamps();
             $table->softDeletes();

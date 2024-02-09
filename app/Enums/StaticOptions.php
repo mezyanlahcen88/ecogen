@@ -42,6 +42,7 @@ final class StaticOptions
         'Bon d\'achat'=>'Bon d\'achat',
         'Carte bancaire'=>'Carte bancaire',
         'Avoir'=>'Avoir',
+        'Garantie'=>'Garantie',
     ];
 
     const CLIENT_TYPES =[

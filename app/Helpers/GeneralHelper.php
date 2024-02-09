@@ -12,6 +12,7 @@ use App\Models\AditionalRate;
 use App\Models\EmailAttachement;
 use App\Models\ProductTranslate;
 use App\Models\CategoryTranslate;
+use App\Models\Client;
 use App\Models\Exercice;
 use App\Models\LanguageTranslate;
 use App\Models\ProductAttachement;
@@ -20,6 +21,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use App\Models\ManufacturerTranslate;
 use App\Models\Numerotation;
+use App\Models\TrackClientDocs;
 use Dotenv\Util\Str;
 use Illuminate\Support\Facades\Storage;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
@@ -333,6 +335,35 @@ if (!function_exists('incDevisNumerotation')) {
     }
 }
 
+
+if (!function_exists('getRegNumerotation')) {
+    function getRegNumerotation()
+    {
+        $num = Numerotation::where('doc_type', 'Reglement')
+            ->latest()
+            ->first();
+
+        if (!$num) {
+            throw new Exception('No Numerotation record found for doc_type "Reglement"');
+        }
+        $codeCommand = $num->prefix . $num->increment_num + 1;
+
+        return $codeCommand;
+    }
+}
+
+
+if (!function_exists('incRegNumerotation')) {
+    function incRegNumerotation()
+    {
+        $num = Numerotation::where('doc_type', 'Reglement')
+            ->latest()
+            ->first();
+        $num->increment_num = $num->increment_num + 1;
+        $num->save();
+    }
+}
+
 if (!function_exists('getExercice')) {
     function getExercice()
     {
@@ -403,5 +434,36 @@ if (!function_exists('getCommandStatus')) {
             'Rejeté'=>'Rejeté',
         ];
          return $status;
+    }
+}
+
+if (!function_exists('trackinkAddedDoc')) {
+    function trackinkAddedDoc(String  $clientId, String $type_doc)
+    {
+
+        // add new record to trackin table
+
+        $tracked = new TrackClientDocs();
+        $tracked->client_id = $clientId;
+        $tracked->type_doc = $type_doc;
+        $tracked->save();
+
+        // update count in client table
+        $client = Client::findOrFail($clientId);
+        $client->count_docs =  $client->count_docs +1 ;
+        $client->save();
+    }
+}
+
+if (!function_exists('trackinkDeletedDoc')) {
+    function trackinkDeletedDoc(String  $clientId, int $doc_id)
+    {
+        // deleted doc record
+        $tracked = TrackClientDocs::findOrFail($doc_id)->delete();
+
+        // update count in client table
+        $client = Client::findOrFail($clientId);
+        $client->count_docs =  $client->count_docs -1 ;
+        $client->save();
     }
 }
