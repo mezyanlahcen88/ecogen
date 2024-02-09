@@ -760,6 +760,7 @@ var newReglement = {
     id: "",
     command_id: "",
     ref_reg: "",
+    num_order: "",
     nature_reg: "",
     parent_type: "",
     parent_id: "",
@@ -799,7 +800,7 @@ $("#btnValider").on("click", function (e) {
     reg.command_id = command_id;
     reg.parent_id = parent_id;
     reg.mode_reg = modePaiment;
-    reg.ref_reg = num_order;
+    reg.num_order = num_order;
     reg.comment = comment;
     reg.amount_reg = montantPayer;
     var dateObj = new Date();
@@ -818,13 +819,16 @@ $("#btnValider").on("click", function (e) {
         // console.log(total_restanter);
         tableReglements();
         $('#montantPayer').val(0);
+        $('#commentReg').val("");
+        $('#check_ref').val("");
+        $('select[name="reglement"]').val("").trigger('change.select2'); // Déselectionner l'option
     } else {
         console.log("le montant entrer est plus grand que le reste à payer !");
-         Swal.fire(
-             "Super!",
-             "Le montant saisi n'est as valide ou plus grand que le reste à payer",
-             "error"
-         );
+        Swal.fire(
+            "Super!",
+            "Le montant saisi n'est as valide ou plus grand que le reste à payer",
+            "error"
+        );
     }
 });
 
@@ -913,12 +917,8 @@ function appendTableRegRow(reg, index) {
         "<td>" +
         reg.date_reg +
         "</td>" +
-        "<td>" +
         '<td>' +
-        '    <button type="button" class="btn editerReglement" data-index="' + index + '"><i class="las la-edit text-danger fs-1"></i></button>' +
-            '</td>' +
-        '<td>' +
-        '    <button type="button" class="btn deleteReglement" data-index="' + index + '"><i class="las la-times text-danger fs-1"></i></button>' +
+        '    <button type="button" class="btn editerReglement" data-index="' + index + '"><i class="las la-edit text-danger fs-1"></i></button> <button type="button" class="btn deleteReglement" data-index="' + index + '"><i class="las la-times text-danger fs-1"></i></button>' +
         '</td>' +
         "</tr>";
 
@@ -926,57 +926,137 @@ function appendTableRegRow(reg, index) {
 }
 
 // Attachez un gestionnaire d'événements de délégation à un élément parent
+// $("#RegTableBody").on('click', '.deleteReglement', function () {
+//     // Obtenez l'index de la ligne à supprimer
+//     var index = $(this).data('index');
+
+//     // Récupérez les données actuelles depuis le localStorage
+//     var data = JSON.parse(localStorage.getItem('product_commandEdit'));
+//     var listeReglements = data.detailsReglement;
+//         console.log(listeReglements);
+//     var montantSaisie = listeReglements[index].amount_reg;
+//     var rest_payer = $("#total_restanter").text();
+//     var total_ttc = parseFloat($("#total_ttc").text());
+//     if ((parseFloat(rest_payer) + parseFloat(montantSaisie)) <= total_ttc) {
+//         rest_payer = parseFloat(rest_payer) + parseFloat(montantSaisie);
+//         $("#total_restanter").text(rest_payer.toFixed(2));
+//         if (listeReglements) {
+//             // Supprimez le reglement à l'index spécifié
+//             listeReglements.splice(index, 1);
+
+//             // Mettez à jour le localStorage avec la nouvelle liste de reglements
+//             localStorage.setItem('product_commandEdit', JSON.stringify(data));
+//             $("#montantPayer").val(0);
+//             $('select[name="reglement"]').val("");
+//             $("#check_ref").val("");
+//             $("#commentReg").val("");
+//             console.log('Reglement supprimé avec succès.');
+//         } else {
+//             console.log('Aucun reglement trouvé dans le localStorage.');
+//         }
+//         if (total_ttc >= rest_payer) {
+//             $('#montantPayer').val(0);
+//             $('#montantPayer').prop('readonly', false);
+//         } else {
+//             $('#montantPayer').val(0);
+//             $('#montantPayer').prop('readonly', true);
+//         }
+//     } else {
+//         Swal.fire(
+//             "Super!",
+//             "Le montant saisi n'est as valide ou plus grand que le reste à payer",
+//             "error"
+//         );
+//     }
+
+//     console.log("montantSaisie : " + montantSaisie);
+//     console.log("total_restanter : " + rest_payer);
+//     // Vérifiez s'il y a des reglements dans le localStorage
+
+
+//     // Actualisez la table des reglements
+//     tableReglements();
+// });
+
+// $("#RegTableBody").on('click', '.editerReglement', function () {
+//     // Obtenez l'index de la ligne à supprimer
+//     var index = $(this).data('index');
+
+//     // Récupérez les données actuelles depuis le localStorage
+//     var data = JSON.parse(localStorage.getItem('product_commandEdit'));
+//     var listeReglements = data.detailsReglement;
+//     console.log(listeReglements);
+//     var montantSaisie = listeReglements[index].amount_reg;
+//     var modePaiment = listeReglements[index].mode_reg;
+//     var num_order = listeReglements[index].num_order;
+//     var comment = listeReglements[index].comment;
+//     $("#montantPayer").val(montantSaisie);
+//      // Mettez à jour la valeur du select2
+//      $('select[name="reglement"]').val(modePaiment).trigger('change.select2');
+//     $("#check_ref").val(num_order);
+//     $("#commentReg").val(comment);
+
+// });
+
 $("#RegTableBody").on('click', '.deleteReglement', function () {
-    // Obtenez l'index de la ligne à supprimer
-    var index = $(this).data('index');
+    let index = $(this).data('index');
 
-    // Récupérez les données actuelles depuis le localStorage
-    var data = JSON.parse(localStorage.getItem('product_commandEdit'));
-    var listeReglements = data.detailsReglement;
-        console.log(listeReglements);
-    var montantSaisie = listeReglements[index].amount_reg;
-    var rest_payer = parseFloat($("#rest_payer").text());
-    rest_payer = rest_payer + montantSaisie
-    console.log(rest_payer);
-    $("#rest_payer").text(rest_payer.toFixed(2));
-    // Vérifiez s'il y a des reglements dans le localStorage
-    if (listeReglements) {
-        // Supprimez le reglement à l'index spécifié
-        listeReglements.splice(index, 1);
-
-        // Mettez à jour le localStorage avec la nouvelle liste de reglements
-        localStorage.setItem('product_commandEdit', JSON.stringify(data));
-         $("#montantPayer").val(0);
-         $('select[name="reglement"]').val("");
-         $("#check_ref").val("");
-         $("#commentReg").val("");
-        console.log('Reglement supprimé avec succès.');
-    } else {
-        console.log('Aucun reglement trouvé dans le localStorage.');
+    let data = JSON.parse(localStorage.getItem('product_commandEdit'));
+    if (!data || !data.detailsReglement) {
+        console.log('Erreur : Aucune donnée de reglement trouvée dans le localStorage.');
+        return;
     }
+    let listeReglements = data.detailsReglement;
+    let montantSaisie = listeReglements[index].amount_reg;
+    let rest_payer = parseFloat($("#total_restanter").text());
+    let total_ttc = parseFloat($("#total_ttc").text());
 
-    // Actualisez la table des reglements
+    if ((rest_payer + montantSaisie) <= total_ttc) {
+        rest_payer += montantSaisie;
+        $("#total_restanter").text(rest_payer.toFixed(2));
+
+        listeReglements.splice(index, 1);
+        localStorage.setItem('product_commandEdit', JSON.stringify(data));
+
+        $("#montantPayer").val(0);
+        $('select[name="reglement"]').val("").trigger('change.select2'); // Déselectionner l'option        $("#check_ref").val("");
+        $("#commentReg").val("");
+        $("#check_ref").val("");
+        console.log('Reglement supprimé avec succès.');
+
+        if (total_ttc >= rest_payer) {
+            $('#montantPayer').val(0);
+            $('#montantPayer').prop('readonly', false);
+        }
+    } else {
+        Swal.fire("Super!", "Le montant saisi n'est pas valide ou plus grand que le reste à payer", "error");
+    }
+    console.log("montantSaisie : " + montantSaisie);
+    console.log("total_restanter : " + rest_payer);
+
     tableReglements();
 });
 
 $("#RegTableBody").on('click', '.editerReglement', function () {
-    // Obtenez l'index de la ligne à supprimer
-    var index = $(this).data('index');
+    let index = $(this).data('index');
 
-    // Récupérez les données actuelles depuis le localStorage
-    var data = JSON.parse(localStorage.getItem('product_commandEdit'));
-    var listeReglements = data.detailsReglement;
-    console.log(listeReglements);
-    var montantSaisie = listeReglements[index].amount_reg;
-    var modePaiment = listeReglements[index].mode_reg;
-    var num_order = listeReglements[index].num_order;
-    var comment = listeReglements[index].comment;
+    let data = JSON.parse(localStorage.getItem('product_commandEdit'));
+    if (!data || !data.detailsReglement) {
+        console.log('Erreur : Aucune donnée de reglement trouvée dans le localStorage.');
+        return;
+    }
+    let listeReglements = data.detailsReglement;
+    let montantSaisie = listeReglements[index].amount_reg;
+    let modePaiment = listeReglements[index].mode_reg;
+    let num_order = listeReglements[index].num_order;
+    let comment = listeReglements[index].comment;
+
     $("#montantPayer").val(montantSaisie);
-    $('select[name="reglement"]').val(modePaiment);
+    $('select[name="reglement"]').val(modePaiment).trigger('change.select2');
     $("#check_ref").val(num_order);
     $("#commentReg").val(comment);
-
 });
+
 
 $(".storeReglement").on("click", function (e) {
     e.preventDefault();
