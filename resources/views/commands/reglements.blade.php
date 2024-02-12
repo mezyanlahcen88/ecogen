@@ -12,7 +12,8 @@
                         <div
                             class="bg-info text-light h-25 w-100 d-flex  justify-content-between align-items-center px-4 mb-1">
                             <label for="" id="commands">Reste à payer</label>
-                            <label for="" id="total_restanter" class="fs-3">{{ $object->total_restant }}</label>
+                            <label for="" id="total_restanter"
+                                class="fs-3">{{ $object->total_restant }}</label>
                         </div>
                         <div
                             class="bg-primary text-light h-25 w-100 d-flex  justify-content-between align-items-center px-4 mb-1">
@@ -33,7 +34,7 @@
                             <input type="number"
                                 class="form-control w-50  bg-soft-success text-white border-0 fs-1 text-center"
                                 name="" id="montantPayer" aria-describedby="helpId" value="0"
-                                 @if ($object->total_restant <= 0) readonly @endif />
+                                @if ($object->total_restant <= 0) readonly @endif />
 
 
                         </div>
@@ -62,9 +63,11 @@
                         'column_value' => old('check_ref'),
                         'readonly' => 'false',
                     ])
-                    <div class="col-md-2 mt-4">
-                        <a href="#" id="btnValider" class="btn btn-primary text-light  w-100"><i
+                    <div class="col-md-2 mt-4 ">
+                        <a href="#" id="btnValider" class="btn btn-primary text-light  w-50"><i
                                 class="las la-check"></i></a>
+                        {{-- <a href="#" id="btnModifier" class="btn btn-success text-light  w-50"><i
+                                class="las la-check"></i></a> --}}
                     </div>
                     <div class="col-md-12 col-xl-12 col-xs-12 col-sm-12">
                         <div class="form-group">
@@ -73,6 +76,7 @@
                             <textarea class="form-control" name="comment" id="commentReg" rows="5">{{ old('comment') }}</textarea>
                         </div>
                     </div>
+                    <input type="hidden" name="index" id="index">
                 </div>
                 <div class="row mt-3">
                     <table id="scroll-horizontal" class="table nowrap align-middle table-hover table-bordered"

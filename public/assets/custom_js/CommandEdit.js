@@ -758,7 +758,8 @@ $(".storeCommand").on("click", function (e) {
 var reglements = [];
 var newReglement = {
     id: "",
-    command_id: "",
+    document_id: "",
+    document_type: "commande",
     ref_reg: "",
     num_order: "",
     nature_reg: "",
@@ -769,80 +770,67 @@ var newReglement = {
     amount_reg: "",
     date_reg: "",
 };
-$("#btnValider").on("click", function (e) {
-    e.preventDefault();
-    var montantTotalPayer = 0;
-    // var data = JSON.parse(localStorage.getItem("reglements")) || [];
-    var commande = JSON.parse(localStorage.getItem("product_commandEdit"));
-    var data = commande.detailsReglement;
-    if (data && data.length > 0) {
-        // Calcule le prix hors taxe
-        montantTotalPayer = data.reduce(
-            (acc, reg) => acc + reg.amount_reg,
-            0
-        );
-    }
-    var reg = Object.assign({}, newReglement);
-    var command_id = commande.object.id;
-    var parent_id = commande.object.client_id;
-    console.log(montantTotalPayer);
-    var total_ttc = parseFloat($("#total_ttc").text());
-    var total_ht = parseFloat($("#total_ht").text());
-    var total_ttva = parseFloat($("#total_ttva").text());
-    var modePaiment = $('select[name="reglement"]').val();
-    var num_order = $("#check_ref").val();
-    var comment = $("#commentReg").val();
-    var montantPayer = parseFloat($("#montantPayer").val());
-    // console.log("total_ttc : " + total_ttc);
-    // console.log("total_ht : " + total_ht);
-    // console.log("total_ttva : " + total_ttva);
-    // console.log("montantPayer : " + montantPayer);
-    reg.command_id = command_id;
-    reg.parent_id = parent_id;
-    reg.mode_reg = modePaiment;
-    reg.num_order = num_order;
-    reg.comment = comment;
-    reg.amount_reg = montantPayer;
-    var dateObj = new Date();
-    // Formate la date selon le format YYYY-MM-DD HH:MM:SS
-    reg.date_reg = dateObj.toISOString().slice(0, 19).replace('T', ' ');
-    if (montantPayer + montantTotalPayer <= total_ttc && montantPayer > 0) {
-        var total_restanter = total_ttc - (montantPayer + montantTotalPayer);
-        $("#total_restanter").text(total_restanter.toFixed(2));
-        if (total_restanter === 0) {
-            $('#montantPayer').val(0);
-            $('#montantPayer').prop('readonly', true);
-        }
-        data.push(reg);
-        // reglements.push(reg);
-        localStorage.setItem("product_commandEdit", JSON.stringify(commande));
-        // console.log(total_restanter);
-        tableReglements();
-        $('#montantPayer').val(0);
-        $('#commentReg').val("");
-        $('#check_ref').val("");
-        $('select[name="reglement"]').val("").trigger('change.select2'); // Déselectionner l'option
-    } else {
-        console.log("le montant entrer est plus grand que le reste à payer !");
-        Swal.fire(
-            "Super!",
-            "Le montant saisi n'est as valide ou plus grand que le reste à payer",
-            "error"
-        );
-    }
-});
-
-// function tableReglements() {
-//     var data = JSON.parse(localStorage.getItem("product_commandEdit")) || [];
-//     var listeReg = data.detailsReglement;
-//     console.log(listeReg);
-//     // tableBody.empty();
-//     $("#RegTableBody").empty();
-//     listeReg.forEach((reg) => {
-//         appendTableRegRow(reg);
-//     });
-//     // calculeTotals();
+// $("#btnValider").on("click", function (e) {
+//     e.preventDefault();
+// var montantTotalPayer = 0;
+// // var data = JSON.parse(localStorage.getItem("reglements")) || [];
+// var commande = JSON.parse(localStorage.getItem("product_commandEdit"));
+// var data = commande.detailsReglement;
+// if (data && data.length > 0) {
+//     // Calcule le prix hors taxe
+//     montantTotalPayer = data.reduce(
+//         (acc, reg) => acc + reg.amount_reg,
+//         0
+//     );
 // }
+// var reg = Object.assign({}, newReglement);
+// var document_id = commande.object.id;
+// var parent_id = commande.object.client_id;
+// console.log(montantTotalPayer);
+// var total_ttc = parseFloat($("#total_ttc").text());
+// var total_ht = parseFloat($("#total_ht").text());
+// var total_ttva = parseFloat($("#total_ttva").text());
+// var modePaiment = $('select[name="reglement"]').val();
+// var num_order = $("#check_ref").val();
+// var comment = $("#commentReg").val();
+// var montantPayer = parseFloat($("#montantPayer").val());
+
+// reg.document_id = document_id;
+// reg.parent_id = parent_id;
+// reg.mode_reg = modePaiment;
+// reg.num_order = num_order;
+// reg.comment = comment;
+// reg.amount_reg = montantPayer;
+// var dateObj = new Date();
+// // Formate la date selon le format YYYY-MM-DD HH:MM:SS
+// reg.date_reg = dateObj.toISOString().slice(0, 19).replace('T', ' ');
+// if (montantPayer + montantTotalPayer <= total_ttc && montantPayer > 0) {
+//     var total_restanter = total_ttc - (montantPayer + montantTotalPayer);
+//     $("#total_restanter").text(total_restanter.toFixed(2));
+//     if (total_restanter === 0) {
+//         $('#montantPayer').val(0);
+//         $('#montantPayer').prop('readonly', true);
+//     }
+//     data.push(reg);
+//     // reglements.push(reg);
+//     localStorage.setItem("product_commandEdit", JSON.stringify(commande));
+//     // console.log(total_restanter);
+//     tableReglements();
+//     $('#montantPayer').val(0);
+//     $('#commentReg').val("");
+//     $('#check_ref').val("");
+//     $('select[name="reglement"]').val("").trigger('change.select2'); // Déselectionner l'option
+// } else {
+//     console.log("le montant entrer est plus grand que le reste à payer !");
+//     Swal.fire(
+//         "Super!",
+//         "Le montant saisi n'est as valide ou plus grand que le reste à payer",
+//         "error"
+//     );
+// }
+// });
+
+
 function tableReglements() {
     var data = JSON.parse(localStorage.getItem("product_commandEdit")) || {};
     var listeReg = data.detailsReglement || [];
@@ -858,52 +846,6 @@ function tableReglements() {
 
     // calculeTotals();
 }
-// Fonction pour générer le HTML pour chaque produit
-// function appendTableRegRow(reg) {
-//     var row =
-//         '<tr class="text-center">' +
-//         "<td>" +
-//         reg.mode_reg +
-//         "</td>" +
-//         "<td>" +
-//         reg.amount_reg +
-//         "</td>" +
-//         "<td>" +
-//         reg.date_reg +
-//         "</td>" +
-//         "<td>" +
-//         '<td>' +
-//         '    <button type="button" onClick="deleteReglement()" class="btn" id="deleteReglement-' + index + '"><i class="las la-times text-danger fs-1"></i></button>' +
-//         '</td>' +
-//         "</tr>";
-
-//     $("#RegTableBody").append(row);
-
-//     // $('#deleteProduct-' + product.pivot.product_id).on('click', () => deleteProduct(product.pivot.product_id));
-// }
-
-
-// function deleteReglement(index) {
-//     // e.preventDefault();
-//     // Récupérer les produits actuels depuis le localStorage
-//     var data = JSON.parse(localStorage.getItem('product_commandEdit'));
-//     var listeReglements = data.detailsReglement;
-
-//     // Vérifier s'il y a des produits dans le localStorage
-//     if (listeReglements) {
-
-//             listeReglements.splice(index, 1);
-
-//             // Mettre à jour le localStorage avec la nouvelle liste de reglements
-//             localStorage.setItem('product_commandEdit', JSON.stringify(data));
-//             console.log('Reglement supprimé avec succès.');
-
-//     } else {
-//         console.log('Aucun reglement trouvé dans le localStorage.');
-//     }
-//     tableReglements();
-// }
-
 
 function appendTableRegRow(reg, index) {
     var row =
@@ -924,79 +866,6 @@ function appendTableRegRow(reg, index) {
 
     $("#RegTableBody").append(row);
 }
-
-// Attachez un gestionnaire d'événements de délégation à un élément parent
-// $("#RegTableBody").on('click', '.deleteReglement', function () {
-//     // Obtenez l'index de la ligne à supprimer
-//     var index = $(this).data('index');
-
-//     // Récupérez les données actuelles depuis le localStorage
-//     var data = JSON.parse(localStorage.getItem('product_commandEdit'));
-//     var listeReglements = data.detailsReglement;
-//         console.log(listeReglements);
-//     var montantSaisie = listeReglements[index].amount_reg;
-//     var rest_payer = $("#total_restanter").text();
-//     var total_ttc = parseFloat($("#total_ttc").text());
-//     if ((parseFloat(rest_payer) + parseFloat(montantSaisie)) <= total_ttc) {
-//         rest_payer = parseFloat(rest_payer) + parseFloat(montantSaisie);
-//         $("#total_restanter").text(rest_payer.toFixed(2));
-//         if (listeReglements) {
-//             // Supprimez le reglement à l'index spécifié
-//             listeReglements.splice(index, 1);
-
-//             // Mettez à jour le localStorage avec la nouvelle liste de reglements
-//             localStorage.setItem('product_commandEdit', JSON.stringify(data));
-//             $("#montantPayer").val(0);
-//             $('select[name="reglement"]').val("");
-//             $("#check_ref").val("");
-//             $("#commentReg").val("");
-//             console.log('Reglement supprimé avec succès.');
-//         } else {
-//             console.log('Aucun reglement trouvé dans le localStorage.');
-//         }
-//         if (total_ttc >= rest_payer) {
-//             $('#montantPayer').val(0);
-//             $('#montantPayer').prop('readonly', false);
-//         } else {
-//             $('#montantPayer').val(0);
-//             $('#montantPayer').prop('readonly', true);
-//         }
-//     } else {
-//         Swal.fire(
-//             "Super!",
-//             "Le montant saisi n'est as valide ou plus grand que le reste à payer",
-//             "error"
-//         );
-//     }
-
-//     console.log("montantSaisie : " + montantSaisie);
-//     console.log("total_restanter : " + rest_payer);
-//     // Vérifiez s'il y a des reglements dans le localStorage
-
-
-//     // Actualisez la table des reglements
-//     tableReglements();
-// });
-
-// $("#RegTableBody").on('click', '.editerReglement', function () {
-//     // Obtenez l'index de la ligne à supprimer
-//     var index = $(this).data('index');
-
-//     // Récupérez les données actuelles depuis le localStorage
-//     var data = JSON.parse(localStorage.getItem('product_commandEdit'));
-//     var listeReglements = data.detailsReglement;
-//     console.log(listeReglements);
-//     var montantSaisie = listeReglements[index].amount_reg;
-//     var modePaiment = listeReglements[index].mode_reg;
-//     var num_order = listeReglements[index].num_order;
-//     var comment = listeReglements[index].comment;
-//     $("#montantPayer").val(montantSaisie);
-//      // Mettez à jour la valeur du select2
-//      $('select[name="reglement"]').val(modePaiment).trigger('change.select2');
-//     $("#check_ref").val(num_order);
-//     $("#commentReg").val(comment);
-
-// });
 
 $("#RegTableBody").on('click', '.deleteReglement', function () {
     let index = $(this).data('index');
@@ -1050,13 +919,212 @@ $("#RegTableBody").on('click', '.editerReglement', function () {
     let modePaiment = listeReglements[index].mode_reg;
     let num_order = listeReglements[index].num_order;
     let comment = listeReglements[index].comment;
+    let rest_payer = parseFloat($("#total_restanter").text());
+    let total_ttc = parseFloat($("#total_ttc").text());
+    localStorage.setItem('montantEdit', montantSaisie);
+    if ((rest_payer + montantSaisie) <= total_ttc) {
+        rest_payer += montantSaisie;
+        $("#total_restanter").text(rest_payer.toFixed(2));
+    }
 
     $("#montantPayer").val(montantSaisie);
     $('select[name="reglement"]').val(modePaiment).trigger('change.select2');
     $("#check_ref").val(num_order);
     $("#commentReg").val(comment);
+    $("#index").val(index);
+    $('#montantPayer').prop('readonly', false);
+    $("#btnValider").attr("id", "btnModifier");
 });
 
+
+// $("#btnModifier").on("click", function (e) {
+//     e.preventDefault();
+
+// // Récupérer l'index de l'élément à mettre à jour
+// let index = $("#index").val();
+// let montantTotalPayer = 0;
+// let montantEdit = localStorage.getItem('montantEdit');
+// // Récupérer les données actuelles depuis le localStorage
+// let object = JSON.parse(localStorage.getItem("product_commandEdit"));
+// let data = object.detailsReglement;
+// let commande = object.object;
+// if (data && data.length > 0) {
+//     // Calcule le prix hors taxe
+//     montantTotalPayer = data.reduce(
+//         (acc, reg) => acc + reg.amount_reg,
+//         0
+//     );
+// }
+// // Vérifier que l'index est valide
+// if (index >= 0 && index < data.length) {
+//     // Récupérer les nouvelles valeurs du formulaire
+//     let modePaiment = $('select[name="reglement"]').val();
+//     let num_order = $("#check_ref").val();
+//     let comment = $("#commentReg").val();
+//     let montantPayer = parseFloat($("#montantPayer").val());
+//     let total_restanter = parseFloat($("#total_restanter").text());
+//     let total_ttc = parseFloat($("#total_ttc").text());
+
+
+//     if (montantPayer + montantTotalPayer - montantEdit <= total_ttc && montantPayer > 0) {
+//          total_restanter = total_ttc - (montantPayer + montantTotalPayer - montantEdit);
+//         $("#total_restanter").text(total_restanter.toFixed(2));
+//         if (total_restanter === 0) {
+//             $('#montantPayer').val(0);
+//             $('#montantPayer').prop('readonly', true);
+//         }
+//         }
+
+//     // Mettre à jour les valeurs de l'élément sélectionné
+//     data[index].mode_reg = modePaiment;
+//     data[index].num_order = num_order;
+//     data[index].comment = comment;
+//     data[index].amount_reg = montantPayer;
+//     commande.total_restant = total_restanter;
+//     commande.total_payant = montantTotalPayer;
+
+//     // Mettre à jour le localStorage avec les données mises à jour
+//     localStorage.setItem("product_commandEdit", JSON.stringify(object));
+
+//     // Actualiser la vue
+//     tableReglements();
+
+//     // Effacer les champs du formulaire ou effectuer d'autres actions nécessaires
+//     $('#montantPayer').val(0);
+//     $('#total_restanter').val(total_restanter);
+//     $('#commentReg').val("");
+//     $('#check_ref').val("");
+//     $('select[name="reglement"]').val("").trigger('change.select2');
+//     $(this).attr("id", "btnValider");
+// } else {
+//     console.log("Index invalide !");
+// }
+// });
+
+
+$("#btnValider").on("click", function (e) {
+    e.preventDefault();
+    if ($(this).attr("id") === "btnValider") {
+        var montantTotalPayer = 0;
+        // var data = JSON.parse(localStorage.getItem("reglements")) || [];
+        var commande = JSON.parse(localStorage.getItem("product_commandEdit"));
+        var data = commande.detailsReglement;
+        if (data && data.length > 0) {
+            // Calcule le prix hors taxe
+            montantTotalPayer = data.reduce(
+                (acc, reg) => acc + reg.amount_reg,
+                0
+            );
+        }
+        var reg = Object.assign({}, newReglement);
+        var document_id = commande.object.id;
+        var parent_id = commande.object.client_id;
+        console.log(montantTotalPayer);
+        var total_ttc = parseFloat($("#total_ttc").text());
+        var total_ht = parseFloat($("#total_ht").text());
+        var total_ttva = parseFloat($("#total_ttva").text());
+        var modePaiment = $('select[name="reglement"]').val();
+        var num_order = $("#check_ref").val();
+        var comment = $("#commentReg").val();
+        var montantPayer = parseFloat($("#montantPayer").val());
+
+        reg.document_id = document_id;
+        reg.parent_id = parent_id;
+        reg.mode_reg = modePaiment;
+        reg.num_order = num_order;
+        reg.comment = comment;
+        reg.amount_reg = montantPayer;
+        var dateObj = new Date();
+        // Formate la date selon le format YYYY-MM-DD HH:MM:SS
+        reg.date_reg = dateObj.toISOString().slice(0, 19).replace('T', ' ');
+        if (montantPayer + montantTotalPayer <= total_ttc && montantPayer > 0) {
+            var total_restanter = total_ttc - (montantPayer + montantTotalPayer);
+            $("#total_restanter").text(total_restanter.toFixed(2));
+            if (total_restanter === 0) {
+                $('#montantPayer').val(0);
+                $('#montantPayer').prop('readonly', true);
+            }
+            data.push(reg);
+            // reglements.push(reg);
+            localStorage.setItem("product_commandEdit", JSON.stringify(commande));
+            // console.log(total_restanter);
+            tableReglements();
+            $('#montantPayer').val(0);
+            $('#commentReg').val("");
+            $('#check_ref').val("");
+            $('select[name="reglement"]').val("").trigger('change.select2'); // Déselectionner l'option
+        } else {
+            console.log("le montant entrer est plus grand que le reste à payer !");
+            Swal.fire(
+                "Super!",
+                "Le montant saisi n'est as valide ou plus grand que le reste à payer",
+                "error"
+            );
+        }
+        console.log("Action du bouton Valider");
+    } else if ($(this).attr("id") === "btnModifier") {
+        // Récupérer l'index de l'élément à mettre à jour
+        let index = $("#index").val();
+        let montantTotalPayer = 0;
+        let montantEdit = localStorage.getItem('montantEdit');
+        // Récupérer les données actuelles depuis le localStorage
+        let object = JSON.parse(localStorage.getItem("product_commandEdit"));
+        let data = object.detailsReglement;
+        let commande = object.object;
+        if (data && data.length > 0) {
+            // Calcule le prix hors taxe
+            montantTotalPayer = data.reduce(
+                (acc, reg) => acc + reg.amount_reg,
+                0
+            );
+        }
+        // Vérifier que l'index est valide
+        if (index >= 0 && index < data.length) {
+            // Récupérer les nouvelles valeurs du formulaire
+            let modePaiment = $('select[name="reglement"]').val();
+            let num_order = $("#check_ref").val();
+            let comment = $("#commentReg").val();
+            let montantPayer = parseFloat($("#montantPayer").val());
+            let total_restanter = parseFloat($("#total_restanter").text());
+            let total_ttc = parseFloat($("#total_ttc").text());
+
+
+            if (montantPayer + montantTotalPayer - montantEdit <= total_ttc && montantPayer > 0) {
+                total_restanter = total_ttc - (montantPayer + montantTotalPayer - montantEdit);
+                $("#total_restanter").text(total_restanter.toFixed(2));
+                if (total_restanter === 0) {
+                    $('#montantPayer').val(0);
+                    $('#montantPayer').prop('readonly', true);
+                }
+            }
+
+            // Mettre à jour les valeurs de l'élément sélectionné
+            data[index].mode_reg = modePaiment;
+            data[index].num_order = num_order;
+            data[index].comment = comment;
+            data[index].amount_reg = montantPayer;
+            commande.total_restant = total_restanter;
+            commande.total_payant = montantTotalPayer;
+
+            // Mettre à jour le localStorage avec les données mises à jour
+            localStorage.setItem("product_commandEdit", JSON.stringify(object));
+
+            // Actualiser la vue
+            tableReglements();
+
+            // Effacer les champs du formulaire ou effectuer d'autres actions nécessaires
+            $('#montantPayer').val(0);
+            $('#total_restanter').val(total_restanter);
+            $('#commentReg').val("");
+            $('#check_ref').val("");
+            $('select[name="reglement"]').val("").trigger('change.select2');
+            $(this).attr("id", "btnValider");
+        } else {
+            console.log("Index invalide !");
+        }
+        console.log("Action du bouton Modifier");
+    }
+});
 
 $(".storeReglement").on("click", function (e) {
     e.preventDefault();

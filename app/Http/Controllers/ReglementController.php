@@ -85,7 +85,8 @@ class ReglementController extends Controller
             if (empty($item['id'])) {
                 $reglement = new Reglement();
                 $reglement->id = Str::uuid();
-                $reglement->reg_code = incRegNumerotation();
+                // getRegNumerotation
+                $reglement->reg_code = getRegNumerotation() . '/' . getExercice();
                 $reglement->document_id = $item['document_id'];
                 $reglement->document_type = $item['document_type'];
                 $reglement->date_reg = $item['date_reg'];
@@ -97,7 +98,7 @@ class ReglementController extends Controller
                 $reglement->comment = $item['comment'];
                 $reglement->save();
 
-                $command = Command::findOrFail($item['command_id']);
+                $command = Command::findOrFail($item['document_id']);
                 $command->total_restant = $command->total_restant - $item['amount_reg'];
                 $command->total_payant = $command->total_payant + $item['amount_reg'];
                 $command->status = 'Validé';
