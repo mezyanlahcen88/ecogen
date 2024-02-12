@@ -29,7 +29,17 @@ class Reglement extends Model
 
 
     public $fillable = [
-
+        'id', // Ajoutez 'id' à la liste des attributs remplissables
+        'reg_code',
+        'document_id',
+        'document_type',
+        'date_reg',
+        'amount_reg',
+        'mode_reg',
+        'nature_reg',
+        'parent_type',
+        'parent_id',
+        'comment',
     ];
 
 

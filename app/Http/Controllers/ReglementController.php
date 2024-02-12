@@ -83,10 +83,17 @@ class ReglementController extends Controller
         $data = $request->all();
         foreach ($data['reglements'] as $item) {
             if (empty($item['id'])) {
-                $reglement = new Reglement();
+            // Si l'ID est vide, créez un nouvel enregistrement
+            $reglement = new Reglement();
                 $reglement->id = Str::uuid();
-                // getRegNumerotation
                 $reglement->reg_code = getRegNumerotation() . '/' . getExercice();
+                incRegNumerotation();
+        } else {
+            // Si l'ID existe, recherchez l'enregistrement correspondant ou créez-en un nouveau
+            $reglement = Reglement::updateOrCreate(['id' => $item['id']], $item);
+        }
+
+                // getRegNumerotation
                 $reglement->document_id = $item['document_id'];
                 $reglement->document_type = $item['document_type'];
                 $reglement->date_reg = $item['date_reg'];
@@ -99,12 +106,12 @@ class ReglementController extends Controller
                 $reglement->save();
 
                 $command = Command::findOrFail($item['document_id']);
-                $command->total_restant = $command->total_restant - $item['amount_reg'];
-                $command->total_payant = $command->total_payant + $item['amount_reg'];
+                // $command->total_restant = $command->total_restant - $item['amount_reg'];
+                // $command->total_payant = $command->total_payant + $item['amount_reg'];
+                $command->total_restant = $command->TTTC - $command->reglements()->sum('amount_reg');
+                $command->total_payant = $command->reglements()->sum('amount_reg');
                 $command->status = 'Validé';
                 $command->save();
-            };
-
         }
 
         return response()->json(['success' => true]);

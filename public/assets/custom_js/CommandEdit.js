@@ -1137,6 +1137,7 @@ $(".storeReglement").on("click", function (e) {
         reglements: listeReg,
     };
     console.log(postData);
+     localStorage.setItem("postData", JSON.stringify(postData));
     $.ajaxSetup({
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
