@@ -81,14 +81,13 @@ class ReglementController extends Controller
     {
         // we need 5 paramtre document_id document_type nature_reg client parent_id
         $data = $request->all();
-        $updatedReglementIds = []; // Liste des IDs de règlements mis à jour
-
         foreach ($data['reglements'] as $item) {
             if (empty($item['id'])) {
             // Si l'ID est vide, créez un nouvel enregistrement
             $reglement = new Reglement();
                 $reglement->id = Str::uuid();
                 $reglement->reg_code = getRegNumerotation() . '/' . getExercice();
+
                 incRegNumerotation();
         } else {
             // Si l'ID existe, recherchez l'enregistrement correspondant ou créez-en un nouveau
@@ -108,19 +107,13 @@ class ReglementController extends Controller
                 $reglement->save();
 
                 $command = Command::findOrFail($item['document_id']);
-                Reglement::where('document_id', $command->id)
-                        ->whereNotIn('id', $updatedReglementIds)
-                        ->delete();
                 // $command->total_restant = $command->total_restant - $item['amount_reg'];
                 // $command->total_payant = $command->total_payant + $item['amount_reg'];
                 $command->total_restant = $command->TTTC - $command->reglements()->sum('amount_reg');
                 $command->total_payant = $command->reglements()->sum('amount_reg');
                 $command->status = 'Validé';
                 $command->save();
-
-                $updatedReglementIds[] = $reglement->id;
         }
-        // Supprimer les règlements qui ne sont pas dans la liste mise à jour
 
         return response()->json(['success' => true]);
 
@@ -155,12 +148,69 @@ class ReglementController extends Controller
      * @param  \App\Models\Reglement  $reglement
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreReglementRequest $request, string $id)
-    {
-        $validated = $request->validated();
-        $this->crudService->updateRecord(new Reglement(), $validated, $id);
-        return redirect()->route('reglements.index');
+
+    public function update(Request $request, string $id)
+{
+    $data = $request->all();
+    // dd( $data);
+    $updatedReglementIds = [];
+ $commandId = $id;
+    foreach ($data['reglements'] as $item) {
+
+
+        $CommandeReglementData = [
+            'document_id' => $item['document_id'],
+            'document_type' => $item['document_type'],
+            'date_reg' => $item['date_reg'],
+            'amount_reg' => $item['amount_reg'],
+            'mode_reg' => $item['mode_reg'],
+            'nature_reg' => 'vente',
+            'parent_type' => 'client',
+            'parent_id' => $item['parent_id'],
+            'comment' => $item['comment'],
+        ];
+
+        $existingReglement = DB::table('reglements')
+            ->where('document_id', $item['document_id'])
+            ->where('id', $item['id'])
+            ->first();
+
+        if ($existingReglement) {
+            DB::table('reglements')->where('id', $item['id'])->update($CommandeReglementData);
+        } else {
+            $CommandeReglementData['id'] = Str::uuid();
+            $CommandeReglementData['reg_code'] = getRegNumerotation() . '/' . getExercice();
+            $CommandeReglementData['created_at'] = now();
+            DB::table('reglements')->insert($CommandeReglementData);
+        }
+
+
+
+        $updatedReglementIds[] = $item['id'];
     }
+
+    // Supprimer les règlements qui ne sont pas dans la liste mise à jour
+    DB::table('reglements')
+        ->where('document_id', $commandId)
+        ->whereNotIn('id', $updatedReglementIds)
+        ->delete();
+        $command = Command::findOrFail($commandId);
+        $command->total_restant = $command->TTTC - $command->reglements()->sum('amount_reg');
+        $command->total_payant = $command->reglements()->sum('amount_reg');
+        $command->status = 'Validé';
+        $command->save();
+    return response()->json(['success' => true]);
+}
+
+
+
+
+    // public function update(StoreReglementRequest $request, string $id)
+    // {
+    //     $validated = $request->validated();
+    //     $this->crudService->updateRecord(new Reglement(), $validated, $id);
+    //     return redirect()->route('reglements.index');
+    // }
 
     /**
      * Remove the specified resource from storage.

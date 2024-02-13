@@ -869,10 +869,8 @@ function appendTableRegRow(reg, index) {
 
 $("#RegTableBody").on('click', '.deleteReglement', function () {
     let index = $(this).data('index');
-
+    $("#storeReglement").removeClass("storeReglement").addClass("updateReglement");
     let data = JSON.parse(localStorage.getItem('product_commandEdit'));
-    let postData = JSON.parse(localStorage.getItem('postData'));
-    let reglements = postData.reglements;
     if (!data || !data.detailsReglement) {
         console.log('Erreur : Aucune donnée de reglement trouvée dans le localStorage.');
         return;
@@ -888,9 +886,6 @@ $("#RegTableBody").on('click', '.deleteReglement', function () {
 
         listeReglements.splice(index, 1);
         localStorage.setItem('product_commandEdit', JSON.stringify(data));
-
-        reglements.splice(index, 1);
-        localStorage.setItem('postData', JSON.stringify(postData));
 
         $("#montantPayer").val(0);
         $('select[name="reglement"]').val("").trigger('change.select2'); // Déselectionner l'option        $("#check_ref").val("");
@@ -1175,6 +1170,44 @@ $(".storeReglement").on("click", function (e) {
         },
     });
 });
+
+
+$(".updateReglement").on("click", function (e) {
+    e.preventDefault();
+
+    var data = JSON.parse(localStorage.getItem("product_commandEdit")) || {};
+    var commandId = data.object.id;
+    var listeReg = data.detailsReglement;
+    var postData = {
+        reglements: listeReg,
+    };
+    console.log(postData);
+    localStorage.setItem("postData", JSON.stringify(postData));
+
+    $.ajaxSetup({
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+    });
+
+    $.ajax({
+        url: "/reglements/" + commandId,
+        type: "PUT",
+        data: JSON.stringify(postData), // Convertir postData en JSON
+        contentType: "application/json", // Spécifier le type de contenu comme JSON
+        dataType: "json",
+        success: function (data) {
+            if (data.success) {
+                localStorage.removeItem("product_commandEdit");
+                // window.location.href = "/commands";
+                console.log("delete storage");
+                Swal.fire("Super!", "Reglement mise à jour avec succès", "success");
+            }
+        },
+    });
+});
+
+
 
 function getCommandDetails(commandId) {
     console.log(commandId);
