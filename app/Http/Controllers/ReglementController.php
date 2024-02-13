@@ -81,6 +81,8 @@ class ReglementController extends Controller
     {
         // we need 5 paramtre document_id document_type nature_reg client parent_id
         $data = $request->all();
+        $updatedReglementIds = []; // Liste des IDs de règlements mis à jour
+
         foreach ($data['reglements'] as $item) {
             if (empty($item['id'])) {
             // Si l'ID est vide, créez un nouvel enregistrement
@@ -106,13 +108,19 @@ class ReglementController extends Controller
                 $reglement->save();
 
                 $command = Command::findOrFail($item['document_id']);
+                Reglement::where('document_id', $command->id)
+                        ->whereNotIn('id', $updatedReglementIds)
+                        ->delete();
                 // $command->total_restant = $command->total_restant - $item['amount_reg'];
                 // $command->total_payant = $command->total_payant + $item['amount_reg'];
                 $command->total_restant = $command->TTTC - $command->reglements()->sum('amount_reg');
                 $command->total_payant = $command->reglements()->sum('amount_reg');
                 $command->status = 'Validé';
                 $command->save();
+
+                $updatedReglementIds[] = $reglement->id;
         }
+        // Supprimer les règlements qui ne sont pas dans la liste mise à jour
 
         return response()->json(['success' => true]);
 

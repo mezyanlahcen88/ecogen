@@ -871,6 +871,8 @@ $("#RegTableBody").on('click', '.deleteReglement', function () {
     let index = $(this).data('index');
 
     let data = JSON.parse(localStorage.getItem('product_commandEdit'));
+    let postData = JSON.parse(localStorage.getItem('postData'));
+    let reglements = postData.reglements;
     if (!data || !data.detailsReglement) {
         console.log('Erreur : Aucune donnée de reglement trouvée dans le localStorage.');
         return;
@@ -886,6 +888,9 @@ $("#RegTableBody").on('click', '.deleteReglement', function () {
 
         listeReglements.splice(index, 1);
         localStorage.setItem('product_commandEdit', JSON.stringify(data));
+
+        reglements.splice(index, 1);
+        localStorage.setItem('postData', JSON.stringify(postData));
 
         $("#montantPayer").val(0);
         $('select[name="reglement"]').val("").trigger('change.select2'); // Déselectionner l'option        $("#check_ref").val("");
