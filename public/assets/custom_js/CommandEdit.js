@@ -49,6 +49,7 @@ $(document).ready(function () {
     loadTableFromLocalStorage();
     tableReglements();
     calculeTotals();
+    $("#updateReglement").hide();
 });
 
 function loadTableFromLocalStorage() {
@@ -908,7 +909,12 @@ $("#RegTableBody").on('click', '.deleteReglement', function () {
 
 $("#RegTableBody").on('click', '.editerReglement', function () {
     let index = $(this).data('index');
-
+    $("#storeReglement").hide();
+    $("#updateReglement").show();
+    // Trouver le bouton "delete" dans le même parent
+    var deleteBtn = $(this).closest("tr").find(".deleteReglement");
+    // Cacher le bouton "delete"
+    deleteBtn.hide();
     let data = JSON.parse(localStorage.getItem('product_commandEdit'));
     if (!data || !data.detailsReglement) {
         console.log('Erreur : Aucune donnée de reglement trouvée dans le localStorage.');
@@ -1063,6 +1069,8 @@ $("#btnValider").on("click", function (e) {
         }
         console.log("Action du bouton Valider");
     } else if ($(this).attr("id") === "btnModifier") {
+        // Réafficher tous les boutons "delete" cachés
+        $(".deleteReglement.hidden").show();
         // Récupérer l'index de l'élément à mettre à jour
         let index = $("#index").val();
         let montantTotalPayer = 0;
@@ -1137,7 +1145,7 @@ $(".storeReglement").on("click", function (e) {
         reglements: listeReg,
     };
     console.log(postData);
-     localStorage.setItem("postData", JSON.stringify(postData));
+    localStorage.setItem("postData", JSON.stringify(postData));
     $.ajaxSetup({
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -1174,7 +1182,8 @@ $(".storeReglement").on("click", function (e) {
 
 $(".updateReglement").on("click", function (e) {
     e.preventDefault();
-
+    $("#storeReglement").show();
+    $("#updateReglement").hide();
     var data = JSON.parse(localStorage.getItem("product_commandEdit")) || {};
     var commandId = data.object.id;
     var listeReg = data.detailsReglement;
@@ -1198,10 +1207,19 @@ $(".updateReglement").on("click", function (e) {
         dataType: "json",
         success: function (data) {
             if (data.success) {
+
                 localStorage.removeItem("product_commandEdit");
-                // window.location.href = "/commands";
+                // $('#productTableBody').empty();
+                data.detailsReglement = [];
+                getCommandDetails(commandId);
+                Swal.fire(
+                    "Super!",
+                    "Réglement a été modifié avec succès",
+                    "success"
+                );
+                location.reload();
                 console.log("delete storage");
-                Swal.fire("Super!", "Reglement mise à jour avec succès", "success");
+                loadTableFromLocalStorage();
             }
         },
     });

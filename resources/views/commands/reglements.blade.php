@@ -105,7 +105,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
                 <button type="button" id="storeReglement" class="btn btn-primary storeReglement">Save Changes</button>
-                <button type="button" id="storeReglement" class="btn btn-primary updateReglement">Modifier</button>
+                <button type="button" id="updateReglement" class="btn btn-primary updateReglement">Modifier</button>
 
             </div>
 
